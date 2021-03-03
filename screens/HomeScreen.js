@@ -8,13 +8,12 @@ import {
   Button,
 } from 'react-native';
 import Colours from '../assets/colours';
-import oldFashioned from '../assets/oldFashioned.svg';
 
 const HomeScreen = ({ navigation, route }) => {
   return (
     <View style={[styles.container, styles.flexCenter]}>
       <Image
-        source={require('../assets/oldFashioned.svg')}
+        source={require('../assets/oldFashioned.png')}
         style={styles.logo}
       />
       <TouchableOpacity style={styles.button}>

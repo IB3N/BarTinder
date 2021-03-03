@@ -9,6 +9,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@expo/metro-config": "^0.1.56",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.8",
     "@react-navigation/native": "^5.9.3",
@@ -22,8 +23,6 @@
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.2",
-    "react-native-svg": "12.1.0",
-    "react-native-svg-transformer": "^0.14.3",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {

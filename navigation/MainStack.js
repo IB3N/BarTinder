@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../screens/Main/Home';
 import Profile from '../screens/Main/Profile/Profile';
 import Group from '../screens/Main/Group/Group';
+import GroupItem from '../screens/Main/Group/GroupItem';
 import Swipe from '../screens/Main/Swipe';
 import DeleteAccount from '../screens/Main/Profile/DeleteAccount';
 import CreateGroupForm from '../screens/Main/Group/CreateGroupForm';
@@ -55,6 +56,11 @@ const MainStack = () => {
       <Stack.Screen
         name="CreateGroupForm"
         component={CreateGroupForm}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="GroupItem"
+        component={GroupItem}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import Colours from '../assets/colours';
-import ButtonStyles from '../assets/button.styles';
+import Colours from '../../assets/colours';
+import ButtonStyles from '../../assets/button.styles';
 
 const Welcome = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>Welcome to BarTinder!</Text>
       <Image
-        source={require('../assets/tumblerSmall.png')}
+        source={require('../../assets/tumblerSmall.png')}
         style={styles.logo}
       />
       <TouchableOpacity style={ButtonStyles.button}>

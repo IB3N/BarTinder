@@ -6,7 +6,7 @@ import ButtonStyles from '../assets/button.styles';
 import InfoRow from '../components/InfoRow';
 import TopBarButtons from '../components/TopBarButtons';
 
-const ProfileScreen = ({ navigation, route }) => {
+const Profile = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.profileScreenContainer}>
       <TopBarButtons navigation={navigation} route={route} />
@@ -30,7 +30,7 @@ const ProfileScreen = ({ navigation, route }) => {
   );
 };
 
-export default ProfileScreen;
+export default Profile;
 
 const styles = StyleSheet.create({
   profileScreenContainer: {

@@ -6,7 +6,7 @@ import ButtonStyles from '../assets/button.styles';
 import GroupItem from '../components/GroupItem';
 import TopBarButtons from '../components/TopBarButtons';
 
-const GroupScreen = ({ navigation, route }) => {
+const Group = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.groupScreenContainer}>
       <TopBarButtons navigation={navigation} route={route} />
@@ -25,7 +25,7 @@ const GroupScreen = ({ navigation, route }) => {
   );
 };
 
-export default GroupScreen;
+export default Group;
 
 const styles = StyleSheet.create({
   groupScreenContainer: {

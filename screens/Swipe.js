@@ -5,7 +5,7 @@ import Colours from '../assets/colours';
 import ButtonStyles from '../assets/button.styles';
 import TopBarButtons from '../components/TopBarButtons';
 
-const SwipeScreen = ({ navigation, route }) => {
+const Swipe = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.swipeScreenContainer}>
       <TopBarButtons
@@ -53,7 +53,7 @@ const SwipeScreen = ({ navigation, route }) => {
   );
 };
 
-export default SwipeScreen;
+export default Swipe;
 
 const styles = StyleSheet.create({
   swipeScreenContainer: {

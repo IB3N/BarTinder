@@ -3,7 +3,7 @@ import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
-import MainStack from '../navigation/MainStackNavigator';
+import MainStack from '../navigation/MainStack';
 
 const Main = () => {
   return (

@@ -11,17 +11,16 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import Colours from '../assets/colours';
-import ButtonStyles from '../assets/button.styles';
+import Colours from '../../assets/colours';
+import ButtonStyles from '../../assets/button.styles';
 import {
   TextInput,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
 
-const Register = ({ navigation, route }) => {
+const Login = ({ navigation, route }) => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [email, setEmail] = React.useState('');
 
   return (
     <KeyboardAvoidingView
@@ -40,19 +39,10 @@ const Register = ({ navigation, route }) => {
         >
           <View>
             <Image
-              source={require('../assets/tumblerSmall.png')}
+              source={require('../../assets/tumblerSmall.png')}
               style={styles.logo}
             />
             <View>
-              <View style={styles.input}>
-                <TextInput
-                  value={email}
-                  onChangeText={setEmail}
-                  placeholder="Email..."
-                  placeholderTextColor={Colours.green}
-                  secureTextEntry={true}
-                />
-              </View>
               <View style={styles.input}>
                 <TextInput
                   value={username}
@@ -71,7 +61,7 @@ const Register = ({ navigation, route }) => {
                 />
               </View>
               <TouchableOpacity style={ButtonStyles.button}>
-                <Text style={ButtonStyles.buttonText}>Register</Text>
+                <Text style={ButtonStyles.buttonText}>Login</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -81,7 +71,7 @@ const Register = ({ navigation, route }) => {
   );
 };
 
-export default Register;
+export default Login;
 
 const styles = StyleSheet.create({
   container: {

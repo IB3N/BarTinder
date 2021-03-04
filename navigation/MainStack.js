@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import GroupScreen from '../screens/GroupScreen';
-import SwipeScreen from '../screens/SwipeScreen';
-import DeleteAccountScreen from '../screens/DeleteAccountScreen';
-import CreateGroupFormScreen from '../screens/CreateGroupFormScreen';
+import Home from '../screens/Home';
+import Profile from '../screens/Profile';
+import Group from '../screens/Group';
+import Swipe from '../screens/Swipe';
+import DeleteAccount from '../screens/DeleteAccount';
+import CreateGroupForm from '../screens/CreateGroupForm';
 import { Button } from 'react-native';
 
 const Stack = createStackNavigator();
@@ -16,12 +16,12 @@ const MainStack = () => {
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Home"
-        component={HomeScreen}
+        component={Home}
         options={{ title: 'BarTinder', headerShown: false }}
       />
       <Stack.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={Profile}
         options={({ route }) => ({
           title: route.params.name,
           headerShown: false,
@@ -29,7 +29,7 @@ const MainStack = () => {
       />
       <Stack.Screen
         name="Groups"
-        component={GroupScreen}
+        component={Group}
         options={({ navigation }) => ({
           headerShown: false,
           headerLeft: () => (
@@ -44,11 +44,11 @@ const MainStack = () => {
       />
       <Stack.Screen
         name="Swipe"
-        component={SwipeScreen}
+        component={Swipe}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Delete" component={DeleteAccountScreen} />
-      <Stack.Screen name="CreateGroupForm" component={CreateGroupFormScreen} />
+      <Stack.Screen name="Delete" component={DeleteAccount} />
+      <Stack.Screen name="CreateGroupForm" component={CreateGroupForm} />
     </Stack.Navigator>
   );
 };

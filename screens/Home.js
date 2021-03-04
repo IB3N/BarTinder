@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import Colours from '../assets/colours';
 import ButtonStyles from '../assets/button.styles';
 
-const HomeScreen = ({ navigation, route }) => {
+const Home = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>BarTinder</Text>
@@ -11,6 +11,12 @@ const HomeScreen = ({ navigation, route }) => {
         source={require('../assets/tumblerSmall.png')}
         style={styles.logo}
       />
+      <TouchableOpacity
+        style={ButtonStyles.button}
+        onPress={() => navigation.navigate('MyDrinks', {})}
+      >
+        <Text style={ButtonStyles.buttonText}>My Drinks</Text>
+      </TouchableOpacity>
       <TouchableOpacity
         style={ButtonStyles.button}
         onPress={() => navigation.navigate('Swipe', {})}
@@ -33,7 +39,7 @@ const HomeScreen = ({ navigation, route }) => {
   );
 };
 
-export default HomeScreen;
+export default Home;
 
 const styles = StyleSheet.create({
   container: {

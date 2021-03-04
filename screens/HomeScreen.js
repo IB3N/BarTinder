@@ -6,6 +6,7 @@ import ButtonStyles from '../assets/button.styles';
 const HomeScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
+      <Text style={styles.welcome}>BarTinder</Text>
       <Image
         source={require('../assets/tumblerSmall.png')}
         style={styles.logo}
@@ -45,5 +46,12 @@ const styles = StyleSheet.create({
     marginBottom: 60,
     width: 140,
     height: 140,
+  },
+  welcome: {
+    fontSize: 36,
+    paddingBottom: 48,
+    color: Colours.green,
+    textAlign: 'center',
+    fontWeight: '500',
   },
 });

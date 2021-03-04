@@ -8,18 +8,18 @@ import Main from './screens/Main';
 import Auth from './screens/Auth';
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
 
   // login handler
   // Pass this handler to Auth component
 
-  const Welcome = () => {
+  const FirstPage = () => {
     return isLoggedIn ? <Main /> : <Auth />;
   };
 
   return (
     <SafeAreaProvider>
-      <Welcome />
+      <FirstPage />
     </SafeAreaProvider>
   );
 }

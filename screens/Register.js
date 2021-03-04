@@ -1,31 +1,83 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Colours from '../assets/colours';
 import ButtonStyles from '../assets/button.styles';
+import {
+  TextInput,
+  TouchableWithoutFeedback,
+} from 'react-native-gesture-handler';
 
 const Register = ({ navigation, route }) => {
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState('');
+
   return (
-    <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={styles.backButton}>
-        <Text style={styles.backButtonText} onPress={() => navigation.goBack()}>
-          ←
-        </Text>
-      </TouchableOpacity>
-      <View style={styles.form}>
-        <Image
-          source={require('../assets/tumblerSmall.png')}
-          style={styles.logo}
-        />
-        <TouchableOpacity style={ButtonStyles.button}>
-          <Text style={ButtonStyles.buttonText}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={ButtonStyles.button}>
-          <Text style={ButtonStyles.buttonText}>Register</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
+      <SafeAreaView style={styles.safeContainer}>
+        <View style={styles.backButtonContainer}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text style={styles.goBackText}>←</Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableWithoutFeedback
+          onPress={Keyboard.dismiss}
+          style={styles.TWBContainer}
+        >
+          <View>
+            <Image
+              source={require('../assets/tumblerSmall.png')}
+              style={styles.logo}
+            />
+            <View>
+              <View style={styles.input}>
+                <TextInput
+                  value={email}
+                  onChangeText={setEmail}
+                  placeholder="Email..."
+                  placeholderTextColor={Colours.green}
+                  secureTextEntry={true}
+                />
+              </View>
+              <View style={styles.input}>
+                <TextInput
+                  value={username}
+                  onChangeText={setUsername}
+                  placeholder="Username..."
+                  placeholderTextColor={Colours.green}
+                />
+              </View>
+              <View style={styles.input}>
+                <TextInput
+                  value={password}
+                  onChangeText={setPassword}
+                  placeholder="Password..."
+                  placeholderTextColor={Colours.green}
+                  secureTextEntry={true}
+                />
+              </View>
+              <TouchableOpacity style={ButtonStyles.button}>
+                <Text style={ButtonStyles.buttonText}>Register</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -37,22 +89,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colours.charcoal,
   },
-  backButton: {
+  safeContainer: {
     flex: 1,
-    alignSelf: 'flex-start',
+    alignSelf: 'stretch',
   },
-  backButtonText: {
+  goBackText: {
     fontSize: 30,
     color: Colours.yellow,
     fontWeight: '800',
-    padding: 20,
+    paddingTop: 30,
+    paddingLeft: 30,
+    alignSelf: 'flex-start',
   },
-  form: {
-    flex: 2.5,
+  backButtonContainer: {
+    flex: 0.5,
+  },
+  TWBContainer: {
+    alignSelf: 'center',
   },
   logo: {
-    marginBottom: 60,
-    width: 140,
-    height: 140,
+    alignSelf: 'center',
+    marginBottom: 30,
+    width: 100,
+    height: 100,
+  },
+  input: {
+    padding: 10,
+    marginBottom: 10,
+    flexDirection: 'row',
+    borderColor: Colours.brown,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderRadius: 10,
   },
 });

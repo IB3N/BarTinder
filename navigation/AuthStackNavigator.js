@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import LoginRegister from '../screens/LoginRegister';
+import Welcome from '../screens/Welcome';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
 
@@ -12,7 +12,7 @@ const AuthStack = () => {
     <Stack.Navigator mode="modal">
       <Stack.Screen
         name="LoginRegister"
-        component={LoginRegister}
+        component={Welcome}
         options={{ headerShown: false }}
       />
       <Stack.Screen

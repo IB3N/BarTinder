@@ -28,6 +28,15 @@ const SwipeScreen = ({ navigation, route }) => {
         <TouchableOpacity style={styles.ingredient}>
           <Text style={styles.ingredientText}>Sweet Vermouth</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.ingredient}>
+          <Text style={styles.ingredientText}>Vodka</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.ingredient}>
+          <Text style={styles.ingredientText}>Lillet</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.ingredient}>
+          <Text style={styles.ingredientText}>Coca Cola</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.swipeButtons}>
         <TouchableOpacity style={styles.swipeButtonTouchable}>
@@ -51,7 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: Colours.green,
   },
   flexStart: {
     alignSelf: 'flex-start',
@@ -69,21 +78,23 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   ingredients: {
+    padding: 10,
     flex: 2,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-evenly',
+    alignItems: 'stretch',
     alignContent: 'center',
   },
   ingredient: {
-    paddingVertical: 10,
-    paddingHorizontal: 30,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    marginLeft: 7,
     borderRadius: 10,
     borderStyle: 'solid',
     borderWidth: 2,
     borderColor: Colours.green,
     backgroundColor: Colours.yellow,
-    marginVertical: 10,
+    marginTop: 15,
     shadowColor: Colours.green,
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.9,

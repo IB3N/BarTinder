@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/tumblerSmall.png",
     "splash": {
-      "image": "./assets/tumblerLarge.png",
+      "image": "./assets/tumbler.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
@@ -26,7 +26,7 @@
       }
     },
     "web": {
-      "favicon": "./assets/oldFashioned.png"
+      "favicon": "./assets/tumblerSmall.png"
     }
   }
 }

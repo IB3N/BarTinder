@@ -5,7 +5,7 @@ import ButtonStyles from '../assets/button.styles';
 
 const HomeScreen = ({ navigation, route }) => {
   return (
-    <View style={[styles.container, styles.flexCenter]}>
+    <View style={styles.container}>
       <Image
         source={require('../assets/tumblerSmall.png')}
         style={styles.logo}
@@ -35,13 +35,11 @@ const HomeScreen = ({ navigation, route }) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  flexCenter: {
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  container: {
-    backgroundColor: '#fff',
+    backgroundColor: Colours.charcoal,
   },
   logo: {
     marginBottom: 60,

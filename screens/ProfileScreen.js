@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   profileScreenContainer: {
     flex: 1,
     alignItems: 'stretch',
-    backgroundColor: 'white',
+    backgroundColor: Colours.brown,
   },
   profilePictureContainer: {
     alignSelf: 'center',

@@ -5,10 +5,12 @@ import Colours from '../assets/colours';
 const TopBarButtons = ({ navigation, route }) => {
   return (
     <View style={styles.topBar}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Text style={styles.goBackText}>←</Text>
+      </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         <Text style={styles.topBarButton}>🏠</Text>
       </TouchableOpacity>
-      <Text style={styles.appName}>BarTinder</Text>
       <TouchableOpacity onPress={() => navigation.navigate('Profile', route)}>
         <Text style={styles.topBarButton}>🤓</Text>
       </TouchableOpacity>
@@ -32,5 +34,10 @@ const styles = StyleSheet.create({
   appName: {
     fontWeight: '700',
     fontSize: 18,
+  },
+  goBackText: {
+    fontSize: 30,
+    color: Colours.yellow,
+    fontWeight: '800',
   },
 });

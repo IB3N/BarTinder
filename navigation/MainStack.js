@@ -47,8 +47,16 @@ const MainStack = () => {
         component={Swipe}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Delete" component={DeleteAccount} />
-      <Stack.Screen name="CreateGroupForm" component={CreateGroupForm} />
+      <Stack.Screen
+        name="Delete"
+        component={DeleteAccount}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CreateGroupForm"
+        component={CreateGroupForm}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

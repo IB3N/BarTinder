@@ -3,16 +3,34 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Colours from '../../../assets/colours';
 import ButtonStyles from '../../../assets/button.styles';
-import GroupItem from '../../../components/GroupItem';
+import GroupItemButton from '../../../components/GroupItemButton';
 import TopBarButtons from '../../../components/TopBarButtons';
 
 const Group = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.groupScreenContainer}>
       <TopBarButtons navigation={navigation} route={route} />
-      <GroupItem header="Birthday Party!" matches={8} people={24} />
-      <GroupItem header="Family" matches={13} people={4} />
-      <GroupItem header="Best Mate" matches={3} people={1} />
+      <GroupItemButton
+        header="Birthday Party!"
+        matches={8}
+        people={24}
+        navigation={navigation}
+        route={route}
+      />
+      <GroupItemButton
+        header="Family"
+        matches={13}
+        people={4}
+        navigation={navigation}
+        route={route}
+      />
+      <GroupItemButton
+        header="Best Mate"
+        matches={3}
+        people={1}
+        navigation={navigation}
+        route={route}
+      />
       <View style={styles.createGroupButton}>
         <TouchableOpacity
           style={ButtonStyles.button}

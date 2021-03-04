@@ -1,18 +1,24 @@
 import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Colours from '../assets/colours';
 
-export default function GroupItem({ header, matches, people }) {
+const GroupItemButton = ({ header, matches, people, navigation, route }) => {
   return (
     <View style={styles.groupContainer}>
-      <Text style={styles.groupHeader}>{header}</Text>
-      <View style={styles.groupInfo}>
-        <Text style={styles.groupInfoText}>Matches: {matches}</Text>
-        <Text style={styles.groupInfoText}>People: {people}</Text>
-      </View>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('GroupItem', { navigation, route })}
+      >
+        <Text style={styles.groupHeader}>{header}</Text>
+        <View style={styles.groupInfo}>
+          <Text style={styles.groupInfoText}>Matches: {matches}</Text>
+          <Text style={styles.groupInfoText}>People: {people}</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
-}
+};
+
+export default GroupItemButton;
 
 const styles = StyleSheet.create({
   groupContainer: {
@@ -39,5 +45,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     color: Colours.charcoal,
+    opacity: 0.8,
   },
 });

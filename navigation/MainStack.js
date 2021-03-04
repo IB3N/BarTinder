@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Home from '../screens/Home';
-import Profile from '../screens/Profile';
-import Group from '../screens/Group';
-import Swipe from '../screens/Swipe';
-import DeleteAccount from '../screens/DeleteAccount';
-import CreateGroupForm from '../screens/CreateGroupForm';
+import Home from '../screens/Main/Home';
+import Profile from '../screens/Main/Profile/Profile';
+import Group from '../screens/Main/Group/Group';
+import Swipe from '../screens/Main/Swipe';
+import DeleteAccount from '../screens/Main/Profile/DeleteAccount';
+import CreateGroupForm from '../screens/Main/Group/CreateGroupForm';
 import { Button } from 'react-native';
 
 const Stack = createStackNavigator();

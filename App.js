@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import Main from './screens/Main';
-import Auth from './screens/Auth/Auth';
+import Auth from './screens/Auth';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);

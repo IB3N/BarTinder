@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Colours from '../assets/colours';
-import ButtonStyles from '../assets/button.styles';
-import InfoRow from '../components/InfoRow';
-import TopBarButtons from '../components/TopBarButtons';
+import Colours from '../../../assets/colours';
+import ButtonStyles from '../../../assets/button.styles';
+import InfoRow from '../../../components/InfoRow';
+import TopBarButtons from '../../../components/TopBarButtons';
 
 const Profile = ({ navigation, route }) => {
   return (

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
-import Colours from '../assets/colours';
+import Colours from '../../../assets/colours';
 
-export default function DeleteAccount() {
+export default function CreateGroupForm() {
   return (
     <View>
-      <Text>Are you sure you want to delete your account?</Text>
+      <Text>Lets create a group</Text>
       <Button title="Yes" />
       <Button title="No" />
     </View>

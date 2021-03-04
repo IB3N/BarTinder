@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Colours from '../assets/colours';
-import ButtonStyles from '../assets/button.styles';
-import TopBarButtons from '../components/TopBarButtons';
+import Colours from '../../assets/colours';
+import ButtonStyles from '../../assets/button.styles';
+import TopBarButtons from '../../components/TopBarButtons';
 
 const Swipe = ({ navigation, route }) => {
   return (
@@ -15,7 +15,7 @@ const Swipe = ({ navigation, route }) => {
       />
       <Text style={styles.header}>Negroni</Text>
       <Image
-        source={require('../assets/tumbler.png')}
+        source={require('../../assets/tumblerSmall.png')}
         style={styles.cocktail}
       />
       <View style={styles.ingredients}>

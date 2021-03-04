@@ -12,6 +12,7 @@ const GroupItem = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <TopBarButtons navigation={navigation} route={route} />
+      <Text>TODO: Create a modal to see list of members</Text>
       <View style={styles.addMember}>
         <TextInput
           style={styles.input}
@@ -24,7 +25,9 @@ const GroupItem = ({ navigation, route }) => {
           <Text style={styles.addMemberButton}>+</Text>
         </TouchableOpacity>
       </View>
-      <Text>Matches</Text>
+      <Text style={styles.header}>Matches</Text>
+      {/* TODO: create matches component and replace here */}
+      <Text>TODO: matches component create when have data</Text>
     </SafeAreaView>
   );
 };
@@ -57,4 +60,11 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   input: {},
+  header: {
+    fontSize: 30,
+    fontWeight: '700',
+    textAlign: 'center',
+    padding: 5,
+    color: Colours.charcoal,
+  },
 });

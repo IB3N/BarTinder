@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 import Colours from '../../assets/colours';
 import ButtonStyles from '../../assets/button.styles';
 import TopBarButtons from '../../components/TopBarButtons';
+import CocktailContext from '../../context/CocktailContext';
 
 const Swipe = ({ navigation, route }) => {
+  const [cocktails, setCocktails] = React.useContext(CocktailContext);
+
   return (
     <SafeAreaView style={styles.swipeScreenContainer}>
       <TopBarButtons
@@ -13,11 +17,9 @@ const Swipe = ({ navigation, route }) => {
         route={route}
         style={styles.flexStart}
       />
-      <Text style={styles.header}>Negroni</Text>
-      <Image
-        source={require('../../assets/tumblerSmall.png')}
-        style={styles.cocktail}
-      />
+      <Text style={styles.header}>{cocktails[65].strDrink}</Text>
+      {console.log(cocktails)}
+      <Image source={cocktails[65].strDrinkThumb} style={styles.cocktail} />
       <View style={styles.ingredients}>
         <TouchableOpacity style={styles.ingredient}>
           <Text style={styles.ingredientText}>Gin</Text>

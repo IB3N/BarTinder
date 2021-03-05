@@ -9,25 +9,25 @@ import Swipe from '../screens/Main/Swipe';
 import DeleteAccount from '../screens/Main/Profile/DeleteAccount';
 import CreateGroupForm from '../screens/Main/Group/CreateGroupForm';
 import { Button } from 'react-native';
-
-import theCocktailDB from '../apiService/TheCocktailDB';
 import CocktailContext from '../context/CocktailContext';
+import theCocktailDB from '../apiService/TheCocktailDB';
+
+const arrayShuffle = require('array-shuffle');
 
 const Stack = createStackNavigator();
 
 const MainStack = () => {
-  const cocktails = React.useState([]);
-  const setCocktails = cocktails[1];
+  const cocktailsHook = React.useState([]);
+  const setCocktails = cocktailsHook[1];
 
   React.useEffect(() => {
-    theCocktailDB.getCocktails().then((newCocktails) => {
-      console.log(newCocktails);
-      setCocktails(newCocktails.drinks);
-    });
+    theCocktailDB
+      .getCocktails()
+      .then((newCocktails) => setCocktails(arrayShuffle(newCocktails.drinks)));
   }, []);
 
   return (
-    <CocktailContext.Provider value={cocktails}>
+    <CocktailContext.Provider value={cocktailsHook}>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
           name="Home"

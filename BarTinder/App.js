@@ -12,7 +12,7 @@ export default function App() {
   const user = Object.keys(userHook[0]);
 
   const FirstPage = () => {
-    return user.length ? <Main /> : <Auth />;
+    return !user.length ? <Main /> : <Auth />;
   };
 
   return (

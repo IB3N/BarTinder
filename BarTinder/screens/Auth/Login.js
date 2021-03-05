@@ -18,7 +18,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
 
-const Login = ({ navigation, route, handleLogin }) => {
+const Login = ({ navigation, route }) => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
 

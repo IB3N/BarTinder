@@ -10,43 +10,45 @@ import {
   Keyboard,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import Colours from '../../assets/colours';
 import ButtonStyles from '../../assets/button.styles';
 import {
   TextInput,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
+import UserContext from '../../context/UserContext';
 
-const Register = ({ navigation, route, handleLogin }) => {
+const Register = ({ navigation, route }) => {
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('');
+  const [user, setUser] = React.useContext(UserContext);
 
-  const handleRegister = React.useCallback(async () => {
-    const user = {
+  const handleRegister = async () => {
+    const newUser = {
       firstName,
       lastName,
       username,
       password,
       email,
     };
-    const url = 'http://localhost:4000/register';
+    const url = 'http://192.168.1.3:4000/register'; // This is crazy expo speak, because we are requesting over wifi, not my machine
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(newUser),
     };
 
     const response = await fetch(url, options);
     if (!response.ok) Alert.alert('Could not register');
     else {
+      setUser(newUser);
     }
-  });
+  };
 
   return (
     <KeyboardAvoidingView
@@ -89,7 +91,6 @@ const Register = ({ navigation, route, handleLogin }) => {
                 onChangeText={setEmail}
                 placeholder="Email..."
                 placeholderTextColor={Colours.green}
-                secureTextEntry={true}
               />
               <TextInput
                 style={styles.input}

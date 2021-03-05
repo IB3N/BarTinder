@@ -5,10 +5,10 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import MainStack from '../navigation/MainStack';
 
-const Main = ({ handleLogin }) => {
+const Main = () => {
   return (
     <NavigationContainer style={styles.bgWhite}>
-      <MainStack handleLogin={handleLogin} />
+      <MainStack />
     </NavigationContainer>
   );
 };

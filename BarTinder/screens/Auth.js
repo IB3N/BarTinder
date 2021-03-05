@@ -5,10 +5,10 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import AuthStack from '../navigation/AuthStack';
 
-const Auth = ({ handleLogin }) => {
+const Auth = () => {
   return (
     <NavigationContainer style={styles.bgWhite}>
-      <AuthStack handleLogin={handleLogin} />
+      <AuthStack />
     </NavigationContainer>
   );
 };

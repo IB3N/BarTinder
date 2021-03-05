@@ -13,7 +13,6 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.register = async (req, res) => {
-  console.log('register reached');
   try {
     const newUser = await user.create(req.body);
     res.send(newUser).status(201);
@@ -24,7 +23,6 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  console.log('login reached');
   const { username, password } = req.body;
   try {
     const userExists = await user.findAll({

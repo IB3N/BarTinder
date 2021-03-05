@@ -20,28 +20,22 @@ import ButtonStyles from '../../assets/button.styles';
 import UserContext from '../../context/UserContext';
 import api from '../../apiService';
 
+const initialUserState = {
+  firstName: '',
+  lastName: '',
+  username: '',
+  password: '',
+  email: '',
+};
+
 const Register = ({ navigation, route }) => {
-  const [firstName, setFirstName] = React.useState('');
-  const [lastName, setLastName] = React.useState('');
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [email, setEmail] = React.useState('');
+  const [newUser, setNewUser] = React.useState(initialUserState);
   const [_, setUser] = React.useContext(UserContext);
 
   const handleRegister = async () => {
-    const newUser = {
-      firstName,
-      lastName,
-      username,
-      password,
-      email,
-    };
-
-    const response = await api.register('register', options);
-    if (!response.ok) Alert.alert('Could not register');
-    else {
-      setUser(newUser);
-    }
+    const response = await api.register(newUser); // Call api service
+    console.log(response.ok);
+    !response.ok ? Alert.alert('Could not register') : setUser(newUser);
   };
 
   return (
@@ -67,36 +61,36 @@ const Register = ({ navigation, route }) => {
             <View>
               <TextInput
                 style={styles.input}
-                value={firstName}
-                onChangeText={setFirstName}
+                value={newUser.firstName}
+                onChangeText={setNewUser}
                 placeholder="First name..."
                 placeholderTextColor={Colours.green}
               />
               <TextInput
                 style={styles.input}
-                value={lastName}
-                onChangeText={setLastName}
+                value={newUser.lastName}
+                onChangeText={setNewUser}
                 placeholder="Last name..."
                 placeholderTextColor={Colours.green}
               />
               <TextInput
                 style={styles.input}
-                value={email}
-                onChangeText={setEmail}
+                value={newUser.email}
+                onChangeText={setNewUser}
                 placeholder="Email..."
                 placeholderTextColor={Colours.green}
               />
               <TextInput
                 style={styles.input}
-                value={username}
-                onChangeText={setUsername}
+                value={newUser.username}
+                onChangeText={setNewUser}
                 placeholder="Username..."
                 placeholderTextColor={Colours.green}
               />
               <TextInput
                 style={styles.input}
-                value={password}
-                onChangeText={setPassword}
+                value={newUser.password}
+                onChangeText={setNewUser}
                 placeholder="Password..."
                 placeholderTextColor={Colours.green}
                 secureTextEntry={true}

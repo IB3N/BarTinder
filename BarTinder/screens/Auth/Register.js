@@ -18,29 +18,35 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
 
-const Register = ({ navigation, route }) => {
+const Register = ({ navigation, route, handleLogin }) => {
   const [firstName, setFirstName] = React.useState('');
   const [lastName, setLastName] = React.useState('');
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('');
 
-  const handleRegister = async () => {
-    const user = JSON.stringify({
+  const handleRegister = React.useCallback(async () => {
+    const user = {
       firstName,
       lastName,
       username,
       password,
       email,
-    });
-    const response = await fetch('http://localhost:4000/register', {
+    };
+    const url = 'http://localhost:4000/register';
+    const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: user,
-    });
-  };
+      body: JSON.stringify(user),
+    };
+
+    const response = await fetch(url, options);
+    if (!response.ok) Alert.alert('Could not register');
+    else {
+    }
+  });
 
   return (
     <KeyboardAvoidingView
@@ -63,57 +69,52 @@ const Register = ({ navigation, route }) => {
               style={styles.logo}
             />
             <View>
-              <View style={styles.input}>
-                <TextInput
-                  value={firstName}
-                  onChangeText={setFirstName}
-                  placeholder="First name..."
-                  placeholderTextColor={Colours.green}
-                />
-              </View>
-              <View style={styles.input}>
-                <TextInput
-                  value={lastName}
-                  onChangeText={setLastName}
-                  placeholder="Last name..."
-                  placeholderTextColor={Colours.green}
-                />
-              </View>
-              <View style={styles.input}>
-                <TextInput
-                  value={email}
-                  onChangeText={setEmail}
-                  placeholder="Email..."
-                  placeholderTextColor={Colours.green}
-                  secureTextEntry={true}
-                />
-              </View>
-              <View style={styles.input}>
-                <TextInput
-                  value={username}
-                  onChangeText={setUsername}
-                  placeholder="Username..."
-                  placeholderTextColor={Colours.green}
-                />
-              </View>
-              <View style={styles.input}>
-                <TextInput
-                  value={password}
-                  onChangeText={setPassword}
-                  placeholder="Password..."
-                  placeholderTextColor={Colours.green}
-                  secureTextEntry={true}
-                />
-              </View>
-              <TouchableOpacity
-                style={ButtonStyles.button}
-                onPress={handleRegister}
-              >
-                <Text style={ButtonStyles.buttonText}>Register</Text>
-              </TouchableOpacity>
+              <TextInput
+                style={styles.input}
+                value={firstName}
+                onChangeText={setFirstName}
+                placeholder="First name..."
+                placeholderTextColor={Colours.green}
+              />
+              <TextInput
+                style={styles.input}
+                value={lastName}
+                onChangeText={setLastName}
+                placeholder="Last name..."
+                placeholderTextColor={Colours.green}
+              />
+              <TextInput
+                style={styles.input}
+                value={email}
+                onChangeText={setEmail}
+                placeholder="Email..."
+                placeholderTextColor={Colours.green}
+                secureTextEntry={true}
+              />
+              <TextInput
+                style={styles.input}
+                value={username}
+                onChangeText={setUsername}
+                placeholder="Username..."
+                placeholderTextColor={Colours.green}
+              />
+              <TextInput
+                style={styles.input}
+                value={password}
+                onChangeText={setPassword}
+                placeholder="Password..."
+                placeholderTextColor={Colours.green}
+                secureTextEntry={true}
+              />
             </View>
           </View>
         </TouchableWithoutFeedback>
+        <TouchableOpacity
+          style={[ButtonStyles.button, styles.register]}
+          onPress={handleRegister}
+        >
+          <Text style={ButtonStyles.buttonText}>Register</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
@@ -153,11 +154,15 @@ const styles = StyleSheet.create({
   },
   input: {
     padding: 10,
+    minWidth: 200,
     marginBottom: 10,
     flexDirection: 'row',
     borderColor: Colours.brown,
     borderStyle: 'solid',
     borderWidth: 1,
     borderRadius: 10,
+  },
+  register: {
+    alignSelf: 'center',
   },
 });

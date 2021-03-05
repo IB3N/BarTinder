@@ -8,13 +8,19 @@ import Main from './screens/Main';
 import Auth from './screens/Auth';
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [user, setUser] = React.useState({});
 
-  // login handler
-  // Pass this handler to Auth component
+  const handleLogin = (newUser) => {
+    setUser(newUser);
+  };
 
   const FirstPage = () => {
-    return isLoggedIn ? <Main /> : <Auth />;
+    const isUserLoggedIn = Object.keys(user).length;
+    return isUserLoggedIn ? (
+      <Main handleLogin={handleLogin} />
+    ) : (
+      <Auth handleLogin={handleLogin} />
+    );
   };
 
   return (

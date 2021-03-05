@@ -5,15 +5,15 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import AuthStack from '../navigation/AuthStack';
 
-const Main = () => {
+const Auth = ({ handleLogin }) => {
   return (
     <NavigationContainer style={styles.bgWhite}>
-      <AuthStack />
+      <AuthStack handleLogin={handleLogin} />
     </NavigationContainer>
   );
 };
 
-export default Main;
+export default Auth;
 
 const styles = StyleSheet.create({
   bgWhite: {

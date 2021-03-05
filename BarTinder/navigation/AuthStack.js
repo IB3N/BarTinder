@@ -7,7 +7,7 @@ import Register from '../screens/Auth/Register';
 
 const Stack = createStackNavigator();
 
-const AuthStack = () => {
+const AuthStack = ({ handleLogin }) => {
   return (
     <Stack.Navigator mode="modal">
       <Stack.Screen
@@ -19,11 +19,13 @@ const AuthStack = () => {
         name="Login"
         component={Login}
         options={{ headerShown: false }}
+        handleLogin={handleLogin}
       />
       <Stack.Screen
         name="Register"
         component={Register}
         options={{ headerShown: false }}
+        handleLogin={handleLogin}
       />
     </Stack.Navigator>
   );

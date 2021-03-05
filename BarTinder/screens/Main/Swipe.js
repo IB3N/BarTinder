@@ -1,14 +1,37 @@
 import * as React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { FlatList } from 'react-native-gesture-handler';
 
 import Colours from '../../assets/colours';
 import ButtonStyles from '../../assets/button.styles';
 import TopBarButtons from '../../components/TopBarButtons';
 import CocktailContext from '../../context/CocktailContext';
+import TheCocktailDB from '../../apiService/TheCocktailDB';
 
 const Swipe = ({ navigation, route }) => {
   const [cocktails, setCocktails] = React.useContext(CocktailContext);
+  const [cocktailIndex, setCocktailIndex] = React.useState(0);
+  const [cocktail, setCocktail] = React.useState(cocktails[cocktailIndex]);
+  const [cocktailById, setCocktailById] = React.useState({});
+
+  // TODO: I need to call the cocktail API for the first cocktail in the list and render
+  // Every time a user clicks like or dislike
+    // Update current cocktail state
+    // Call cocktail API for that cocktail and re render
+
+  // function that will call the api for each new cocktail
+  const fetchCocktailById = async (id) => {
+    await TheCocktailDB.getOne(id).then(drink => setCocktailById(drink));
+  }
+
+  React.useEffect(() => {
+    await fetchCocktailById(cocktail.idDrink);
+  },[])
+
+  const handleNewCocktail = async () => {
+    await fetchCocktailById(cocktail.idDrink);
+  };
 
   return (
     <SafeAreaView style={styles.swipeScreenContainer}>
@@ -17,9 +40,8 @@ const Swipe = ({ navigation, route }) => {
         route={route}
         style={styles.flexStart}
       />
-      <Text style={styles.header}>{cocktails[65].strDrink}</Text>
-      {console.log(cocktails)}
-      <Image source={cocktails[65].strDrinkThumb} style={styles.cocktail} />
+      <Text style={styles.header}>{cocktail.strDrink}</Text>
+      <Image source={{ uri: cocktail.strDrinkThumb }} style={styles.cocktail} />
       <View style={styles.ingredients}>
         <TouchableOpacity style={styles.ingredient}>
           <Text style={styles.ingredientText}>Gin</Text>

@@ -1,5 +1,5 @@
-require('dotenv').config();
-const config = process.env;
+// require('dotenv').config();
+// const config = process.env;
 // TODO: sort out my api key
 
 const URL = 'https://www.thecocktaildb.com/api/json/v1/1';
@@ -8,15 +8,8 @@ export default {
   getCocktails: () => {
     return fetchRequest('filter.php?c=cocktail');
   },
-  login: (credentials) => {
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(credentials),
-    };
-    return fetchRequest('login', options);
+  getOne: (idDrink) => {
+    return fetchRequest(`lookup.php?i=${idDrink}`, options);
   },
 };
 

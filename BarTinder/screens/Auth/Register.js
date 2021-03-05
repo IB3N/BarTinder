@@ -19,6 +19,8 @@ import {
 } from 'react-native-gesture-handler';
 
 const Register = ({ navigation, route }) => {
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -44,6 +46,22 @@ const Register = ({ navigation, route }) => {
               style={styles.logo}
             />
             <View>
+              <View style={styles.input}>
+                <TextInput
+                  value={firstName}
+                  onChangeText={setFirstName}
+                  placeholder="First name..."
+                  placeholderTextColor={Colours.green}
+                />
+              </View>
+              <View style={styles.input}>
+                <TextInput
+                  value={lastName}
+                  onChangeText={setLastName}
+                  placeholder="Last name..."
+                  placeholderTextColor={Colours.green}
+                />
+              </View>
               <View style={styles.input}>
                 <TextInput
                   value={email}

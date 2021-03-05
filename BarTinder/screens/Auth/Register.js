@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
+  Alert,
 } from 'react-native';
 import {
   TextInput,
@@ -33,8 +34,14 @@ const Register = ({ navigation, route }) => {
   const [_, setUser] = React.useContext(UserContext);
 
   const handleRegister = async () => {
-    const response = await api.register(newUser); // Call api service
-    !response.ok ? Alert.alert('Could not register') : setUser(newUser);
+    await api
+      .register(newUser) // Call api service
+      .then((fetchedUser) => {
+        console.log(fetchedUser);
+        !fetchedUser.errors
+          ? setUser(fetchedUser)
+          : Alert.alert('Could not register');
+      });
   };
 
   return (

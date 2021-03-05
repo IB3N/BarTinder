@@ -1,14 +1,17 @@
 import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 import Colours from '../../../assets/colours';
 import ButtonStyles from '../../../assets/button.styles';
+
 import InfoRow from '../../../components/InfoRow';
 import TopBarButtons from '../../../components/TopBarButtons';
+
 import UserContext from '../../../context/UserContext';
 
 const Profile = ({ navigation, route }) => {
-  const [_, setUser] = React.useContext(UserContext);
+  const [user, setUser] = React.useContext(UserContext);
 
   return (
     <SafeAreaView style={styles.profileScreenContainer}>

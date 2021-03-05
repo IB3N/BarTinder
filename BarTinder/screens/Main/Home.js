@@ -4,11 +4,7 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import Colours from '../../assets/colours';
 import ButtonStyles from '../../assets/button.styles';
 
-import UserContext from '../../context/UserContext';
-
 const Home = ({ navigation, route }) => {
-  const [user, setUser] = React.useContext(UserContext);
-
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>BarTinder</Text>

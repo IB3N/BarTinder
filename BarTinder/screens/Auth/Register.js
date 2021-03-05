@@ -37,7 +37,6 @@ const Register = ({ navigation, route }) => {
     await api
       .register(newUser) // Call api service
       .then((fetchedUser) => {
-        console.log(fetchedUser);
         !fetchedUser.errors
           ? setUser(fetchedUser)
           : Alert.alert('Could not register');

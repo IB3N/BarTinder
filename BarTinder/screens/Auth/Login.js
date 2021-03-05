@@ -31,8 +31,11 @@ const Login = ({ navigation, route }) => {
   const [_, setUser] = React.useContext(UserContext);
 
   const handleLogin = async () => {
-    const response = await api.login(credentials); // Call api service
-    !response.ok ? Alert.alert('Could not register') : setUser(credentials);
+    await api.login(credentials).then((fetchedUser) => {
+      !fetchedUser.errors
+        ? setUser(fetchedUser)
+        : Alert.alert('Could not login');
+    });
   };
 
   return (
@@ -81,15 +84,15 @@ const Login = ({ navigation, route }) => {
                 placeholderTextColor={Colours.green}
                 secureTextEntry={true}
               />
-              <TouchableOpacity
-                style={ButtonStyles.button}
-                onPress={handleLogin}
-              >
-                <Text style={ButtonStyles.buttonText}>Login</Text>
-              </TouchableOpacity>
             </View>
           </View>
         </TouchableWithoutFeedback>
+        <TouchableOpacity
+          style={[ButtonStyles.button, styles.login]}
+          onPress={handleLogin}
+        >
+          <Text style={ButtonStyles.buttonText}>Login</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
@@ -135,5 +138,8 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     borderRadius: 10,
+  },
+  login: {
+    alignSelf: 'center',
   },
 });

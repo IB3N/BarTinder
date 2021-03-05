@@ -11,13 +11,13 @@ export default {
     };
     return fetchRequest('register', options);
   },
-  login: (creds) => {
+  login: (credentials) => {
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(creds),
+      body: JSON.stringify(credentials),
     };
     return fetchRequest('login', options);
   },

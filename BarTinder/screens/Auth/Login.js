@@ -8,19 +8,32 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
+  Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-import Colours from '../../assets/colours';
-import ButtonStyles from '../../assets/button.styles';
 import {
   TextInput,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
 
+import Colours from '../../assets/colours';
+import ButtonStyles from '../../assets/button.styles';
+import UserContext from '../../context/UserContext';
+import api from '../../apiService';
+
+const initialCredentials = {
+  username: '',
+  password: '',
+};
+
 const Login = ({ navigation, route }) => {
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [credentials, setCredentials] = React.useState(initialCredentials);
+  const [_, setUser] = React.useContext(UserContext);
+
+  const handleLogin = async () => {
+    const response = await api.login(credentials); // Call api service
+    !response.ok ? Alert.alert('Could not register') : setUser(credentials);
+  };
 
   return (
     <KeyboardAvoidingView
@@ -43,24 +56,35 @@ const Login = ({ navigation, route }) => {
               style={styles.logo}
             />
             <View>
-              <View style={styles.input}>
-                <TextInput
-                  value={username}
-                  onChangeText={setUsername}
-                  placeholder="Username..."
-                  placeholderTextColor={Colours.green}
-                />
-              </View>
-              <View style={styles.input}>
-                <TextInput
-                  value={password}
-                  onChangeText={setPassword}
-                  placeholder="Password..."
-                  placeholderTextColor={Colours.green}
-                  secureTextEntry={true}
-                />
-              </View>
-              <TouchableOpacity style={ButtonStyles.button}>
+              <TextInput
+                style={styles.input}
+                value={credentials.username}
+                onChangeText={(input) =>
+                  setCredentials((previousCredentials) => ({
+                    ...credentials,
+                    username: input,
+                  }))
+                }
+                placeholder="Username..."
+                placeholderTextColor={Colours.green}
+              />
+              <TextInput
+                style={styles.input}
+                value={credentials.password}
+                onChangeText={(input) =>
+                  setCredentials((previousCredentials) => ({
+                    ...previousCredentials,
+                    password: input,
+                  }))
+                }
+                placeholder="Password..."
+                placeholderTextColor={Colours.green}
+                secureTextEntry={true}
+              />
+              <TouchableOpacity
+                style={ButtonStyles.button}
+                onPress={handleLogin}
+              >
                 <Text style={ButtonStyles.buttonText}>Login</Text>
               </TouchableOpacity>
             </View>

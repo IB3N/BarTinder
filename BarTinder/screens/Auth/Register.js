@@ -34,7 +34,6 @@ const Register = ({ navigation, route }) => {
 
   const handleRegister = async () => {
     const response = await api.register(newUser); // Call api service
-    console.log(response.ok);
     !response.ok ? Alert.alert('Could not register') : setUser(newUser);
   };
 
@@ -62,35 +61,60 @@ const Register = ({ navigation, route }) => {
               <TextInput
                 style={styles.input}
                 value={newUser.firstName}
-                onChangeText={setNewUser}
+                onChangeText={(input) =>
+                  setNewUser((previousUser) => ({
+                    ...previousUser,
+                    firstName: input,
+                  }))
+                }
                 placeholder="First name..."
                 placeholderTextColor={Colours.green}
               />
               <TextInput
                 style={styles.input}
                 value={newUser.lastName}
-                onChangeText={setNewUser}
+                onChangeText={(input) =>
+                  setNewUser((previousUser) => ({
+                    ...previousUser,
+                    lastName: input,
+                  }))
+                }
                 placeholder="Last name..."
                 placeholderTextColor={Colours.green}
               />
               <TextInput
                 style={styles.input}
                 value={newUser.email}
-                onChangeText={setNewUser}
+                onChangeText={(input) =>
+                  setNewUser((previousUser) => ({
+                    ...previousUser,
+                    email: input,
+                  }))
+                }
                 placeholder="Email..."
                 placeholderTextColor={Colours.green}
               />
               <TextInput
                 style={styles.input}
                 value={newUser.username}
-                onChangeText={setNewUser}
+                onChangeText={(input) =>
+                  setNewUser((previousUser) => ({
+                    ...previousUser,
+                    username: input,
+                  }))
+                }
                 placeholder="Username..."
                 placeholderTextColor={Colours.green}
               />
               <TextInput
                 style={styles.input}
                 value={newUser.password}
-                onChangeText={setNewUser}
+                onChangeText={(input) =>
+                  setNewUser((previousUser) => ({
+                    ...previousUser,
+                    password: input,
+                  }))
+                }
                 placeholder="Password..."
                 placeholderTextColor={Colours.green}
                 secureTextEntry={true}

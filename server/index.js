@@ -23,7 +23,7 @@ app.use(router);
     try {
       await db.sequelize.authenticate();
       await db.sequelize.sync();
-      console.log('🤙 You have successfully Databased 👌');
+      console.log('🤙 Database connection successful 👌');
     } catch (error) {
       console.error(`👎 Could not connect to database: ${error} 🖕`);
     }

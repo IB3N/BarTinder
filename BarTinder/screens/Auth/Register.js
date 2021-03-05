@@ -25,6 +25,23 @@ const Register = ({ navigation, route }) => {
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('');
 
+  const handleRegister = async () => {
+    const user = JSON.stringify({
+      firstName,
+      lastName,
+      username,
+      password,
+      email,
+    });
+    const response = await fetch('http://localhost:4000/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: user,
+    });
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -88,7 +105,10 @@ const Register = ({ navigation, route }) => {
                   secureTextEntry={true}
                 />
               </View>
-              <TouchableOpacity style={ButtonStyles.button}>
+              <TouchableOpacity
+                style={ButtonStyles.button}
+                onPress={handleRegister}
+              >
                 <Text style={ButtonStyles.buttonText}>Register</Text>
               </TouchableOpacity>
             </View>

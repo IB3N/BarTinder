@@ -9,7 +9,6 @@ const config = process.env;
 
 const db = {};
 
-// TODO: Configure for using an environment variable
 const sequelize = new Sequelize(
   config.DB_NAME,
   config.DB_USERNAME,

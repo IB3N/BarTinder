@@ -1,15 +1,12 @@
-const { Sequelize } = require('.');
-
 module.exports = (sequelize, DataTypes) => {
   const Like = sequelize.define('like', {
-    drinkId: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    userId: {
+    drinkId: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-      default: Sequelize.NOW,
+      allowNull: false,
     },
     liked: {
       type: DataTypes.BOOLEAN,
@@ -19,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Like.associate = (model) => {
     // Likes have many users
-    // Likes have many drink id's
   };
 
   return Like;

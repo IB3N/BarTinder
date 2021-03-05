@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    liked: {
+    like: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },

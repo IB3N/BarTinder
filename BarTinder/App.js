@@ -9,10 +9,10 @@ import Auth from './screens/Auth';
 
 export default function App() {
   const userHook = React.useState({});
+  const user = Object.keys(userHook[0]);
 
   const FirstPage = () => {
-    const isUserLoggedIn = Object.keys(userHook[0]).length;
-    return isUserLoggedIn ? <Main /> : <Auth />;
+    return user.length ? <Main /> : <Auth />;
   };
 
   return (

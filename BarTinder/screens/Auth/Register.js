@@ -9,14 +9,16 @@ import {
   Platform,
   Keyboard,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Colours from '../../assets/colours';
-import ButtonStyles from '../../assets/button.styles';
 import {
   TextInput,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import Colours from '../../assets/colours';
+import ButtonStyles from '../../assets/button.styles';
 import UserContext from '../../context/UserContext';
+import api from '../../apiService';
 
 const Register = ({ navigation, route }) => {
   const [firstName, setFirstName] = React.useState('');
@@ -34,16 +36,8 @@ const Register = ({ navigation, route }) => {
       password,
       email,
     };
-    const url = 'http://192.168.1.3:4000/register'; // This is crazy expo speak, because we are requesting over wifi, not my machine
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newUser),
-    };
 
-    const response = await fetch(url, options);
+    const response = await api.register('register', options);
     if (!response.ok) Alert.alert('Could not register');
     else {
       setUser(newUser);

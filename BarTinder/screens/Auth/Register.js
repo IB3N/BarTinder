@@ -24,7 +24,7 @@ const Register = ({ navigation, route }) => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('');
-  const [user, setUser] = React.useContext(UserContext);
+  const [_, setUser] = React.useContext(UserContext);
 
   const handleRegister = async () => {
     const newUser = {

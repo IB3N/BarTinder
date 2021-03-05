@@ -21,18 +21,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    friends: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      allowNull: true,
+    },
   });
 
   User.associate = (model) => {
-    // Users has many likes
     User.hasMany(model.like);
-
-    // Users have many groups and groups have many users
     User.belongsToMany(model.group, { through: model.member });
-
-    // Users have many friends
-    User.hasMany(model.friend);
-    model.friend.belongsTo(User);
   };
 
   return User;

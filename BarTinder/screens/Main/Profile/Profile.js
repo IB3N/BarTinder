@@ -8,7 +8,7 @@ import TopBarButtons from '../../../components/TopBarButtons';
 import UserContext from '../../../context/UserContext';
 
 const Profile = ({ navigation, route }) => {
-  const [user, setUser] = React.useContext(UserContext);
+  const [_, setUser] = React.useContext(UserContext);
 
   return (
     <SafeAreaView style={styles.profileScreenContainer}>

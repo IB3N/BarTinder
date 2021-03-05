@@ -22,7 +22,7 @@ app.use(router);
     });
     try {
       await db.sequelize.authenticate();
-      await db.sequelize.sync();
+      await db.sequelize.sync(); // { force: true }
       console.log('🤙 Database connection successful 👌');
     } catch (error) {
       console.error(`👎 Could not connect to database: ${error} 🖕`);

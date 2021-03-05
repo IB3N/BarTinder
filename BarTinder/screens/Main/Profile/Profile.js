@@ -20,8 +20,10 @@ const Profile = ({ navigation, route }) => {
         <Text style={styles.profilePicture}>👨‍🦳</Text>
       </View>
       <View style={styles.infoContainer}>
-        <InfoRow header="USERNAME" info="IB3N" />
-        <InfoRow header="EMAIL" info="benpearce9@live.co.uk" />
+        <InfoRow header="USERNAME" info={user.username} />
+        <InfoRow header="NAME" info={user.firstName} />
+        <InfoRow header="SURNAME" info={user.lastName} />
+        <InfoRow header="EMAIL" info={user.email} />
         <InfoRow header="PASSWORD" info="change" />
       </View>
       <View style={styles.deleteContainer}>
@@ -55,7 +57,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colours.charcoal,
     borderRadius: 200,
     padding: 20,
-    marginVertical: 40,
+    marginTop: 20,
   },
   profilePicture: {
     fontSize: 100,

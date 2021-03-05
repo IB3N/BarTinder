@@ -3,8 +3,17 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 
 import Colours from '../../assets/colours';
 import ButtonStyles from '../../assets/button.styles';
+import theCocktailDB from '../../apiService/TheCocktailDB';
 
 const Home = ({ navigation, route }) => {
+  const [cocktails, setCocktails] = React.useState([]);
+
+  React.useEffect(() => {
+    theCocktailDB
+      .getCocktails()
+      .then((newCocktails) => setCocktails(newCocktails.drinks));
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>BarTinder</Text>

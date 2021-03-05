@@ -10,60 +10,75 @@ import DeleteAccount from '../screens/Main/Profile/DeleteAccount';
 import CreateGroupForm from '../screens/Main/Group/CreateGroupForm';
 import { Button } from 'react-native';
 
+import theCocktailDB from '../apiService/TheCocktailDB';
+import CocktailContext from '../context/CocktailContext';
+
 const Stack = createStackNavigator();
 
 const MainStack = () => {
+  const cocktails = React.useState([]);
+  const setCocktails = cocktails[1];
+
+  React.useEffect(() => {
+    theCocktailDB.getCocktails().then((newCocktails) => {
+      console.log(newCocktails);
+      setCocktails(newCocktails.drinks);
+    });
+  }, []);
+
   return (
-    <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{ title: 'BarTinder', headerShown: false }}
-      />
-      <Stack.Screen
-        name="Profile"
-        component={Profile}
-        options={({ route }) => ({
-          title: route.params.name,
-          headerShown: false,
-        })}
-      />
-      <Stack.Screen
-        name="Groups"
-        component={Group}
-        options={({ navigation }) => ({
-          headerShown: false,
-          headerLeft: () => (
-            <Button
-              onPress={() => navigation.goBack()}
-              title="<"
-              color="black"
-              style={{ backgroundColor: 'grey' }}
-            />
-          ),
-        })}
-      />
-      <Stack.Screen
-        name="Swipe"
-        component={Swipe}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Delete"
-        component={DeleteAccount}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="CreateGroupForm"
-        component={CreateGroupForm}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="GroupItem"
-        component={GroupItem}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
+    <CocktailContext.Provider value={cocktails}>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ title: 'BarTinder', headerShown: false }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={({ route }) => ({
+            title: route.params.name,
+            headerShown: false,
+          })}
+        />
+        <Stack.Screen
+          name="Groups"
+          component={Group}
+          options={({ navigation }) => ({
+            headerShown: false,
+            headerLeft: () => (
+              <Button
+                onPress={() => navigation.goBack()}
+                title="<"
+                color="black"
+                style={{ backgroundColor: 'grey' }}
+              />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="Swipe"
+          component={Swipe}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Delete"
+          component={DeleteAccount}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CreateGroupForm"
+          component={CreateGroupForm}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="GroupItem"
+          component={GroupItem}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </CocktailContext.Provider>
   );
 };
 

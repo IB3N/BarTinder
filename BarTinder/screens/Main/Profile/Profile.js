@@ -5,8 +5,11 @@ import Colours from '../../../assets/colours';
 import ButtonStyles from '../../../assets/button.styles';
 import InfoRow from '../../../components/InfoRow';
 import TopBarButtons from '../../../components/TopBarButtons';
+import UserContext from '../../../context/UserContext';
 
 const Profile = ({ navigation, route }) => {
+  const [user, setUser] = React.useContext(UserContext);
+
   return (
     <SafeAreaView style={styles.profileScreenContainer}>
       <TopBarButtons navigation={navigation} route={route} />
@@ -19,6 +22,12 @@ const Profile = ({ navigation, route }) => {
         <InfoRow header="PASSWORD" info="change" />
       </View>
       <View style={styles.deleteContainer}>
+        <TouchableOpacity
+          style={ButtonStyles.button}
+          onPress={() => setUser({})}
+        >
+          <Text style={ButtonStyles.buttonText}>Logout</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           style={ButtonStyles.button}
           onPress={() => navigation.navigate('Delete', {})}
@@ -36,7 +45,7 @@ const styles = StyleSheet.create({
   profileScreenContainer: {
     flex: 1,
     alignItems: 'stretch',
-    backgroundColor: Colours.brown,
+    backgroundColor: Colours.green,
   },
   profilePictureContainer: {
     alignSelf: 'center',

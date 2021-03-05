@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     padding: 7,
   },
   infoTextHeader: {
-    color: Colours.green,
+    color: Colours.charcoal,
     fontWeight: '700',
     textAlign: 'center',
     fontSize: 16,

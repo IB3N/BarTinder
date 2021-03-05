@@ -23,9 +23,15 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   User.associate = (model) => {
-    // Users has many drinks and drinks have many users
+    // Users has many likes
+    User.hasMany(model.like);
+
     // Users have many groups and groups have many users
+    User.belongsToMany(model.group, { through: model.member });
+
     // Users have many friends
+    User.hasMany(model.friend);
+    model.friend.belongsTo(User);
   };
 
   return User;

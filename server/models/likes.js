@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Like.associate = (model) => {
     // Likes have many users
+    Like.belongsTo(model.user);
   };
 
   return Like;

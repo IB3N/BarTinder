@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  Member.associate = (model) => {
-    // Members have many groups
-    // Members have many users
-  };
+  // Member.associate = (model) => {
+  //   Members have many groups
+  //   Members have many users
+  // };
 
   return Member;
 };

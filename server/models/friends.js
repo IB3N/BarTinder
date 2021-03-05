@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   Friend.associate = (model) => {
     // Friends have many users
     // Users have many friends
+    Friend.belongsTo(model.user);
   };
 
   return Friend;

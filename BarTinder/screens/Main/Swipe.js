@@ -1,6 +1,13 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatList } from 'react-native-gesture-handler';
 
@@ -18,11 +25,6 @@ const Swipe = ({ navigation, route }) => {
   const [current, setCurrent] = React.useState(0);
   const [fullCocktail, setFullCocktail] = React.useState({});
   const [recipe, setRecipe] = React.useState({});
-
-  // TODO: I need to call the cocktail API for the first cocktail in the list and render
-  // Every time a user clicks like or dislike
-  // Update current cocktail state
-  // Call cocktail API for that cocktail and re render
 
   // function that will call the api for each new cocktail
   const fetchFullCocktail = async (id) => {
@@ -56,12 +58,6 @@ const Swipe = ({ navigation, route }) => {
     fetchFullCocktail(cocktails[current].idDrink);
   }, []);
 
-  // When a user likes or dislikes a cocktail
-  const handleSwipe = async (likeOrDislike) => {
-    await api.swipe(user.id, fullCocktail.idDrink, likeOrDislike); // Add this cocktail to users likes list
-    setCurrent((prev) => prev + 1); // Update cocktail index to begin to render next cocktail
-  };
-
   // Update current cocktail to use new cocktail index
   React.useEffect(() => {
     fetchFullCocktail(cocktails[current].idDrink);
@@ -71,6 +67,19 @@ const Swipe = ({ navigation, route }) => {
   React.useEffect(() => {
     loadRecipe();
   }, [fullCocktail]);
+
+  // When a user likes or dislikes a cocktail
+  const handleSwipe = async (likeOrDislike) => {
+    await api.swipe(user.id, fullCocktail.idDrink, likeOrDislike); // Add this cocktail to users likes list
+    setCurrent((prev) => prev + 1); // Update cocktail index to begin to render next cocktail
+  };
+
+  // When a user wants to load a new drink without liking/disliking
+  const handleForwardBack = (direction) => {
+    const newIndex = current + direction;
+    if (newIndex < 1 || newIndex >= cocktails.length) return; // handle edge cases where index is less than one or greater than array length
+    setCurrent((prev) => prev + direction);
+  };
 
   return (
     <SafeAreaView style={styles.swipeScreenContainer}>
@@ -104,8 +113,17 @@ const Swipe = ({ navigation, route }) => {
         >
           <Text style={styles.swipeButton}>❌</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.swipeButtonTouchable}>
-          <Text style={styles.swipeButton}>⭐️</Text>
+        <TouchableOpacity
+          style={styles.swipeButtonTouchable}
+          onPress={() => handleForwardBack(-1)}
+        >
+          <Text style={styles.swipeButton}>⇠</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.swipeButtonTouchable}
+          onPress={() => handleForwardBack(1)}
+        >
+          <Text style={styles.swipeButton}>⇢</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.swipeButtonTouchable}

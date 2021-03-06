@@ -16,7 +16,7 @@ const Swipe = ({ navigation, route }) => {
   const [user, _] = React.useContext(UserContext);
   const [cocktails, __] = React.useContext(CocktailContext);
 
-  const [current, setCurrent] = React.useState(0);
+  const [current, setCurrent] = React.useState(0); // Keeps track of the cocktail index in the cocktails array
   const [fullCocktail, setFullCocktail] = React.useState({});
   const [recipe, setRecipe] = React.useState({});
 
@@ -71,7 +71,7 @@ const Swipe = ({ navigation, route }) => {
   // When a user wants to load a new drink without liking/disliking
   const handleForwardBack = (direction) => {
     const newIndex = current + direction;
-    if (newIndex < 1 || newIndex >= cocktails.length) return; // handle edge cases where index is less than one or greater than array length
+    if (newIndex < 0 || newIndex >= cocktails.length) return; // handle edge cases where index is less than one or greater than array length
     setCurrent((prev) => prev + direction);
   };
 

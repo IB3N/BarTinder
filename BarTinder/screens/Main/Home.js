@@ -8,10 +8,12 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>BarTinder</Text>
-      <Image
-        source={require('../../assets/tumblerSmall.png')}
-        style={styles.logo}
-      />
+      <TouchableOpacity onPress={() => navigation.navigate('Swipe', {})}>
+        <Image
+          source={require('../../assets/tumblerSmall.png')}
+          style={styles.logo}
+        />
+      </TouchableOpacity>
       <TouchableOpacity
         style={ButtonStyles.button}
         onPress={() => navigation.navigate('MyDrinks', {})}

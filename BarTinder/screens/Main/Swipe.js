@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import * as React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -7,12 +8,17 @@ import Colours from '../../assets/colours';
 import TopBarButtons from '../../components/TopBarButtons';
 import CocktailContext from '../../context/CocktailContext';
 import TheCocktailDB from '../../apiService/TheCocktailDB';
+import api from '../../apiService';
+import UserContext from '../../context/UserContext';
 
 const Swipe = ({ navigation, route }) => {
-  const [cocktails, setCocktails] = React.useContext(CocktailContext);
+  const [user, _] = React.useContext(UserContext);
+  const [cocktails, __] = React.useContext(CocktailContext);
   const [cocktailIndex, setCocktailIndex] = React.useState(0);
-  const [cocktail, setCocktail] = React.useState(cocktails[cocktailIndex]);
-  const [cocktailById, setCocktailById] = React.useState({});
+  const [currentCocktail, setCurrentCocktail] = React.useState(
+    cocktails[cocktailIndex],
+  );
+  const [fullCocktail, setFullCocktail] = React.useState({});
   const [recipe, setRecipe] = React.useState({});
 
   // TODO: I need to call the cocktail API for the first cocktail in the list and render
@@ -21,8 +27,10 @@ const Swipe = ({ navigation, route }) => {
   // Call cocktail API for that cocktail and re render
 
   // function that will call the api for each new cocktail
-  const fetchCocktailById = async (id) => {
-    await TheCocktailDB.getOne(id).then((drink) => setCocktailById(drink));
+  const fetchFullCocktail = async (id) => {
+    await TheCocktailDB.getOne(id).then((drink) =>
+      setFullCocktail(drink.drinks[0]),
+    );
   };
 
   // This function is because my api has some weird data structure,
@@ -30,31 +38,46 @@ const Swipe = ({ navigation, route }) => {
   // rather than an array of ingredients from one prop ?!?!?
   const loadRecipe = () => {
     const loadedRecipe = [];
-    let i = 0;
-    let { strIngredient1, strMeasure1 } = cocktailById;
+    let i = 1;
+    let { strIngredient1, strMeasure1 } = fullCocktail;
     while (strIngredient1) {
       loadedRecipe[i] = {
         ingred: strIngredient1,
         measure: strMeasure1,
       };
       i++;
-      strIngredient1 = cocktailById[`strIngredient${i}`];
-      strMeasure1 = cocktailById[`strMeasure${i}`];
+      strIngredient1 = fullCocktail[`strIngredient${i}`];
+      strMeasure1 = fullCocktail[`strMeasure${i}`];
     }
-    console.log(loadedRecipe);
     setRecipe(loadedRecipe);
   };
 
-  // Call The Cocktail DB to get one full cocktail object
+  // Initial call to The Cocktail DB to get one full cocktail object
+  // Ingredients and measures included
   React.useEffect(() => {
-    fetchCocktailById(cocktail.idDrink);
+    fetchFullCocktail(currentCocktail.idDrink);
   }, []);
 
-  React.useEffect(() => {}, [recipe]);
-
-  const handleNewCocktail = () => {
-    fetchCocktailById(cocktail.idDrink);
+  // When a user likes or dislikes a cocktail
+  const handleSwipe = async (likeOrDislike) => {
+    await api.swipe(user.id, fullCocktail.idDrink, likeOrDislike); // Add this cocktail to users likes list
+    setCocktailIndex((prevIndex) => prevIndex + 1); // Update cocktail index to begin to render next cocktail
   };
+
+  // Update current cocktail to use new cocktail index
+  React.useEffect(() => {
+    setCurrentCocktail(cocktails[cocktailIndex]);
+  }, [cocktailIndex]);
+
+  // Call api every time new cocktail is loaded
+  React.useEffect(() => {
+    fetchFullCocktail(currentCocktail.idDrink);
+  }, [currentCocktail]);
+
+  // Every time full cocktail is changed, set recipe from new full cocktail
+  React.useEffect(() => {
+    loadRecipe();
+  }, [fullCocktail]);
 
   return (
     <SafeAreaView style={styles.swipeScreenContainer}>
@@ -63,10 +86,13 @@ const Swipe = ({ navigation, route }) => {
         route={route}
         style={styles.flexStart}
       />
-      <Text style={styles.header}>{cocktail.strDrink}</Text>
-      <Image source={{ uri: cocktail.strDrinkThumb }} style={styles.cocktail} />
+      <Text style={styles.header}>{currentCocktail.strDrink}</Text>
+      <Image
+        source={{ uri: currentCocktail.strDrinkThumb }}
+        style={styles.cocktail}
+      />
       <View style={styles.ingredients}>
-        {console.log(cocktailById)}
+        {console.log(fullCocktail)}
         <TouchableOpacity style={styles.ingredient}>
           <Text style={styles.ingredientText}>Gin</Text>
         </TouchableOpacity>
@@ -87,13 +113,19 @@ const Swipe = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.swipeButtons}>
-        <TouchableOpacity style={styles.swipeButtonTouchable}>
+        <TouchableOpacity
+          style={styles.swipeButtonTouchable}
+          onPress={handleSwipe(false)}
+        >
           <Text style={styles.swipeButton}>❌</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.swipeButtonTouchable}>
           <Text style={styles.swipeButton}>⭐️</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.swipeButtonTouchable}>
+        <TouchableOpacity
+          style={styles.swipeButtonTouchable}
+          onPress={handleSwipe(false)}
+        >
           <Text style={styles.swipeButton}>❤️</Text>
         </TouchableOpacity>
       </View>

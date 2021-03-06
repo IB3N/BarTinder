@@ -21,6 +21,16 @@ export default {
     };
     return fetchRequest('login', options);
   },
+  swipe: (userId, drinkId, like) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId, drinkId, like }),
+    };
+    return fetchRequest('likes', options);
+  },
 };
 
 const fetchRequest = (path, options) => {
@@ -28,6 +38,6 @@ const fetchRequest = (path, options) => {
     .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
     .then((res) => res.json())
     .catch((err) => {
-      console.log(`${err.message} while fetching /${url}`);
+      console.log(`${err.message} while fetching /${URL}/${path}`);
     });
 };

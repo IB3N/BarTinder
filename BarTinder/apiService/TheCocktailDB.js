@@ -1,8 +1,6 @@
-// require('dotenv').config();
-// const config = process.env;
-// TODO: sort out my api key
+import config from '../config';
 
-const URL = 'https://www.thecocktaildb.com/api/json/v1/1';
+const URL = `${config.API_URL}${config.API_KEY}`;
 
 export default {
   getCocktails: () => {

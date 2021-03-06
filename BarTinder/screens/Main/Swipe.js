@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { FlatList } from 'react-native-gesture-handler';
 
 import Colours from '../../assets/colours';
 import TopBarButtons from '../../components/TopBarButtons';
 import CocktailCard from '../../components/CocktailCard';
+import SwipeButtons from '../../components/SwipeButtons';
 import api from '../../apiService';
 import TheCocktailDB from '../../apiService/TheCocktailDB';
 import CocktailContext from '../../context/CocktailContext';
@@ -83,32 +83,10 @@ const Swipe = ({ navigation, route }) => {
         style={styles.flexStart}
       />
       <CocktailCard currentCocktail={cocktails[current]} recipe={recipe} />
-      <View style={styles.swipeButtons}>
-        <TouchableOpacity
-          style={styles.swipeButtonTouchable}
-          onPress={() => handleSwipe(false)}
-        >
-          <Text style={styles.swipeButton}>❌</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.swipeButtonTouchable}
-          onPress={() => handleForwardBack(-1)}
-        >
-          <Text style={styles.swipeButton}>⇠</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.swipeButtonTouchable}
-          onPress={() => handleForwardBack(1)}
-        >
-          <Text style={styles.swipeButton}>⇢</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.swipeButtonTouchable}
-          onPress={() => handleSwipe(true)}
-        >
-          <Text style={styles.swipeButton}>❤️</Text>
-        </TouchableOpacity>
-      </View>
+      <SwipeButtons
+        handleSwipe={handleSwipe}
+        handleForwardBack={handleForwardBack}
+      />
     </SafeAreaView>
   );
 };
@@ -124,25 +102,5 @@ const styles = StyleSheet.create({
   },
   flexStart: {
     alignSelf: 'flex-start',
-  },
-  swipeButtons: {
-    flex: 1,
-    alignSelf: 'stretch',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'flex-end',
-  },
-  swipeButtonTouchable: {
-    backgroundColor: Colours.brown,
-    borderRadius: 50,
-    shadowColor: Colours.charcoal,
-    shadowOffset: { width: 3, height: 3 },
-    shadowOpacity: 0.6,
-    shadowRadius: 3,
-  },
-  swipeButton: {
-    fontSize: 30,
-    padding: 10,
-    margin: 10,
   },
 });

@@ -29,7 +29,7 @@ const initialUserState = {
   email: '',
 };
 
-const Register = ({ navigation, route }) => {
+const Register = ({ navigation }) => {
   const [newUser, setNewUser] = React.useState(initialUserState);
   const [_, setUser] = React.useContext(UserContext);
 

@@ -9,7 +9,7 @@ export default {
     return fetchRequest('filter.php?c=cocktail');
   },
   getOne: (idDrink) => {
-    return fetchRequest(`lookup.php?i=${idDrink}`, options);
+    return fetchRequest(`lookup.php?i=${idDrink}`);
   },
 };
 
@@ -18,6 +18,6 @@ const fetchRequest = (path, options) => {
     .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
     .then((res) => res.json())
     .catch((err) => {
-      console.log(`${err.message} while fetching /${url}`);
+      console.log(`${err.message} while fetching /${URL}/${path}`);
     });
 };

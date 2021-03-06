@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import Colours from '../../assets/colours';
 import ButtonStyles from '../../assets/button.styles';
 
-const Home = ({ navigation, route }) => {
+const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>BarTinder</Text>

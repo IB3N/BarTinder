@@ -26,7 +26,7 @@ const initialCredentials = {
   password: '',
 };
 
-const Login = ({ navigation, route }) => {
+const Login = ({ navigation }) => {
   const [credentials, setCredentials] = React.useState(initialCredentials);
   const [_, setUser] = React.useContext(UserContext);
 
@@ -64,7 +64,7 @@ const Login = ({ navigation, route }) => {
                 value={credentials.username}
                 onChangeText={(input) =>
                   setCredentials((previousCredentials) => ({
-                    ...credentials,
+                    ...previousCredentials,
                     username: input,
                   }))
                 }

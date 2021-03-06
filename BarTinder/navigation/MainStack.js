@@ -8,7 +8,6 @@ import GroupItem from '../screens/Main/Group/GroupItem';
 import Swipe from '../screens/Main/Swipe';
 import DeleteAccount from '../screens/Main/Profile/DeleteAccount';
 import CreateGroupForm from '../screens/Main/Group/CreateGroupForm';
-import { Button } from 'react-native';
 import CocktailContext from '../context/CocktailContext';
 import theCocktailDB from '../apiService/TheCocktailDB';
 
@@ -45,17 +44,9 @@ const MainStack = () => {
         <Stack.Screen
           name="Groups"
           component={Group}
-          options={({ navigation }) => ({
+          options={{
             headerShown: false,
-            headerLeft: () => (
-              <Button
-                onPress={() => navigation.goBack()}
-                title="<"
-                color="black"
-                style={{ backgroundColor: 'grey' }}
-              />
-            ),
-          })}
+          }}
         />
         <Stack.Screen
           name="Swipe"

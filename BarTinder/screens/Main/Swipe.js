@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatList } from 'react-native-gesture-handler';
 
 import Colours from '../../assets/colours';
-import ButtonStyles from '../../assets/button.styles';
 import TopBarButtons from '../../components/TopBarButtons';
 import CocktailContext from '../../context/CocktailContext';
 import TheCocktailDB from '../../apiService/TheCocktailDB';
@@ -14,23 +13,47 @@ const Swipe = ({ navigation, route }) => {
   const [cocktailIndex, setCocktailIndex] = React.useState(0);
   const [cocktail, setCocktail] = React.useState(cocktails[cocktailIndex]);
   const [cocktailById, setCocktailById] = React.useState({});
+  const [recipe, setRecipe] = React.useState({});
 
   // TODO: I need to call the cocktail API for the first cocktail in the list and render
   // Every time a user clicks like or dislike
-    // Update current cocktail state
-    // Call cocktail API for that cocktail and re render
+  // Update current cocktail state
+  // Call cocktail API for that cocktail and re render
 
   // function that will call the api for each new cocktail
   const fetchCocktailById = async (id) => {
-    await TheCocktailDB.getOne(id).then(drink => setCocktailById(drink));
-  }
+    await TheCocktailDB.getOne(id).then((drink) => setCocktailById(drink));
+  };
 
+  // This function is because my api has some weird data structure,
+  // Each ingredient is stored as a property on an object...
+  // rather than an array of ingredients from one prop ?!?!?
+  const loadRecipe = () => {
+    const loadedRecipe = [];
+    let i = 0;
+    let { strIngredient1, strMeasure1 } = cocktailById;
+    while (strIngredient1) {
+      loadedRecipe[i] = {
+        ingred: strIngredient1,
+        measure: strMeasure1,
+      };
+      i++;
+      strIngredient1 = cocktailById[`strIngredient${i}`];
+      strMeasure1 = cocktailById[`strMeasure${i}`];
+    }
+    console.log(loadedRecipe);
+    setRecipe(loadedRecipe);
+  };
+
+  // Call The Cocktail DB to get one full cocktail object
   React.useEffect(() => {
-    await fetchCocktailById(cocktail.idDrink);
-  },[])
+    fetchCocktailById(cocktail.idDrink);
+  }, []);
 
-  const handleNewCocktail = async () => {
-    await fetchCocktailById(cocktail.idDrink);
+  React.useEffect(() => {}, [recipe]);
+
+  const handleNewCocktail = () => {
+    fetchCocktailById(cocktail.idDrink);
   };
 
   return (
@@ -43,6 +66,7 @@ const Swipe = ({ navigation, route }) => {
       <Text style={styles.header}>{cocktail.strDrink}</Text>
       <Image source={{ uri: cocktail.strDrinkThumb }} style={styles.cocktail} />
       <View style={styles.ingredients}>
+        {console.log(cocktailById)}
         <TouchableOpacity style={styles.ingredient}>
           <Text style={styles.ingredientText}>Gin</Text>
         </TouchableOpacity>

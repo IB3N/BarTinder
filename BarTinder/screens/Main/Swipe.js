@@ -6,6 +6,7 @@ import { FlatList } from 'react-native-gesture-handler';
 
 import Colours from '../../assets/colours';
 import TopBarButtons from '../../components/TopBarButtons';
+import CocktailCard from '../../components/CocktailCard';
 import api from '../../apiService';
 import TheCocktailDB from '../../apiService/TheCocktailDB';
 import CocktailContext from '../../context/CocktailContext';
@@ -81,24 +82,7 @@ const Swipe = ({ navigation, route }) => {
         route={route}
         style={styles.flexStart}
       />
-      <Text style={styles.header}>{cocktails[current].strDrink}</Text>
-      <Image
-        source={{ uri: cocktails[current].strDrinkThumb }}
-        style={styles.cocktail}
-      />
-      <View style={styles.ingredients}>
-        <FlatList
-          data={recipe}
-          keyExtractor={(item) => item.ingred}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={styles.ingredient}>
-              <Text style={styles.ingredientText}>
-                {item.measure} {item.ingred}
-              </Text>
-            </TouchableOpacity>
-          )}
-        />
-      </View>
+      <CocktailCard currentCocktail={cocktails[current]} recipe={recipe} />
       <View style={styles.swipeButtons}>
         <TouchableOpacity
           style={styles.swipeButtonTouchable}
@@ -140,47 +124,6 @@ const styles = StyleSheet.create({
   },
   flexStart: {
     alignSelf: 'flex-start',
-  },
-  cocktail: {
-    width: 280,
-    height: 280,
-    marginTop: 10,
-  },
-  header: {
-    fontSize: 26,
-    fontWeight: '700',
-    alignSelf: 'flex-start',
-    marginLeft: 40,
-  },
-  ingredients: {
-    padding: 10,
-    flex: 2,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'stretch',
-    alignContent: 'center',
-  },
-  ingredient: {
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    marginLeft: 7,
-    borderRadius: 10,
-    borderStyle: 'solid',
-    borderWidth: 2,
-    borderColor: Colours.green,
-    backgroundColor: Colours.yellow,
-    marginTop: 15,
-    shadowColor: Colours.green,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.9,
-    shadowRadius: 5,
-    elevation: 2,
-  },
-  ingredientText: {
-    color: Colours.charcoal,
-    fontWeight: '500',
-    textAlign: 'center',
-    fontSize: 20,
   },
   swipeButtons: {
     flex: 1,

@@ -14,10 +14,8 @@ import UserContext from '../../context/UserContext';
 const Swipe = ({ navigation, route }) => {
   const [user, _] = React.useContext(UserContext);
   const [cocktails, __] = React.useContext(CocktailContext);
-  const [cocktailIndex, setCocktailIndex] = React.useState(0);
-  const [currentCocktail, setCurrentCocktail] = React.useState(
-    cocktails[cocktailIndex],
-  );
+
+  const [current, setCurrent] = React.useState(0);
   const [fullCocktail, setFullCocktail] = React.useState({});
   const [recipe, setRecipe] = React.useState({});
 
@@ -38,7 +36,7 @@ const Swipe = ({ navigation, route }) => {
   // rather than an array of ingredients from one prop ?!?!?
   const loadRecipe = () => {
     const loadedRecipe = [];
-    let i = 1;
+    let i = 0;
     let { strIngredient1, strMeasure1 } = fullCocktail;
     while (strIngredient1) {
       loadedRecipe[i] = {
@@ -46,8 +44,8 @@ const Swipe = ({ navigation, route }) => {
         measure: strMeasure1,
       };
       i++;
-      strIngredient1 = fullCocktail[`strIngredient${i}`];
-      strMeasure1 = fullCocktail[`strMeasure${i}`];
+      strIngredient1 = fullCocktail[`strIngredient${i + 1}`];
+      strMeasure1 = fullCocktail[`strMeasure${i + 1}`];
     }
     setRecipe(loadedRecipe);
   };
@@ -55,24 +53,19 @@ const Swipe = ({ navigation, route }) => {
   // Initial call to The Cocktail DB to get one full cocktail object
   // Ingredients and measures included
   React.useEffect(() => {
-    fetchFullCocktail(currentCocktail.idDrink);
+    fetchFullCocktail(cocktails[current].idDrink);
   }, []);
 
   // When a user likes or dislikes a cocktail
   const handleSwipe = async (likeOrDislike) => {
     await api.swipe(user.id, fullCocktail.idDrink, likeOrDislike); // Add this cocktail to users likes list
-    setCocktailIndex((prevIndex) => prevIndex + 1); // Update cocktail index to begin to render next cocktail
+    setCurrent((prev) => prev + 1); // Update cocktail index to begin to render next cocktail
   };
 
   // Update current cocktail to use new cocktail index
   React.useEffect(() => {
-    setCurrentCocktail(cocktails[cocktailIndex]);
-  }, [cocktailIndex]);
-
-  // Call api every time new cocktail is loaded
-  React.useEffect(() => {
-    fetchFullCocktail(currentCocktail.idDrink);
-  }, [currentCocktail]);
+    fetchFullCocktail(cocktails[current].idDrink);
+  }, [current]);
 
   // Every time full cocktail is changed, set recipe from new full cocktail
   React.useEffect(() => {
@@ -86,36 +79,28 @@ const Swipe = ({ navigation, route }) => {
         route={route}
         style={styles.flexStart}
       />
-      <Text style={styles.header}>{currentCocktail.strDrink}</Text>
+      <Text style={styles.header}>{cocktails[current].strDrink}</Text>
       <Image
-        source={{ uri: currentCocktail.strDrinkThumb }}
+        source={{ uri: cocktails[current].strDrinkThumb }}
         style={styles.cocktail}
       />
       <View style={styles.ingredients}>
-        {console.log(fullCocktail)}
-        <TouchableOpacity style={styles.ingredient}>
-          <Text style={styles.ingredientText}>Gin</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.ingredient}>
-          <Text style={styles.ingredientText}>Campari</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.ingredient}>
-          <Text style={styles.ingredientText}>Sweet Vermouth</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.ingredient}>
-          <Text style={styles.ingredientText}>Vodka</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.ingredient}>
-          <Text style={styles.ingredientText}>Lillet</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.ingredient}>
-          <Text style={styles.ingredientText}>Coca Cola</Text>
-        </TouchableOpacity>
+        <FlatList
+          data={recipe}
+          keyExtractor={(item) => item.ingred}
+          renderItem={({ item }) => (
+            <TouchableOpacity style={styles.ingredient}>
+              <Text style={styles.ingredientText}>
+                {item.measure} {item.ingred}
+              </Text>
+            </TouchableOpacity>
+          )}
+        />
       </View>
       <View style={styles.swipeButtons}>
         <TouchableOpacity
           style={styles.swipeButtonTouchable}
-          onPress={handleSwipe(false)}
+          onPress={() => handleSwipe(false)}
         >
           <Text style={styles.swipeButton}>❌</Text>
         </TouchableOpacity>
@@ -124,7 +109,7 @@ const Swipe = ({ navigation, route }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.swipeButtonTouchable}
-          onPress={handleSwipe(false)}
+          onPress={() => handleSwipe(false)}
         >
           <Text style={styles.swipeButton}>❤️</Text>
         </TouchableOpacity>
@@ -148,14 +133,13 @@ const styles = StyleSheet.create({
   cocktail: {
     width: 280,
     height: 280,
-    marginTop: 30,
+    marginTop: 10,
   },
   header: {
     fontSize: 26,
     fontWeight: '700',
     alignSelf: 'flex-start',
     marginLeft: 40,
-    marginTop: 40,
   },
   ingredients: {
     padding: 10,

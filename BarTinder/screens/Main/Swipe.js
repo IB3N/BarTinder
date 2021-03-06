@@ -1,21 +1,14 @@
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import {
-  Alert,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatList } from 'react-native-gesture-handler';
 
 import Colours from '../../assets/colours';
 import TopBarButtons from '../../components/TopBarButtons';
-import CocktailContext from '../../context/CocktailContext';
-import TheCocktailDB from '../../apiService/TheCocktailDB';
 import api from '../../apiService';
+import TheCocktailDB from '../../apiService/TheCocktailDB';
+import CocktailContext from '../../context/CocktailContext';
 import UserContext from '../../context/UserContext';
 
 const Swipe = ({ navigation, route }) => {
@@ -127,7 +120,7 @@ const Swipe = ({ navigation, route }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.swipeButtonTouchable}
-          onPress={() => handleSwipe(false)}
+          onPress={() => handleSwipe(true)}
         >
           <Text style={styles.swipeButton}>❤️</Text>
         </TouchableOpacity>

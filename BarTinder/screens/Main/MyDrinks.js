@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import DrinksList from './DrinksList';
@@ -12,6 +12,10 @@ import TheCocktailDB from '../../apiService/TheCocktailDB';
 import { FlatList } from 'react-native-gesture-handler';
 import GroupItem from './Group/GroupItem';
 import CocktailCard from '../../components/CocktailCard';
+import Colours from '../../assets/colours';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const MyDrinks = ({ navigation, route }) => {
   const [user, _] = React.useContext(UserContext);
@@ -31,16 +35,20 @@ const MyDrinks = ({ navigation, route }) => {
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <TopBarButtons
         navigation={navigation}
         route={route}
         style={styles.flexStart}
       />
       <FlatList
+        horizontal
+        pagingEnabled={true}
+        showsHorizontalScrollIndicator={false}
         data={likes}
         keyExtractor={(item) => item.idDrink}
         renderItem={({ item }) => <CocktailCard cocktail={item} />}
+        style={styles.drinks}
       />
     </SafeAreaView>
   );
@@ -48,4 +56,11 @@ const MyDrinks = ({ navigation, route }) => {
 
 export default MyDrinks;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colours.charcoal,
+  },
+  drinks: {
+    maxWidth: windowWidth,
+  },
+});

@@ -1,8 +1,18 @@
 /* eslint-disable react/prop-types */
 import * as React from 'react';
-import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  Dimensions,
+} from 'react-native';
 
 import Colours from '../assets/colours';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const CocktailCard = ({ cocktail }) => {
   const loadRecipe = () => {
@@ -50,16 +60,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
+    borderStyle: 'solid',
+    borderColor: Colours.green,
+    borderWidth: 1,
+    borderRadius: 10,
+    margin: 10,
+    width: windowWidth - 20,
+    height: windowHeight - 150,
   },
   header: {
     fontSize: 30,
     fontWeight: '700',
     alignSelf: 'center',
-    marginTop: 30,
+    marginTop: 10,
     color: Colours.yellow,
-    textShadowColor: Colours.charcoal,
+    textShadowColor: 'black',
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 5,
+    padding: 5,
   },
   cocktail: {
     width: 280,
@@ -69,7 +87,6 @@ const styles = StyleSheet.create({
   ingredients: {
     padding: 10,
     marginTop: 10,
-    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignContent: 'center',

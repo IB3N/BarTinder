@@ -21,29 +21,29 @@ const Swipe = ({ navigation, route }) => {
   const [cocktails, __] = React.useContext(CocktailContext);
 
   const [current, setCurrent] = React.useState(0); // Keeps track of the cocktail index in the cocktails array
-  const [fullCocktail, setFullCocktail] = React.useState({});
+  const [cocktail, setCocktail] = React.useState({});
 
   // function that will call the api for each new cocktail
-  const fetchFullCocktail = async (id) => {
+  const fetchCocktail = async (id) => {
     await TheCocktailDB.getOne(id).then((drink) =>
-      setFullCocktail(drink.drinks[0]),
+      setCocktail(drink.drinks[0]),
     );
   };
 
   // Initial call to The Cocktail DB to get one full cocktail object
   // Ingredients and measures included
   React.useEffect(() => {
-    fetchFullCocktail(cocktails[current].idDrink);
+    fetchCocktail(cocktails[current].idDrink);
   }, []);
 
   // Update current cocktail to use new cocktail index
   React.useEffect(() => {
-    fetchFullCocktail(cocktails[current].idDrink);
+    fetchCocktail(cocktails[current].idDrink);
   }, [current]);
 
   // When a user likes or dislikes a cocktail
   const handleSwipe = async (likeOrDislike) => {
-    await api.swipe(user.id, fullCocktail.idDrink, likeOrDislike); // Add this cocktail to users likes list
+    await api.swipe(user.id, cocktail.idDrink, likeOrDislike); // Add this cocktail to users likes list
     setCurrent((prev) => prev + 1); // Update cocktail index to begin to render next cocktail
   };
 
@@ -61,14 +61,15 @@ const Swipe = ({ navigation, route }) => {
         route={route}
         style={styles.flexStart}
       />
-      {Object.keys(fullCocktail).length ? (
-        <CocktailCard cocktail={fullCocktail} />
+      {Object.keys(cocktail).length ? (
+        <CocktailCard cocktail={cocktail} />
       ) : (
         <Text>Loading</Text>
       )}
       <SwipeButtons
         handleSwipe={handleSwipe}
         handleForwardBack={handleForwardBack}
+        styles={styles.f}
       />
     </SafeAreaView>
   );
@@ -81,9 +82,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: Colours.green,
+    backgroundColor: Colours.charcoal,
   },
   flexStart: {
     alignSelf: 'flex-start',
+  },
+  flexEnd: {
+    alignSelf: 'flex-end',
   },
 });

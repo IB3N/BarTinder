@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
@@ -38,11 +39,11 @@ export default SwipeButtons;
 
 const styles = StyleSheet.create({
   swipeButtons: {
-    flex: 1,
+    flex: 0.2,
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems: 'flex-end',
+    alignItems: 'center',
   },
   swipeButtonTouchable: {
     backgroundColor: Colours.brown,

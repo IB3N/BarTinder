@@ -66,6 +66,17 @@ export default {
     };
     return fetchRequest('groups', options);
   },
+
+  getMembers: (groupId) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ groupId }),
+    };
+    return fetchRequest('members', options);
+  },
 };
 
 const fetchRequest = (path, options) => {

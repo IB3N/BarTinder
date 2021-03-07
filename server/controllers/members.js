@@ -4,14 +4,11 @@ const { member, user } = require('../models');
 
 exports.createMember = async (req, res) => {
   try {
-    // const { email, groupId } = req.body;
-    const foundUser = await user.findOne(
-      { attributes: ['id'] },
-      { where: { email: req.body.email } },
-    );
+    const { email, groupId } = req.body;
+    const foundUser = await user.findOne({ where: { email } });
     const newMember = await member.create({
-      groupId: req.body.groupId,
-      userId: foundUser[0].dataValues.id,
+      groupId,
+      userId: foundUser.dataValues.id,
     });
     res.send(newMember).status(201);
   } catch (error) {
@@ -23,15 +20,12 @@ exports.createMember = async (req, res) => {
 exports.usersGroups = async (req, res) => {
   try {
     // const { userId } = req.body;
-    const groupIds = await member.findAll(
-      { attributes: ['groupId'] },
-      { where: { userId: req.body.userId } },
-    );
+    const groupIds = await member.findAll({
+      where: { userId: req.body.userId },
+    });
     // let groups = [];
     // await groupIds.forEach(async ({ groupId }) => {
-    //   const foundGroup = await group.findByPk(groupId, {
-    //     attributes: ['id', 'name', 'date'],
-    //   });
+    //   const foundGroup = await group.findByPk(groupId);
     //   groups.push(foundGroup.dataValues);
     //   console.log(foundGroup.dataValues);
     //   console.log(groups);

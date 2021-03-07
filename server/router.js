@@ -17,6 +17,7 @@ const {
   usersGroups,
   allGroupMembers,
 } = require('./controllers/members');
+const { getMatches } = require('./controllers/matches');
 
 // Authorization
 router.get('/register', getAllUsers);
@@ -40,5 +41,8 @@ router.post('/user/groups', usersGroups); // Get all groups of one user
 router.post('/addMember', createMember);
 router.post('/members', allGroupMembers);
 // delete member
+
+// Matches
+router.post('/matches', getMatches);
 
 module.exports = router;

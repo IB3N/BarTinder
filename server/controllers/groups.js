@@ -11,3 +11,14 @@ exports.createGroup = async (req, res) => {
     res.status(500);
   }
 };
+
+exports.getGroup = async (req, res) => {
+  try {
+    // const { groupId } = req.body;
+    const names = await group.findAll({ where: { id: req.body.groupId } });
+    res.send(names).status(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500);
+  }
+};

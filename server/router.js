@@ -3,7 +3,7 @@
 const { Router } = require('express');
 const router = Router();
 
-// Controllers imports go here
+// Controllers imports
 const { login, register, getAllUsers } = require('./controllers/auth');
 const {
   allLikes,
@@ -11,7 +11,7 @@ const {
   usersLikes,
   usersDislikes,
 } = require('./controllers/likes');
-const { createGroup } = require('./controllers/groups');
+const { createGroup, getGroup } = require('./controllers/groups');
 const {
   createMember,
   usersGroups,
@@ -32,6 +32,7 @@ router.post('/user/dislikes', usersDislikes);
 
 // Groups
 router.post('/group', createGroup);
+router.post('/groups', getGroup);
 router.post('/user/groups', usersGroups); // Get all groups of one user
 // delete group
 

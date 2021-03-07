@@ -45,15 +45,26 @@ export default {
     return fetchRequest('user/likes', options);
   },
 
-  getGroups: (id) => {
+  getGroupIds: (userId) => {
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id }),
+      body: JSON.stringify({ userId }),
     };
     return fetchRequest('user/groups', options);
+  },
+
+  getGroup: (groupId) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ groupId }),
+    };
+    return fetchRequest('groups', options);
   },
 };
 

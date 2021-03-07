@@ -1,21 +1,20 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import { StyleSheet, View, Text, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { FlatList } from 'react-native-gesture-handler';
 
-import DrinksList from './DrinksList';
+import Colours from '../../assets/colours';
+
 import TopBarButtons from '../../components/TopBarButtons';
+import CocktailCard from '../../components/CocktailCard';
+
 import UserContext from '../../context/UserContext';
 import api from '../../apiService';
 import TheCocktailDB from '../../apiService/TheCocktailDB';
-import { FlatList } from 'react-native-gesture-handler';
-import GroupItem from './Group/GroupItem';
-import CocktailCard from '../../components/CocktailCard';
-import Colours from '../../assets/colours';
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const MyDrinks = ({ navigation, route }) => {
   const [user, _] = React.useContext(UserContext);

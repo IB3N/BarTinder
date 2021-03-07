@@ -44,6 +44,17 @@ export default {
     };
     return fetchRequest('user/likes', options);
   },
+
+  getGroups: (id) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    };
+    return fetchRequest('user/groups', options);
+  },
 };
 
 const fetchRequest = (path, options) => {

@@ -1,11 +1,18 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { FlatList } from 'react-native-gesture-handler';
+
 import Colours from '../../../assets/colours';
 import ButtonStyles from '../../../assets/button.styles';
+
 import GroupItemButton from '../../../components/GroupItemButton';
 import TopBarButtons from '../../../components/TopBarButtons';
+
+import UserContext from '../../../context/UserContext';
+import api from '../../../apiService/index';
 
 const Group = ({ navigation, route }) => {
   return (

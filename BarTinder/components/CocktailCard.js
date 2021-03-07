@@ -1,21 +1,33 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
 
 import Colours from '../assets/colours';
 
-const CocktailCard = ({ currentCocktail, recipe }) => {
+const CocktailCard = ({ cocktail }) => {
+  const loadRecipe = () => {
+    const loadedRecipe = [];
+    let i = 0;
+    let { strIngredient1, strMeasure1 } = cocktail;
+    while (strIngredient1) {
+      loadedRecipe[i] = {
+        ingred: strIngredient1,
+        measure: strMeasure1,
+      };
+      i++;
+      strIngredient1 = cocktail[`strIngredient${i + 1}`];
+      strMeasure1 = cocktail[`strMeasure${i + 1}`];
+    }
+    return loadedRecipe;
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>
-        {currentCocktail.strDrink.toUpperCase()}
-      </Text>
-      <Image
-        source={{ uri: currentCocktail.strDrinkThumb }}
-        style={styles.cocktail}
-      />
+      <Text style={styles.header}>{cocktail.strDrink.toUpperCase()}</Text>
+      <Image source={{ uri: cocktail.strDrinkThumb }} style={styles.cocktail} />
       <View style={styles.ingredients}>
         <FlatList
-          data={recipe}
+          data={loadRecipe(cocktail)}
           keyExtractor={(item) => item.ingred}
           horizontal={false}
           numColumns={2}

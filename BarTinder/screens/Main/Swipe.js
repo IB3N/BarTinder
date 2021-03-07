@@ -1,14 +1,18 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Colours from '../../assets/colours';
+
 import TopBarButtons from '../../components/TopBarButtons';
 import CocktailCard from '../../components/CocktailCard';
 import SwipeButtons from '../../components/SwipeButtons';
+
 import api from '../../apiService';
 import TheCocktailDB from '../../apiService/TheCocktailDB';
+
 import CocktailContext from '../../context/CocktailContext';
 import UserContext from '../../context/UserContext';
 
@@ -18,32 +22,12 @@ const Swipe = ({ navigation, route }) => {
 
   const [current, setCurrent] = React.useState(0); // Keeps track of the cocktail index in the cocktails array
   const [fullCocktail, setFullCocktail] = React.useState({});
-  const [recipe, setRecipe] = React.useState({});
 
   // function that will call the api for each new cocktail
   const fetchFullCocktail = async (id) => {
     await TheCocktailDB.getOne(id).then((drink) =>
       setFullCocktail(drink.drinks[0]),
     );
-  };
-
-  // This function is because my api has some weird data structure,
-  // Each ingredient is stored as a property on an object...
-  // rather than an array of ingredients from one prop ?!?!?
-  const loadRecipe = () => {
-    const loadedRecipe = [];
-    let i = 0;
-    let { strIngredient1, strMeasure1 } = fullCocktail;
-    while (strIngredient1) {
-      loadedRecipe[i] = {
-        ingred: strIngredient1,
-        measure: strMeasure1,
-      };
-      i++;
-      strIngredient1 = fullCocktail[`strIngredient${i + 1}`];
-      strMeasure1 = fullCocktail[`strMeasure${i + 1}`];
-    }
-    setRecipe(loadedRecipe);
   };
 
   // Initial call to The Cocktail DB to get one full cocktail object
@@ -56,11 +40,6 @@ const Swipe = ({ navigation, route }) => {
   React.useEffect(() => {
     fetchFullCocktail(cocktails[current].idDrink);
   }, [current]);
-
-  // Every time full cocktail is changed, set recipe from new full cocktail
-  React.useEffect(() => {
-    loadRecipe();
-  }, [fullCocktail]);
 
   // When a user likes or dislikes a cocktail
   const handleSwipe = async (likeOrDislike) => {
@@ -82,7 +61,11 @@ const Swipe = ({ navigation, route }) => {
         route={route}
         style={styles.flexStart}
       />
-      <CocktailCard currentCocktail={cocktails[current]} recipe={recipe} />
+      {Object.keys(fullCocktail).length ? (
+        <CocktailCard cocktail={fullCocktail} />
+      ) : (
+        <Text>Loading</Text>
+      )}
       <SwipeButtons
         handleSwipe={handleSwipe}
         handleForwardBack={handleForwardBack}

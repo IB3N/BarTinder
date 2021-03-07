@@ -5,7 +5,7 @@ const { member, user } = require('../models');
 exports.createMember = async (req, res) => {
   try {
     // const { email, groupId } = req.body;
-    const foundUser = await user.findAll(
+    const foundUser = await user.findOne(
       { attributes: ['id'] },
       { where: { email: req.body.email } },
     );

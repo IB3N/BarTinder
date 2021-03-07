@@ -1,4 +1,4 @@
-const URL = 'http://192.168.1.3:4000'; // This is crazy expo speak, because we are requesting over wifi, not my machine
+import config from '../config';
 
 export default {
   register: (newUser) => {
@@ -11,6 +11,7 @@ export default {
     };
     return fetchRequest('register', options);
   },
+
   login: (credentials) => {
     const options = {
       method: 'POST',
@@ -21,6 +22,7 @@ export default {
     };
     return fetchRequest('login', options);
   },
+
   swipe: (userId, drinkId, like) => {
     const options = {
       method: 'POST',
@@ -31,10 +33,21 @@ export default {
     };
     return fetchRequest('likes', options);
   },
+
+  getLikes: (id) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    };
+    return fetchRequest('user/likes', options);
+  },
 };
 
 const fetchRequest = (path, options) => {
-  return fetch(`${URL}/${path}`, options)
+  return fetch(`${config.SERVER_URL}/${path}`, options)
     .then((res) => (res.status <= 400 ? res : Promise.reject(res)))
     .then((res) => res.json())
     .catch((err) => {

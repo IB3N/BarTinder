@@ -19,9 +19,9 @@ exports.createMember = async (req, res) => {
 
 exports.usersGroups = async (req, res) => {
   try {
-    // const { userId } = req.body;
+    const { userId } = req.body;
     const groupIds = await member.findAll({
-      where: { userId: req.body.userId },
+      where: { userId },
     });
     // let groups = [];
     // await groupIds.forEach(async ({ groupId }) => {
@@ -39,9 +39,9 @@ exports.usersGroups = async (req, res) => {
 
 exports.allGroupMembers = async (req, res) => {
   try {
-    // const { groupId } = req.body
+    const { groupId } = req.body;
     const members = await member.findAll({
-      where: { groupId: req.body.groupId },
+      where: { groupId },
     });
     res.send(members).status(200);
   } catch (error) {

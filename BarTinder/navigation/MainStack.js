@@ -12,7 +12,7 @@ import CreateGroupForm from '../screens/Main/Group/CreateGroupForm';
 import CocktailContext from '../context/CocktailContext';
 import theCocktailDB from '../apiService/TheCocktailDB';
 
-const arrayShuffle = require('array-shuffle');
+// const arrayShuffle = require('array-shuffle');
 
 const Stack = createStackNavigator();
 
@@ -23,7 +23,7 @@ const MainStack = () => {
   React.useEffect(() => {
     theCocktailDB
       .getCocktails()
-      .then((newCocktails) => setCocktails(arrayShuffle(newCocktails.drinks)));
+      .then((newCocktails) => setCocktails(newCocktails.drinks)); // TODO: arrayShuffle(newCocktails.drinks)
   }, []);
 
   return (

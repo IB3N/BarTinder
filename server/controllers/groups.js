@@ -14,8 +14,7 @@ exports.createGroup = async (req, res) => {
 
 exports.getGroup = async (req, res) => {
   try {
-    // const { groupId } = req.body;
-    const names = await group.findAll({ where: { id: req.body.groupId } });
+    const names = await group.findByPk(req.body.groupId);
     res.send(names).status(200);
   } catch (error) {
     console.error(error);

@@ -34,13 +34,13 @@ export default {
     return fetchRequest('likes', options);
   },
 
-  getLikes: (id) => {
+  getLikes: (userId) => {
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id }),
+      body: JSON.stringify({ userId }),
     };
     return fetchRequest('user/likes', options);
   },

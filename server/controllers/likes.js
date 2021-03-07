@@ -25,9 +25,10 @@ exports.choose = async (req, res) => {
 
 exports.usersLikes = async (req, res) => {
   try {
+    const { userId } = req.body;
     const likes = await like.findAll({
       where: {
-        userId: req.body.id,
+        userId,
         like: true,
       },
     });
@@ -40,9 +41,10 @@ exports.usersLikes = async (req, res) => {
 
 exports.usersDislikes = async (req, res) => {
   try {
+    const { userId } = req.body;
     const dislikes = await like.findAll({
       where: {
-        userId: req.body.id,
+        userId,
         like: false,
       },
     });

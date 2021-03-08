@@ -54,6 +54,7 @@ const Swipe = ({ navigation, route }) => {
     setCurrent((prev) => prev + direction);
   };
 
+  // I want to make some swipes here
   return (
     <SafeAreaView style={styles.swipeScreenContainer}>
       <TopBarButtons

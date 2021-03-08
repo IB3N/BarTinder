@@ -78,6 +78,17 @@ export default {
     return fetchRequest('groups', options);
   },
 
+  createGroup: (name) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name }),
+    };
+    return fetchRequest('group', options);
+  },
+
   addMember: (groupId, email) => {
     const options = {
       method: 'POST',

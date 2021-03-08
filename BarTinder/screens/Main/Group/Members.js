@@ -31,9 +31,9 @@ const Members = ({ navigation, route }) => {
   };
 
   // initial call to get full member details of group
-  React.useEffect(() => {
-    getMemberDetails();
-  }, []);
+  // React.useEffect(() => {
+  //   getMemberDetails();
+  // }, []);
 
   // When member gets added to group
   const addMember = async () => {

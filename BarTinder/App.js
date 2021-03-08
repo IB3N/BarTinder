@@ -12,7 +12,7 @@ export default function App() {
     id: 1,
     firstName: 'Ben',
     lastName: 'Pearce',
-    email: 'ben@live.co.uk',
+    email: 'benpearce9@live.co.uk',
     username: 'Ben',
     password: 'ben',
     friends: null,

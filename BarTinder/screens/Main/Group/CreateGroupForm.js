@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import * as React from 'react';
 import {
   View,
@@ -8,6 +10,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
+  Dimensions,
+  Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -18,8 +22,38 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
 
+import UserContext from '../../../context/UserContext';
+import GroupsContext from '../../../context/GroupsContext';
+
+import api from '../../../apiService';
+
+const windowWidth = Dimensions.get('window').width;
+
 const CreateGroupForm = ({ navigation, route }) => {
   const [groupName, setGroupName] = React.useState('');
+  const [user, setUser] = React.useContext(UserContext);
+  const [groups, setGroups] = React.useContext(GroupsContext);
+
+  console.log(user);
+  console.log(groups);
+
+  React.useEffect(() => {
+    console.log('got new groups', groups);
+  }, [groups]);
+
+  // Call api to create group and insert user into that group
+  const handleCreateGroup = async () => {
+    if (!groupName) {
+      Alert.alert('Please enter a group name');
+      return;
+    }
+    await api.createGroup(groupName).then((group) => {
+      api.addMember(group.id, user.email);
+      setGroups([...groups, group]);
+    });
+    setGroupName('');
+    navigation.navigate('Groups');
+  };
 
   return (
     <KeyboardAvoidingView
@@ -51,12 +85,16 @@ const CreateGroupForm = ({ navigation, route }) => {
                   style={styles.textInput}
                 />
               </View>
-              <TouchableOpacity style={ButtonStyles.button}>
-                <Text style={ButtonStyles.buttonText}>Create Group</Text>
-              </TouchableOpacity>
             </View>
           </View>
         </TouchableWithoutFeedback>
+        <TouchableOpacity
+          style={[ButtonStyles.button, styles.createGroupButton]}
+          activeOpacity={0.3}
+          onPress={handleCreateGroup}
+        >
+          <Text style={ButtonStyles.buttonText}>Create Group</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
@@ -107,6 +145,10 @@ const styles = StyleSheet.create({
   textInput: {
     fontSize: 16,
     fontWeight: '500',
+    minWidth: windowWidth / 2,
     color: Colours.sienna,
+  },
+  createGroupButton: {
+    alignSelf: 'center',
   },
 });

@@ -23,6 +23,17 @@ export default {
     return fetchRequest('login', options);
   },
 
+  getUser: (userId) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId }),
+    };
+    return fetchRequest('user', options);
+  },
+
   swipe: (userId, drinkId, like) => {
     const options = {
       method: 'POST',

@@ -35,7 +35,6 @@ const Group = ({ navigation, route }) => {
     <SafeAreaView style={styles.groupScreenContainer}>
       <TopBarButtons navigation={navigation} route={route} />
       <Text style={styles.header}>Groups</Text>
-      {console.log(groups)}
       {groups.length ? (
         <FlatList
           data={groups}

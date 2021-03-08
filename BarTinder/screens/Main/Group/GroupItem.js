@@ -1,70 +1,35 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Colours from '../../../assets/colours';
-import ButtonStyles from '../../../assets/button.styles';
-import TopBarButtons from '../../../components/TopBarButtons';
-import { TextInput } from 'react-native-gesture-handler';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const GroupItem = ({ navigation, route }) => {
-  const [member, setMember] = React.useState('');
+import Colours from '../../../assets/colours';
+
+import GroupsContext from '../../../context/GroupsContext';
+
+import Matches from './Matches';
+import Members from './Members';
+
+const Tab = createBottomTabNavigator();
+
+const GroupItem = ({ route }) => {
+  const { members, matches } = route.params;
+  const groupsHook = React.useState({ matches, members });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <TopBarButtons navigation={navigation} route={route} />
-      <Text>TODO: Create a modal to see list of members</Text>
-      <View style={styles.addMember}>
-        <TextInput
-          style={styles.input}
-          value={member}
-          onChangeText={setMember}
-          placeholder="Email or Username..."
-          placeholderTextColor={Colours.charcoal}
-        />
-        <TouchableOpacity style={styles.addMemberTO}>
-          <Text style={styles.addMemberButton}>+</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.header}>Matches</Text>
-      {/* TODO: create matches component and replace here */}
-      <Text>TODO: matches component create when have data</Text>
-    </SafeAreaView>
+    <GroupsContext.Provider value={groupsHook}>
+      <Tab.Navigator
+        tabBarOptions={{
+          style: { backgroundColor: Colours.charcoal, opacity: 0.9 },
+        }}
+        labelStyle={{
+          fontSize: 24,
+        }}
+      >
+        <Tab.Screen name="Matches" component={Matches} />
+        <Tab.Screen name="Members" component={Members} />
+      </Tab.Navigator>
+    </GroupsContext.Provider>
   );
 };
 
 export default GroupItem;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  addMember: {
-    flexDirection: 'row',
-    paddingLeft: 10,
-    justifyContent: 'space-between',
-    alignSelf: 'stretch',
-    marginHorizontal: 15,
-    marginVertical: 10,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderColor: Colours.charcoal,
-    borderRadius: 5,
-  },
-  addMemberTO: {
-    borderTopRightRadius: 4,
-    borderBottomRightRadius: 4,
-    backgroundColor: Colours.sienna,
-  },
-  addMemberButton: {
-    padding: 12,
-  },
-  input: {},
-  header: {
-    fontSize: 30,
-    fontWeight: '700',
-    textAlign: 'center',
-    padding: 5,
-    color: Colours.charcoal,
-  },
-});

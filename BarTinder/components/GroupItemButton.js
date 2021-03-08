@@ -4,8 +4,9 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Colours from '../assets/colours';
 
 import api from '../apiService';
+import TheCocktailDB from '../apiService/TheCocktailDB';
 
-const GroupItemButton = ({ header, navigation, route, groupId }) => {
+const GroupItemButton = ({ header, navigation, groupId }) => {
   const [members, setMembers] = React.useState([]);
   const [matches, setMatches] = React.useState([]);
 
@@ -19,20 +20,29 @@ const GroupItemButton = ({ header, navigation, route, groupId }) => {
   // Find matches for all users in the group
   React.useEffect(() => {
     const memberIds = members.map((member) => member.userId); // [1, 2, 3]
-    api
-      .getMatches(memberIds)
-      .then((fetchedMatches) => setMatches(fetchedMatches));
+    api.getMatches(memberIds).then((fetchedMatches) =>
+      Promise.all(
+        fetchedMatches
+          .sort((a, b) => b.count - a.count)
+          .map((match) =>
+            TheCocktailDB.getOne(match.drinkId).then((drink) => ({
+              ...match,
+              ...drink.drinks[0],
+            })),
+          ),
+      ).then((drinks) => setMatches(drinks)),
+    );
   }, [members]);
 
   return (
     <View style={styles.groupContainer}>
-      {console.log(matches)}
+      {console.log(members)}
       <TouchableOpacity
-        onPress={() => navigation.navigate('GroupItem', { navigation, route })}
+        onPress={() => navigation.navigate('GroupItem', { members, matches })}
       >
         <Text style={styles.groupHeader}>{header}</Text>
         <View style={styles.groupInfo}>
-          {/* <Text style={styles.groupInfoText}>Matches: {matches.length}</Text> */}
+          <Text style={styles.groupInfoText}>Matches: {matches.length}</Text>
           <Text style={styles.groupInfoText}>People: {members.length}</Text>
         </View>
       </TouchableOpacity>

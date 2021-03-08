@@ -4,7 +4,7 @@ const { Router } = require('express');
 const router = Router();
 
 // Controllers imports
-const { login, register, getAllUsers } = require('./controllers/auth');
+const { login, register, getAllUsers, getUser } = require('./controllers/auth');
 const {
   allLikes,
   choose,
@@ -23,6 +23,7 @@ const { getMatches } = require('./controllers/matches');
 router.get('/register', getAllUsers);
 router.post('/register', register);
 router.post('/login', login);
+router.post('/user', getUser);
 // delete user
 
 // Likes

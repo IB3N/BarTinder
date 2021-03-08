@@ -40,3 +40,14 @@ exports.login = async (req, res) => {
       : res.send(error).status(500);
   }
 };
+
+exports.getUser = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const fetchedUser = await user.findByPk(userId);
+    res.send(fetchedUser).status(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500);
+  }
+};

@@ -44,5 +44,10 @@ router.post('/members', allGroupMembers);
 
 // Matches
 router.post('/matches', getMatches);
+// SELECT likes.drinkId, COUNT(likes.drinkId) FROM likes
+// WHERE likes.userId IN (
+// SELECT members.userId FROM members
+// WHERE members.groupId = 1)
+// AND likes.like = TRUE;
 
 module.exports = router;

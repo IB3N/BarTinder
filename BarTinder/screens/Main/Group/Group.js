@@ -25,7 +25,7 @@ const Group = ({ navigation, route }) => {
       .then((fetchedGroupIds) =>
         Promise.all(
           fetchedGroupIds.map(({ groupId }) =>
-            api.getGroup(groupId).then((group) => group[0]),
+            api.getGroup(groupId).then((group) => group),
           ),
         ).then((fetchedGroups) => setGroups(fetchedGroups)),
       );
@@ -35,6 +35,7 @@ const Group = ({ navigation, route }) => {
     <SafeAreaView style={styles.groupScreenContainer}>
       <TopBarButtons navigation={navigation} route={route} />
       <Text style={styles.header}>Groups</Text>
+      {console.log(groups)}
       {groups.length ? (
         <FlatList
           data={groups}

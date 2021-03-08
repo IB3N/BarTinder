@@ -17,9 +17,16 @@ const GroupItemButton = ({ header, navigation, route, groupId }) => {
   }, []);
 
   // Find matches for all users in the group
+  React.useEffect(() => {
+    const memberIds = members.map((member) => member.userId); // [1, 2, 3]
+    api
+      .getMatches(memberIds)
+      .then((fetchedMatches) => setMatches(fetchedMatches));
+  }, [members]);
 
   return (
     <View style={styles.groupContainer}>
+      {console.log(matches)}
       <TouchableOpacity
         onPress={() => navigation.navigate('GroupItem', { navigation, route })}
       >

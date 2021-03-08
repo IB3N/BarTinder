@@ -1,21 +1,17 @@
 'use strict';
 
-const { member, like } = require('../models');
+const { like, sequelize } = require('../models');
 
 exports.getMatches = async (req, res) => {
   try {
-    // Get members of a group
-    const { groupId } = req.body;
-    const members = await member.findAll({
-      where: { groupId },
-    });
-    // Map array of id's
-    const memberIds = members.map((member) => member.dataValues.userId);
-    // Get all likes where userId in group member ids
-    const matches = await like.findAll({
+    const { memberIds } = req.body;
+    const matches = await like.count({
       where: {
         userId: memberIds,
+        like: true,
       },
+      col: 'drinkId',
+      group: ['drinkId'],
     });
     res.send(matches).status(200);
   } catch (error) {

@@ -77,6 +77,17 @@ export default {
     };
     return fetchRequest('members', options);
   },
+
+  getMatches: (memberIds) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ memberIds }),
+    };
+    return fetchRequest('matches', options);
+  },
 };
 
 const fetchRequest = (path, options) => {

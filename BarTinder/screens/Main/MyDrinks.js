@@ -57,9 +57,12 @@ export default MyDrinks;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: Colours.charcoal,
   },
   drinks: {
     maxWidth: windowWidth,
+    flex: 1,
+    alignSelf: 'center',
   },
 });

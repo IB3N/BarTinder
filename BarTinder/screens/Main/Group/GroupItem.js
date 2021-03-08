@@ -12,7 +12,7 @@ import Members from './Members';
 const Tab = createBottomTabNavigator();
 
 const GroupItem = ({ route }) => {
-  const { members, matches } = route.params;
+  const { members, matches, groupId } = route.params;
   const groupsHook = React.useState({ matches, members });
 
   return (

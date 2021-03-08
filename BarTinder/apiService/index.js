@@ -78,6 +78,17 @@ export default {
     return fetchRequest('groups', options);
   },
 
+  addMember: (groupId, email) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, groupId }),
+    };
+    return fetchRequest('addMember', options);
+  },
+
   getMembers: (groupId) => {
     const options = {
       method: 'POST',

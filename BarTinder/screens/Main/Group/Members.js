@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,9 +14,10 @@ import api from '../../../apiService';
 const Members = ({ navigation, route }) => {
   const [member, setMember] = React.useState('');
   const [groups, setGroups] = React.useContext(GroupsContext);
+  const [groupId, _] = React.useState(groups.members[0].groupId);
 
-  // Get member details
-  React.useEffect(() => {
+  // Get full member details
+  const getMemberDetails = () => {
     Promise.all(
       groups.members.map(({ userId }) =>
         api.getUser(userId).then((user) => user),
@@ -25,10 +28,27 @@ const Members = ({ navigation, route }) => {
         members: users,
       }),
     );
+  };
+
+  // initial call to get full member details of group
+  React.useEffect(() => {
+    getMemberDetails();
   }, []);
+
+  // When member gets added to group
+  const addMember = async () => {
+    await api.addMember(groupId, member).then((member) =>
+      setGroups({
+        ...groups,
+        members: [...groups.members, member],
+      }),
+    );
+    setMember(''); // reset text input field
+  };
 
   return (
     <SafeAreaView style={styles.container}>
+      {console.log(groups)}
       <TopBarButtons
         navigation={navigation}
         route={route}
@@ -41,8 +61,9 @@ const Members = ({ navigation, route }) => {
           onChangeText={setMember}
           placeholder="Add Member..."
           placeholderTextColor={Colours.green}
+          keyboardType="email-address"
         />
-        <TouchableOpacity style={styles.addMemberTO}>
+        <TouchableOpacity style={styles.addMemberTO} onPress={addMember}>
           <Text style={styles.addMemberButton}>+</Text>
         </TouchableOpacity>
       </View>
@@ -83,6 +104,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colours.green,
     borderRadius: 5,
+  },
+  input: {
+    flex: 1,
   },
   addMemberTO: {
     borderTopRightRadius: 4,

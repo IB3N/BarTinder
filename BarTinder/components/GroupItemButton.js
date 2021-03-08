@@ -36,9 +36,10 @@ const GroupItemButton = ({ header, navigation, groupId }) => {
 
   return (
     <View style={styles.groupContainer}>
-      {console.log(members)}
       <TouchableOpacity
-        onPress={() => navigation.navigate('GroupItem', { members, matches })}
+        onPress={() =>
+          navigation.navigate('GroupItem', { members, matches, groupId })
+        }
       >
         <Text style={styles.groupHeader}>{header}</Text>
         <View style={styles.groupInfo}>

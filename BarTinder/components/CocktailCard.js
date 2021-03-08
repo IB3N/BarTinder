@@ -58,7 +58,7 @@ export default CocktailCard;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     borderStyle: 'solid',
     borderColor: Colours.green,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 10,
     width: windowWidth - 20,
-    height: windowHeight - 150,
+    // height: windowHeight - 150,
   },
   header: {
     fontSize: 30,
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
   ingredients: {
     padding: 10,
     marginTop: 10,
+    // flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignContent: 'center',

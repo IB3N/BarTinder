@@ -8,39 +8,41 @@ import { FlatList, TextInput } from 'react-native-gesture-handler';
 import Colours from '../../../assets/colours';
 import TopBarButtons from '../../../components/TopBarButtons';
 import Member from '../../../components/Member';
-import GroupsContext from '../../../context/GroupsContext';
+import MatchesMembersContext from '../../../context/MatchesMembersContext';
 import api from '../../../apiService';
 
 const Members = ({ navigation, route }) => {
   const [member, setMember] = React.useState('');
-  const [groups, setGroups] = React.useContext(GroupsContext);
-  const [groupId, _] = React.useState(groups.members[0].groupId);
+  const [matchesMembers, setMatchesMembers] = React.useContext(
+    MatchesMembersContext,
+  );
+  const [groupId, _] = React.useState(matchesMembers.members[0].groupId);
 
   // Get full member details
   const getMemberDetails = () => {
     Promise.all(
-      groups.members.map(({ userId }) =>
+      matchesMembers.members.map(({ userId }) =>
         api.getUser(userId).then((user) => user),
       ),
     ).then((users) =>
-      setGroups({
-        ...groups,
+      setMatchesMembers({
+        ...matchesMembers,
         members: users,
       }),
     );
   };
 
   // initial call to get full member details of group
-  // React.useEffect(() => {
-  //   getMemberDetails();
-  // }, []);
+  React.useEffect(() => {
+    getMemberDetails();
+  }, []);
 
   // When member gets added to group
   const addMember = async () => {
     await api.addMember(groupId, member).then((member) =>
-      setGroups({
-        ...groups,
-        members: [...groups.members, member],
+      setMatchesMembers({
+        ...matchesMembers,
+        members: [...matchesMembers.members, member],
       }),
     );
     setMember(''); // reset text input field
@@ -48,7 +50,6 @@ const Members = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {console.log(groups)}
       <TopBarButtons
         navigation={navigation}
         route={route}
@@ -68,9 +69,9 @@ const Members = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.memberContainer}>
-        {groups.members[0].id ? (
+        {matchesMembers.members[0].id ? (
           <FlatList
-            data={groups.members}
+            data={matchesMembers.members}
             keyExtractor={(item) => String(item.id)}
             renderItem={({ item }) => <Member member={item} />}
           />

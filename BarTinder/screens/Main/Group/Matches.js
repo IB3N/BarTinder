@@ -10,13 +10,13 @@ import Colours from '../../../assets/colours';
 import TopBarButtons from '../../../components/TopBarButtons';
 import CocktailCard from '../../../components/CocktailCard';
 
-import GroupsContext from '../../../context/GroupsContext';
+import MatchesMembersContext from '../../../context/MatchesMembersContext';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const Matches = ({ navigation, route }) => {
-  const [groups, _] = React.useContext(GroupsContext);
+  const [matchesMembers, _] = React.useContext(MatchesMembersContext);
   return (
     <SafeAreaView style={styles.container}>
       <TopBarButtons
@@ -28,7 +28,7 @@ const Matches = ({ navigation, route }) => {
         horizontal
         pagingEnabled={true}
         showsHorizontalScrollIndicator={false}
-        data={groups.matches}
+        data={matchesMembers.matches}
         keyExtractor={(item) => item.idDrink}
         renderItem={({ item }) => <CocktailCard cocktail={item} />}
         style={styles.drinks}

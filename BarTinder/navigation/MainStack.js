@@ -3,14 +3,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from '../screens/Main/Home';
 import Profile from '../screens/Main/Profile/Profile';
-import Group from '../screens/Main/Group/Group';
+// import Group from '../screens/Main/Group/Group';
 import MyDrinks from '../screens/Main/MyDrinks';
-import GroupItem from '../screens/Main/Group/GroupItem';
+// import GroupItem from '../screens/Main/Group/GroupItem';
 import Swipe from '../screens/Main/Swipe';
 import DeleteAccount from '../screens/Main/Profile/DeleteAccount';
-import CreateGroupForm from '../screens/Main/Group/CreateGroupForm';
+// import CreateGroupForm from '../screens/Main/Group/CreateGroupForm';
 import CocktailContext from '../context/CocktailContext';
 import theCocktailDB from '../apiService/TheCocktailDB';
+import GroupStack from '../navigation/GroupStack';
 
 // const arrayShuffle = require('array-shuffle');
 
@@ -44,7 +45,7 @@ const MainStack = () => {
         />
         <Stack.Screen
           name="Groups"
-          component={Group}
+          component={GroupStack}
           options={{
             headerShown: false,
           }}
@@ -62,16 +63,6 @@ const MainStack = () => {
         <Stack.Screen
           name="Delete"
           component={DeleteAccount}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="CreateGroupForm"
-          component={CreateGroupForm}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="GroupItem"
-          component={GroupItem}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

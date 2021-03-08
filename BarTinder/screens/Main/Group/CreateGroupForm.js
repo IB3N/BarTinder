@@ -34,13 +34,6 @@ const CreateGroupForm = ({ navigation, route }) => {
   const [user, setUser] = React.useContext(UserContext);
   const [groups, setGroups] = React.useContext(GroupsContext);
 
-  console.log(user);
-  console.log(groups);
-
-  React.useEffect(() => {
-    console.log('got new groups', groups);
-  }, [groups]);
-
   // Call api to create group and insert user into that group
   const handleCreateGroup = async () => {
     if (!groupName) {
@@ -48,11 +41,11 @@ const CreateGroupForm = ({ navigation, route }) => {
       return;
     }
     await api.createGroup(groupName).then((group) => {
+      setGroups((prevGroups) => [...prevGroups, group]);
       api.addMember(group.id, user.email);
-      setGroups([...groups, group]);
     });
     setGroupName('');
-    navigation.navigate('Groups');
+    navigation.navigate('Group');
   };
 
   return (

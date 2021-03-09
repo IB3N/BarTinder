@@ -7,6 +7,7 @@ import Profile from '../screens/Main/Profile/Profile';
 import MyDrinks from '../screens/Main/MyDrinks';
 // import GroupItem from '../screens/Main/Group/GroupItem';
 import Swipe from '../screens/Main/Swipe';
+import SwipeTest from '../screens/Main/SwipeTest';
 import DeleteAccount from '../screens/Main/Profile/DeleteAccount';
 // import CreateGroupForm from '../screens/Main/Group/CreateGroupForm';
 import CocktailContext from '../context/CocktailContext';
@@ -52,7 +53,7 @@ const MainStack = () => {
         />
         <Stack.Screen
           name="Swipe"
-          component={Swipe}
+          component={SwipeTest}
           options={{ headerShown: false }}
         />
         <Stack.Screen

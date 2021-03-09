@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, Animated, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Colours from '../../assets/colours';
 
 import TopBarButtons from '../../components/TopBarButtons';
-import CocktailCard from '../../components/CocktailCard';
+import CocktailCardTest from '../../components/CocktailCardTest';
 import SwipeButtons from '../../components/SwipeButtons';
 
 import api from '../../apiService';
@@ -16,10 +16,12 @@ import TheCocktailDB from '../../apiService/TheCocktailDB';
 import CocktailContext from '../../context/CocktailContext';
 import UserContext from '../../context/UserContext';
 
+const SCREEN_HEIGHT = Dimensions.get('window').height;
+const SCREEN_WIDTH = Dimensions.get('window').width;
+
 const Swipe = ({ navigation, route }) => {
   const [user, _] = React.useContext(UserContext);
   const [cocktails, __] = React.useContext(CocktailContext);
-  console.log('Swipe');
 
   const [current, setCurrent] = React.useState(0); // Keeps track of the cocktail index in the cocktails array
   const [cocktail, setCocktail] = React.useState({});
@@ -55,6 +57,14 @@ const Swipe = ({ navigation, route }) => {
     setCurrent((prev) => prev + direction);
   };
 
+  const renderCocktails = () => {
+    return cocktails
+      .map((item, i) => {
+        return <CocktailCardTest key={item.idDrink} cocktail={cocktails[i]} />;
+      })
+      .reverse();
+  };
+
   // I want to make some swipes here
   return (
     <SafeAreaView style={styles.swipeScreenContainer}>
@@ -63,15 +73,11 @@ const Swipe = ({ navigation, route }) => {
         route={route}
         style={styles.flexStart}
       />
-      {Object.keys(cocktail).length ? (
-        <CocktailCard cocktail={cocktail} />
-      ) : (
-        <Text>Loading</Text>
-      )}
+      {Object.keys(cocktail).length ? renderCocktails() : <Text>Loading</Text>}
       <SwipeButtons
         handleSwipe={handleSwipe}
         handleForwardBack={handleForwardBack}
-        styles={styles.f}
+        styles={styles.flexEnd}
       />
     </SafeAreaView>
   );

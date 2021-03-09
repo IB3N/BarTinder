@@ -14,6 +14,7 @@ import TopBarButtons from '../../../components/TopBarButtons';
 import UserContext from '../../../context/UserContext';
 import GroupsContext from '../../../context/GroupsContext';
 import api from '../../../apiService/index';
+import Splash from '../../../splash/Splash';
 
 const Group = ({ navigation, route }) => {
   const [user, _] = React.useContext(UserContext);
@@ -47,7 +48,7 @@ const Group = ({ navigation, route }) => {
           style={styles.flatlist}
         />
       ) : (
-        <Text>No groups?</Text>
+        <Splash />
       )}
     </SafeAreaView>
   );

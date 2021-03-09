@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import * as React from 'react';
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatList } from 'react-native-gesture-handler';
 
@@ -13,6 +13,7 @@ import CocktailCard from '../../components/CocktailCard';
 import UserContext from '../../context/UserContext';
 import api from '../../apiService';
 import TheCocktailDB from '../../apiService/TheCocktailDB';
+import Splash from '../../splash/Splash';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -59,6 +60,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colours.charcoal,
+  },
+  shaker: {
+    flex: 1,
+    padding: 50,
   },
   drinks: {
     maxWidth: windowWidth,

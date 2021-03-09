@@ -11,19 +11,23 @@ import TopBarButtons from '../../../components/TopBarButtons';
 import UserContext from '../../../context/UserContext';
 
 const Profile = ({ navigation, route }) => {
-  const [user, setUser] = React.useContext(UserContext);
+  const [{ username, firstName, lastName, email }, setUser] = React.useContext(
+    UserContext,
+  );
 
   return (
     <SafeAreaView style={styles.profileScreenContainer}>
-      <TopBarButtons navigation={navigation} route={route} />
-      <View style={styles.profilePictureContainer}>
-        <Text style={styles.profilePicture}>👨‍🦳</Text>
-      </View>
+      <TopBarButtons
+        navigation={navigation}
+        route={route}
+        style={styles.flexStart}
+      />
+      <Text style={styles.profileHeader}>
+        {(firstName + ' ' + lastName).toUpperCase()}
+      </Text>
       <View style={styles.infoContainer}>
-        <InfoRow header="USERNAME" info={user.username} />
-        <InfoRow header="NAME" info={user.firstName} />
-        <InfoRow header="SURNAME" info={user.lastName} />
-        <InfoRow header="EMAIL" info={user.email} />
+        <InfoRow header="USERNAME" info={username} />
+        <InfoRow header="EMAIL" info={email} />
         <InfoRow header="PASSWORD" info="change" />
       </View>
       <View style={styles.deleteContainer}>
@@ -50,17 +54,21 @@ const styles = StyleSheet.create({
   profileScreenContainer: {
     flex: 1,
     alignItems: 'stretch',
-    backgroundColor: Colours.green,
-  },
-  profilePictureContainer: {
-    alignSelf: 'center',
     backgroundColor: Colours.charcoal,
-    borderRadius: 200,
-    padding: 20,
-    marginTop: 20,
   },
-  profilePicture: {
-    fontSize: 100,
+  flexStart: {
+    alignSelf: 'flex-start',
+  },
+  profileHeader: {
+    fontSize: 65,
+    marginTop: 50,
+    color: Colours.green,
+    textAlign: 'center',
+    alignSelf: 'center',
+    fontFamily: 'B',
+    textShadowColor: '#000000aa',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 2,
   },
   infoContainer: {
     marginVertical: 40,

@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Colours from '../../../assets/colours';
 
@@ -18,11 +20,31 @@ const GroupItem = ({ route }) => {
   return (
     <MatchesMembersContext.Provider value={matchesMembersHook}>
       <Tab.Navigator
+        screenOptions={({ route }) => ({
+          // eslint-disable-next-line react/display-name
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+
+            if (route.name === 'Matches') {
+              return (
+                <MaterialCommunityIcons
+                  name="glass-cocktail"
+                  size={size}
+                  color={color}
+                />
+              );
+            } else if (route.name === 'Members') {
+              iconName = focused ? 'people' : 'people-outline';
+            }
+
+            // You can return any component that you like here!
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
         tabBarOptions={{
           style: { backgroundColor: Colours.charcoal, opacity: 0.9 },
-        }}
-        labelStyle={{
-          fontSize: 24,
+          activeTintColor: Colours.sienna,
+          inactiveTintColor: Colours.green,
         }}
       >
         <Tab.Screen name="Matches" component={Matches} />

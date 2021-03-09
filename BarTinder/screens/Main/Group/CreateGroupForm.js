@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   },
   goBackText: {
     fontSize: 30,
-    color: Colours.yellow,
+    color: Colours.green,
     fontWeight: '800',
     paddingTop: 30,
     paddingLeft: 30,

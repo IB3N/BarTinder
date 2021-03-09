@@ -100,7 +100,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignSelf: 'stretch',
     marginHorizontal: 15,
-    marginVertical: 10,
+    marginBottom: 10,
+    marginTop: 20,
     borderStyle: 'solid',
     borderWidth: 1,
     borderColor: Colours.green,
@@ -115,7 +116,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colours.yellow,
   },
   addMemberButton: {
-    padding: 12,
+    paddingHorizontal: 12,
+    fontSize: 30,
+    fontFamily: 'B',
   },
   memberContainer: {
     alignSelf: 'stretch',

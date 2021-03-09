@@ -29,20 +29,22 @@ const styles = StyleSheet.create({
   name: {
     minWidth: '40%',
     backgroundColor: Colours.brown,
-    paddingVertical: 10,
+    paddingVertical: 6,
     paddingLeft: 20,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
   },
   text: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: '600',
     color: Colours.charcoal,
+    fontFamily: 'P',
   },
   email: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '500',
-    paddingVertical: 15,
+    paddingVertical: 10,
     paddingLeft: 20,
+    fontFamily: 'L',
   },
 });

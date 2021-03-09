@@ -1,44 +1,55 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 
 import Colours from '../../assets/colours';
 import ButtonStyles from '../../assets/button.styles';
 
 const Home = ({ navigation }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>BarTinder</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Swipe', {})}>
-        <Image
-          source={require('../../assets/tumblerSmall.png')}
-          style={styles.logo}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={ButtonStyles.button}
-        onPress={() => navigation.navigate('MyDrinks', {})}
-      >
-        <Text style={ButtonStyles.buttonText}>My Drinks</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={ButtonStyles.button}
-        onPress={() => navigation.navigate('Swipe', {})}
-      >
-        <Text style={ButtonStyles.buttonText}>Swipe</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={ButtonStyles.button}
-        onPress={() => navigation.navigate('Groups', {})}
-      >
-        <Text style={ButtonStyles.buttonText}>Groups</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={ButtonStyles.button}
-        onPress={() => navigation.navigate('Profile', {})}
-      >
-        <Text style={ButtonStyles.buttonText}>Profile</Text>
-      </TouchableOpacity>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Text style={styles.welcome}>BARTINDER</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Swipe', {})}>
+          <Image
+            source={require('../../assets/tumblerSmall.png')}
+            style={styles.logo}
+          />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity
+          style={ButtonStyles.button}
+          onPress={() => navigation.navigate('MyDrinks', {})}
+        >
+          <Text style={ButtonStyles.buttonText}>My Drinks</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={ButtonStyles.button}
+          onPress={() => navigation.navigate('Swipe', {})}
+        >
+          <Text style={ButtonStyles.buttonText}>Swipe</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={ButtonStyles.button}
+          onPress={() => navigation.navigate('Groups', {})}
+        >
+          <Text style={ButtonStyles.buttonText}>Groups</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={ButtonStyles.button}
+          onPress={() => navigation.navigate('Profile', {})}
+        >
+          <Text style={ButtonStyles.buttonText}>Profile</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -47,20 +58,29 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
     backgroundColor: Colours.charcoal,
   },
+  logoContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 100,
+  },
+  buttonsContainer: {
+    justifyContent: 'center',
+  },
   logo: {
-    marginBottom: 60,
     width: 140,
     height: 140,
   },
   welcome: {
-    fontSize: 36,
-    paddingBottom: 48,
+    fontSize: 65,
     color: Colours.green,
     textAlign: 'center',
-    fontWeight: '500',
+    fontFamily: 'B',
+    textShadowColor: '#000000aa',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 2,
   },
 });

@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
 import * as React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 import Colours from '../assets/colours';
 
-const SwipeButtons = ({ handleSwipe, handleRefresh }) => {
+const SwipeButtons = ({ like, dislike, handleRefresh }) => {
   return (
     <View style={styles.swipeButtons}>
       <TouchableOpacity
         style={styles.swipeButtonTouchable}
-        onPress={() => handleSwipe(false)}
+        onPress={() => dislike()}
       >
         <Image
           source={require('../assets/icons/dislike/sienna.png')}
@@ -27,7 +27,7 @@ const SwipeButtons = ({ handleSwipe, handleRefresh }) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.swipeButtonTouchable}
-        onPress={() => handleSwipe(true)}
+        onPress={() => like()}
       >
         <Image
           source={require('../assets/icons/like/sienna.png')}

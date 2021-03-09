@@ -8,11 +8,11 @@ import {
   FlatList,
   Dimensions,
 } from 'react-native';
+import { Card } from 'react-native-card-stack-swiper';
 
 import Colours from '../assets/colours';
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const CocktailCard = ({ cocktail }) => {
   const loadRecipe = () => {
@@ -32,7 +32,7 @@ const CocktailCard = ({ cocktail }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <Card style={styles.container}>
       <Text style={styles.header}>{cocktail.strDrink.toUpperCase()}</Text>
       <Image source={{ uri: cocktail.strDrinkThumb }} style={styles.cocktail} />
       <View style={styles.ingredients}>
@@ -49,7 +49,7 @@ const CocktailCard = ({ cocktail }) => {
           )}
         />
       </View>
-    </View>
+    </Card>
   );
 };
 
@@ -58,10 +58,11 @@ export default CocktailCard;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     alignItems: 'center',
     margin: 10,
     width: windowWidth - 20,
+    backgroundColor: Colours.charcoal,
   },
   header: {
     fontSize: 40,

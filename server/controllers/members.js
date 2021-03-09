@@ -5,7 +5,6 @@ const { member, user } = require('../models');
 exports.createMember = async (req, res) => {
   try {
     const { email, groupId } = req.body;
-    console.log('group Id= ', groupId, 'email= ', email);
     const foundUser = await user.findOne({ where: { email } });
     await member.create({
       groupId,

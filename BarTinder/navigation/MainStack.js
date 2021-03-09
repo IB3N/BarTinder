@@ -34,12 +34,18 @@ const MainStack = () => {
   React.useEffect(() => {
     theCocktailDB
       .getCocktails()
-      .then((unfiltered) =>
-        unfiltered.drinks.filter((cocktail) => {
-          return !likes.some((like) => like.drinkId === +cocktail.idDrink);
+      .then(({ drinks }) =>
+        drinks.filter((cocktail) => {
+          return !likes.some(({ drinkId }) => drinkId === +cocktail.idDrink);
         }),
       )
-      .then((filtered) => setCocktails(arrayShuffle(filtered)));
+      .then((filtered) =>
+        Promise.all(
+          filtered.map(({ idDrink }) =>
+            theCocktailDB.getOne(idDrink).then(({ drinks }) => drinks[0]),
+          ),
+        ).then((fullCocktails) => setCocktails(arrayShuffle(fullCocktails))),
+      );
   }, [likes]);
 
   return (

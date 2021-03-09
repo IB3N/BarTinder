@@ -6,7 +6,7 @@ import ButtonStyles from '../../assets/button.styles';
 const Welcome = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome to BarTinder!</Text>
+      <Text style={styles.welcome}>BarTinder</Text>
       <Image
         source={require('../../assets/tumblerSmall.png')}
         style={styles.logo}
@@ -41,14 +41,17 @@ const styles = StyleSheet.create({
     backgroundColor: Colours.charcoal,
   },
   logo: {
-    marginBottom: 60,
+    marginBottom: 100,
     width: 140,
     height: 140,
   },
   welcome: {
-    fontSize: 36,
-    paddingBottom: 48,
+    fontSize: 60,
     color: Colours.green,
     textAlign: 'center',
+    fontFamily: 'B',
+    textShadowColor: '#000000aa',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 2,
   },
 });

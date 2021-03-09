@@ -51,7 +51,7 @@ const Swipe = ({ navigation, route }) => {
   };
 
   // When a user wants to load a new drink without liking/disliking
-  const handleForwardBack = (direction) => {
+  const handleNextCocktail = (direction) => {
     const newIndex = current + direction;
     if (newIndex < 0 || newIndex >= cocktails.length) return; // handle edge cases where index is less than one or greater than array length
     setCurrent((prev) => prev + direction);
@@ -61,7 +61,16 @@ const Swipe = ({ navigation, route }) => {
     // make this its own component
     return cocktails
       .map((item, i) => {
-        return <CocktailCardTest key={item.idDrink} cocktail={cocktails[i]} />;
+        return (
+          <CocktailCardTest
+            key={item.idDrink}
+            cocktail={cocktails[i]}
+            handleSwipe={handleSwipe}
+            handleNextCocktail={handleNextCocktail}
+            current={current}
+            setCurrent={setCurrent}
+          />
+        );
       })
       .reverse();
   };
@@ -70,10 +79,16 @@ const Swipe = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.swipeScreenContainer}>
       <TopBarButtons navigation={navigation} route={route} />
-      {Object.keys(cocktail).length ? renderCocktails() : <Text>Loading</Text>}
+      <CocktailCardTest
+        handleSwipe={handleSwipe}
+        handleNextCocktail={handleNextCocktail}
+        current={current}
+        setCurrent={setCurrent}
+      />
+      {/* {Object.keys(cocktail).length ? renderCocktails() : <Text>Loading</Text>} */}
       <SwipeButtons
         handleSwipe={handleSwipe}
-        handleForwardBack={handleForwardBack}
+        handleForwardBack={handleNextCocktail}
       />
     </SafeAreaView>
   );

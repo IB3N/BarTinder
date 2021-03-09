@@ -10,48 +10,59 @@ import {
   PanResponder,
   Animated,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Colours from '../assets/colours';
 import TheCocktailDB from '../apiService/TheCocktailDB';
+import CocktailContext from '../context/CocktailContext';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const CocktailCard = ({ cocktail }) => {
-  const [fullCocktail, setFullCocktail] = React.useState([]);
+const CocktailCard = ({
+  handleSwipe,
+  handleNextCocktail,
+  current,
+  setCurrent,
+}) => {
+  const [fullCocktails, setFullCocktails] = React.useState([]);
+  const [cocktails, __] = React.useContext(CocktailContext);
 
   // function that will call the api for each new cocktail
   React.useEffect(() => {
-    TheCocktailDB.getOne(cocktail.idDrink).then((drink) =>
-      setFullCocktail(drink.drinks[0]),
-    );
+    Promise.all(
+      cocktails.map((cocktail) =>
+        TheCocktailDB.getOne(cocktail.idDrink).then((drink) => drink),
+      ),
+    ).then((drinks) => setFullCocktails(drinks));
   }, []);
 
   const pan = React.useRef(new Animated.ValueXY()).current;
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
-    onPanResponderMove: Animated.event(
-      [
-        null,
-        {
-          dx: pan.x, // x,y are Animated.Value
-          dy: pan.y,
-        },
-      ],
-      { useNativeDriver: false },
-    ),
+    onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], {
+      useNativeDriver: false,
+    }),
     onPanResponderRelease: (evt, gestureState) => {
+      console.log(gestureState.dy);
       if (gestureState.dx > 120) {
+        // Swipe right to like
         Animated.spring(
           pan, // Auto-multiplexed
-          { toValue: { x: windowWidth, y: gestureState.dy } }, // Off to the right
-        ).start(); // Call like function)
+          { toValue: { x: windowWidth + 100, y: gestureState.dy } }, // Off page to the right
+        ).start(() => handleSwipe(true)); // Call like function)
       } else if (gestureState.dx < -120) {
+        // Swipe left to dislike
         Animated.spring(
           pan, // Auto-multiplexed
-          { toValue: { x: -windowWidth - 100, y: gestureState.dy } }, // Off to the right
-        ).start(); // Call dislike function)
+          { toValue: { x: -windowWidth - 100, y: gestureState.dy } }, // Off page to the right
+        ).start(() => handleSwipe(false)); // Call dislike function)
+      } else if (gestureState.dy < -120) {
+        // Swipe up to get next cocktail
+        Animated.spring(pan, {
+          toValue: { x: 0, y: -windowHeight - 100 },
+        }).start(() => handleNextCocktail(1)); // increment current index
       } else {
         Animated.spring(
           pan, // Auto-multiplexed
@@ -71,22 +82,6 @@ const CocktailCard = ({ cocktail }) => {
     transform: [{ rotate }, ...pan.getTranslateTransform()],
   };
 
-  const loadRecipe = () => {
-    const loadedRecipe = [];
-    let i = 0;
-    let { strIngredient1, strMeasure1 } = fullCocktail;
-    while (strIngredient1) {
-      loadedRecipe[i] = {
-        ingred: strIngredient1,
-        measure: strMeasure1,
-      };
-      i++;
-      strIngredient1 = fullCocktail[`strIngredient${i + 1}`];
-      strMeasure1 = fullCocktail[`strMeasure${i + 1}`];
-    }
-    return loadedRecipe;
-  };
-
   const likeOpacity = pan.x.interpolate({
     inputRange: [-windowWidth / 2, 0, windowWidth / 2],
     outputRange: [0, 0, 1],
@@ -99,60 +94,86 @@ const CocktailCard = ({ cocktail }) => {
     extrapolate: 'clamp',
   });
 
-  return (
-    <Animated.View
-      {...panResponder.panHandlers}
-      style={[rotateAndTranslate, styles.container]}
-    >
-      {/* <Text style={styles.header}>{cocktail.strDrink.toUpperCase()}</Text> */}
-      <Animated.View
-        style={{
-          opacity: likeOpacity,
-          transform: [{ rotate: '-30deg' }],
-          position: 'absolute',
-          top: 250,
-          left: 50,
-          zIndex: 1000,
-        }}
-      >
-        <Text
-          style={{
-            borderWidth: 1,
-            borderColor: 'green',
-            color: 'green',
-            fontSize: 26,
-            fontWeight: '800',
-            padding: 10,
-          }}
-        >
-          LIKE
-        </Text>
-      </Animated.View>
-      <Animated.View
-        style={{
-          opacity: nopeOpacity,
-          transform: [{ rotate: '30deg' }],
-          position: 'absolute',
-          top: 250,
-          right: 50,
-          zIndex: 1000,
-        }}
-      >
-        <Text
-          style={{
-            borderWidth: 1,
-            borderColor: 'red',
-            color: 'red',
-            fontSize: 26,
-            fontWeight: '800',
-            padding: 10,
-          }}
-        >
-          NOPE
-        </Text>
-      </Animated.View>
-      <Image source={{ uri: cocktail.strDrinkThumb }} style={styles.cocktail} />
-      {/* <View style={styles.ingredients}>
+  const loadRecipe = (cocktail) => {
+    const loadedRecipe = [];
+    let i = 0;
+    let { strIngredient1, strMeasure1 } = cocktail;
+    while (strIngredient1) {
+      loadedRecipe[i] = {
+        ingred: strIngredient1,
+        measure: strMeasure1,
+      };
+      i++;
+      strIngredient1 = cocktail[`strIngredient${i + 1}`];
+      strMeasure1 = cocktail[`strMeasure${i + 1}`];
+    }
+    return loadedRecipe;
+  };
+
+  const renderCocktails = () => {
+    // make this its own component
+    return cocktails
+      .map((item, i) => {
+        console.log(current);
+        if (i === current) {
+          return (
+            <Animated.View
+              key={item.idDrink}
+              {...panResponder.panHandlers}
+              style={[rotateAndTranslate, styles.container]}
+            >
+              {/* <Text style={styles.header}>{cocktail.strDrink.toUpperCase()}</Text> */}
+              <Animated.View
+                style={{
+                  opacity: likeOpacity,
+                  transform: [{ rotate: '-30deg' }],
+                  position: 'absolute',
+                  top: 250,
+                  left: 50,
+                  zIndex: 1000,
+                }}
+              >
+                <Text
+                  style={{
+                    borderWidth: 1,
+                    borderColor: 'green',
+                    color: 'green',
+                    fontSize: 26,
+                    fontWeight: '800',
+                    padding: 10,
+                  }}
+                >
+                  LIKE
+                </Text>
+              </Animated.View>
+              <Animated.View
+                style={{
+                  opacity: nopeOpacity,
+                  transform: [{ rotate: '30deg' }],
+                  position: 'absolute',
+                  top: 250,
+                  right: 50,
+                  zIndex: 1000,
+                }}
+              >
+                <Text
+                  style={{
+                    borderWidth: 1,
+                    borderColor: 'red',
+                    color: 'red',
+                    fontSize: 26,
+                    fontWeight: '800',
+                    padding: 10,
+                  }}
+                >
+                  NOPE
+                </Text>
+              </Animated.View>
+              <Image
+                source={{ uri: item.strDrinkThumb }}
+                style={styles.cocktail}
+              />
+              {/* <View style={styles.ingredients}>
         <FlatList
           data={loadRecipe(fullCocktail)}
           keyExtractor={(item) => item.ingred}
@@ -166,6 +187,86 @@ const CocktailCard = ({ cocktail }) => {
           )}
         />
       </View> */}
+            </Animated.View>
+          );
+        } else {
+          return (
+            <Animated.View key={item.idDrink} style={styles.container}>
+              {/* <Text style={styles.header}>{cocktail.strDrink.toUpperCase()}</Text> */}
+              <Animated.View
+                style={{
+                  opacity: likeOpacity,
+                  transform: [{ rotate: '-30deg' }],
+                  position: 'absolute',
+                  top: 250,
+                  left: 50,
+                  zIndex: 1000,
+                }}
+              >
+                <Text
+                  style={{
+                    borderWidth: 1,
+                    borderColor: 'green',
+                    color: 'green',
+                    fontSize: 26,
+                    fontWeight: '800',
+                    padding: 10,
+                  }}
+                >
+                  LIKE
+                </Text>
+              </Animated.View>
+              <Animated.View
+                style={{
+                  opacity: nopeOpacity,
+                  transform: [{ rotate: '30deg' }],
+                  position: 'absolute',
+                  top: 250,
+                  right: 50,
+                  zIndex: 1000,
+                }}
+              >
+                <Text
+                  style={{
+                    borderWidth: 1,
+                    borderColor: 'red',
+                    color: 'red',
+                    fontSize: 26,
+                    fontWeight: '800',
+                    padding: 10,
+                  }}
+                >
+                  NOPE
+                </Text>
+              </Animated.View>
+              <Image
+                source={{ uri: item.strDrinkThumb }}
+                style={styles.cocktail}
+              />
+              {/* <View style={styles.ingredients}>
+        <FlatList
+          data={loadRecipe(fullCocktail)}
+          keyExtractor={(item) => item.ingred}
+          horizontal={false}
+          numColumns={2}
+          contentContainerStyle={styles.flatlist}
+          renderItem={({ item }) => (
+            <View style={styles.ingredient}>
+              <Text style={styles.ingredientText}>{item.ingred}</Text>
+            </View>
+          )}
+        />
+      </View> */}
+            </Animated.View>
+          );
+        }
+      })
+      .reverse();
+  };
+
+  return (
+    <Animated.View>
+      {fullCocktails.length ? renderCocktails() : <Text>Loading</Text>}
     </Animated.View>
   );
 };
@@ -175,11 +276,11 @@ export default CocktailCard;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     borderRadius: 10,
     margin: 10,
     position: 'absolute',
+    bottom: -windowHeight / 2,
+    right: -windowWidth / 2 - 40,
     width: windowWidth - 20,
     height: windowHeight - 200,
   },

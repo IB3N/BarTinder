@@ -41,7 +41,7 @@ const CreateGroupForm = ({ navigation, route }) => {
       return;
     }
     await api.createGroup(groupName).then((group) => {
-      setGroups((prevGroups) => [...prevGroups, group]);
+      setGroups((prevGroups) => [group, ...prevGroups]);
       api.addMember(group.id, user.email);
     });
     setGroupName('');

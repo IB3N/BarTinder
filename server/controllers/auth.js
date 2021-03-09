@@ -25,7 +25,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   const { username, password } = req.body;
   try {
-    const userExists = await user.findAll({
+    const userExists = await user.findOne({
       where: {
         username,
         password,

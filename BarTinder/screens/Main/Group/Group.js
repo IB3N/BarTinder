@@ -47,7 +47,7 @@ const Group = ({ navigation, route }) => {
           style={styles.flatlist}
         />
       ) : (
-        <Text>Loading</Text>
+        <Text>No groups?</Text>
       )}
     </SafeAreaView>
   );

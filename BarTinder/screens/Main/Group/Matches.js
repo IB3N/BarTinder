@@ -41,6 +41,7 @@ export default Matches;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: Colours.charcoal,
   },
   drinks: {

@@ -10,6 +10,7 @@ const {
   choose,
   usersLikes,
   usersDislikes,
+  usersLikesAndDislikes,
 } = require('./controllers/likes');
 const { createGroup, getGroup } = require('./controllers/groups');
 const {
@@ -31,6 +32,7 @@ router.get('/likes', allLikes);
 router.post('/likes', choose); // When a user swipes right or left
 router.post('/user/likes', usersLikes);
 router.post('/user/dislikes', usersDislikes);
+router.post('/user/likesAndDislikes', usersLikesAndDislikes);
 
 // Groups
 router.post('/group', createGroup);

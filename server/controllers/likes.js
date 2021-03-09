@@ -54,3 +54,14 @@ exports.usersDislikes = async (req, res) => {
     res.status(500);
   }
 };
+
+exports.usersLikesAndDislikes = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const likesAndDislikes = await like.findAll({ where: { userId } });
+    res.send(likesAndDislikes).status(200);
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+  }
+};

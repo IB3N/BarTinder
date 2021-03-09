@@ -23,14 +23,8 @@ exports.usersGroups = async (req, res) => {
     const { userId } = req.body;
     const groupIds = await member.findAll({
       where: { userId },
+      order: [['groupId', 'DESC']],
     });
-    // let groups = [];
-    // await groupIds.forEach(async ({ groupId }) => {
-    //   const foundGroup = await group.findByPk(groupId);
-    //   groups.push(foundGroup.dataValues);
-    //   console.log(foundGroup.dataValues);
-    //   console.log(groups);
-    // });
     res.send(groupIds).status(200);
   } catch (error) {
     console.error(error);

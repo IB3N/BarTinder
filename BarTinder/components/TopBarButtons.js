@@ -9,7 +9,10 @@ const TopBarButtons = ({ navigation, route }) => {
         <Text style={styles.goBackText}>←</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-        <Text style={styles.topBarButton}>🏠</Text>
+        <Image
+          source={require('../assets/tumblerSmall.png')}
+          style={styles.homeLogo}
+        />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Profile', route)}>
         <Text style={styles.topBarButton}>🤓</Text>
@@ -30,6 +33,11 @@ const styles = StyleSheet.create({
   },
   topBarButton: {
     fontSize: 24,
+  },
+  homeLogo: {
+    marginTop: 5,
+    width: 33,
+    height: 33,
   },
   appName: {
     fontWeight: '700',

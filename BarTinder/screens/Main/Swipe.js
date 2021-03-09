@@ -22,6 +22,7 @@ const Swipe = ({ navigation, route }) => {
 
   const [current, setCurrent] = React.useState(0); // Keeps track of the cocktail index in the cocktails array
   const [cocktail, setCocktail] = React.useState({});
+  const [likes, setLikes] = React.useState([]);
 
   // function that will call the api for each new cocktail
   const fetchCocktail = async (id) => {
@@ -29,6 +30,12 @@ const Swipe = ({ navigation, route }) => {
       setCocktail(drink.drinks[0]),
     );
   };
+
+  React.useEffect(() => {
+    api
+      .getLikesAndDislikes(user.id)
+      .then((fetchedLikesAndDislikes) => setLikes(fetchedLikesAndDislikes));
+  }, []);
 
   // Initial call to The Cocktail DB to get one full cocktail object
   // Ingredients and measures included
@@ -48,10 +55,15 @@ const Swipe = ({ navigation, route }) => {
   };
 
   // When a user wants to load a new drink without liking/disliking
-  const handleForwardBack = (direction) => {
-    const newIndex = current + direction;
+  const handleRefresh = () => {
+    let newIndex = current + 1;
     if (newIndex < 0 || newIndex >= cocktails.length) return; // handle edge cases where index is less than one or greater than array length
-    setCurrent((prev) => prev + direction);
+    while (
+      likes.some((like) => like.drinkId === +cocktails[newIndex].idDrink)
+    ) {
+      newIndex++;
+    }
+    setCurrent(newIndex);
   };
 
   // I want to make some swipes here
@@ -69,7 +81,7 @@ const Swipe = ({ navigation, route }) => {
       )}
       <SwipeButtons
         handleSwipe={handleSwipe}
-        handleForwardBack={handleForwardBack}
+        handleRefresh={handleRefresh}
         styles={styles.f}
       />
     </SafeAreaView>

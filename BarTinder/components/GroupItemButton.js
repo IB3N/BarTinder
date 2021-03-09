@@ -23,7 +23,8 @@ const GroupItemButton = ({ header, navigation, groupId }) => {
     api.getMatches(memberIds).then((fetchedMatches) =>
       Promise.all(
         fetchedMatches
-          .sort((a, b) => b.count - a.count)
+          .filter((item) => item.count > 1) // Filter only matches greater than 2
+          .sort((a, b) => b.count - a.count) // Sort them in ascending order
           .map((match) =>
             TheCocktailDB.getOne(match.drinkId).then((drink) => ({
               ...match,
@@ -44,7 +45,9 @@ const GroupItemButton = ({ header, navigation, groupId }) => {
         <Text style={styles.groupHeader}>{header}</Text>
         <View style={styles.groupInfo}>
           <Text style={styles.groupInfoText}>Matches: {matches.length}</Text>
-          <Text style={styles.groupInfoText}>People: {members.length}</Text>
+          <Text style={styles.groupInfoText}>
+            People: {members.length || 1}
+          </Text>
         </View>
       </TouchableOpacity>
     </View>

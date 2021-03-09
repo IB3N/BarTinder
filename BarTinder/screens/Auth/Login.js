@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
   },
   input: {
     padding: 10,
+    minWidth: 200,
     marginBottom: 10,
     flexDirection: 'row',
     borderColor: Colours.brown,

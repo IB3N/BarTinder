@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 import Colours from '../assets/colours';
 
-const SwipeButtons = ({ handleSwipe, handleForwardBack }) => {
+const SwipeButtons = ({ handleSwipe, handleRefresh }) => {
   return (
     <View style={styles.swipeButtons}>
       <TouchableOpacity
@@ -15,15 +15,9 @@ const SwipeButtons = ({ handleSwipe, handleForwardBack }) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.swipeButtonTouchable}
-        onPress={() => handleForwardBack(-1)}
+        onPress={() => handleRefresh()}
       >
         <Text style={styles.swipeButton}>⇠</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.swipeButtonTouchable}
-        onPress={() => handleForwardBack(1)}
-      >
-        <Text style={styles.swipeButton}>⇢</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.swipeButtonTouchable}

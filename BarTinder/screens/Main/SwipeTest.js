@@ -58,6 +58,7 @@ const Swipe = ({ navigation, route }) => {
   };
 
   const renderCocktails = () => {
+    // make this its own component
     return cocktails
       .map((item, i) => {
         return <CocktailCardTest key={item.idDrink} cocktail={cocktails[i]} />;
@@ -68,16 +69,11 @@ const Swipe = ({ navigation, route }) => {
   // I want to make some swipes here
   return (
     <SafeAreaView style={styles.swipeScreenContainer}>
-      <TopBarButtons
-        navigation={navigation}
-        route={route}
-        style={styles.flexStart}
-      />
+      <TopBarButtons navigation={navigation} route={route} />
       {Object.keys(cocktail).length ? renderCocktails() : <Text>Loading</Text>}
       <SwipeButtons
         handleSwipe={handleSwipe}
         handleForwardBack={handleForwardBack}
-        styles={styles.flexEnd}
       />
     </SafeAreaView>
   );
@@ -88,14 +84,8 @@ export default Swipe;
 const styles = StyleSheet.create({
   swipeScreenContainer: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: Colours.charcoal,
-  },
-  flexStart: {
-    alignSelf: 'flex-start',
-  },
-  flexEnd: {
-    alignSelf: 'flex-end',
   },
 });

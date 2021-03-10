@@ -22,7 +22,7 @@ const Swipe = ({ navigation, route }) => {
 
   const [likes, setLikes] = React.useState([]);
 
-  const swiper = React.createRef();
+  const swiper = React.useRef(null);
 
   React.useEffect(() => {
     api
@@ -61,9 +61,9 @@ const Swipe = ({ navigation, route }) => {
         {renderCocktailCards()}
       </CardStack>
       <SwipeButtons
-        like={swiper.swipeRight}
-        dislike={swiper.swipeLeft}
-        handleRefresh={swiper.swipeTop}
+        like={() => swiper.current.swipeRight()}
+        dislike={() => swiper.current.swipeLeft()}
+        handleRefresh={() => swiper.current.swipeTop()}
         styles={styles.f}
       />
     </SafeAreaView>

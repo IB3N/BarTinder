@@ -41,15 +41,19 @@ const MyDrinks = ({ navigation, route }) => {
         route={route}
         style={styles.flexStart}
       />
-      <FlatList
-        horizontal
-        pagingEnabled={true}
-        showsHorizontalScrollIndicator={false}
-        data={likes}
-        keyExtractor={(item) => item.idDrink}
-        renderItem={({ item }) => <CocktailCard cocktail={item} />}
-        style={styles.drinks}
-      />
+      {!likes.length ? (
+        <Splash />
+      ) : (
+        <FlatList
+          horizontal
+          pagingEnabled={true}
+          showsHorizontalScrollIndicator={false}
+          data={likes}
+          keyExtractor={(item) => item.idDrink}
+          renderItem={({ item }) => <CocktailCard cocktail={item} />}
+          style={styles.drinks}
+        />
+      )}
     </SafeAreaView>
   );
 };

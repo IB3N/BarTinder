@@ -3,7 +3,7 @@ import { Animated, Image, StyleSheet, Easing } from 'react-native';
 
 const Splash = () => {
   const animated = new Animated.ValueXY(0, 0);
-  const duration = 200;
+  const duration = 20000; // make this 200 - 250 for non demo purposes when working
 
   React.useEffect(() => {
     Animated.loop(

@@ -7,10 +7,7 @@ import Colours from '../assets/colours';
 const SwipeButtons = ({ like, dislike, handleRefresh }) => {
   return (
     <View style={styles.swipeButtons}>
-      <TouchableOpacity
-        style={styles.swipeButtonTouchable}
-        onPress={() => dislike()}
-      >
+      <TouchableOpacity style={styles.swipeButtonTouchable} onPress={dislike}>
         <Image
           source={require('../assets/icons/dislike/sienna.png')}
           style={styles.likeIcons}
@@ -18,17 +15,14 @@ const SwipeButtons = ({ like, dislike, handleRefresh }) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.swipeButtonTouchable}
-        onPress={() => handleRefresh()}
+        onPress={handleRefresh}
       >
         <Image
           source={require('../assets/icons/refresh/sienna.png')}
           style={styles.refreshIcon}
         />
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.swipeButtonTouchable}
-        onPress={() => like()}
-      >
+      <TouchableOpacity style={styles.swipeButtonTouchable} onPress={like}>
         <Image
           source={require('../assets/icons/like/sienna.png')}
           style={styles.likeIcons}
@@ -47,6 +41,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+    borderTopColor: Colours.sienna,
+    borderTopWidth: 1,
   },
   swipeButtonTouchable: {
     shadowColor: Colours.charcoal,
@@ -57,6 +53,7 @@ const styles = StyleSheet.create({
   likeIcons: {
     height: 60,
     width: 60,
+    marginBottom: -20,
   },
   refreshIcon: {
     height: 40,

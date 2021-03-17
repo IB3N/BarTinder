@@ -13,13 +13,11 @@ import SwipeButtons from '../../components/SwipeButtons';
 
 import api from '../../apiService';
 
-import CocktailContext from '../../context/CocktailContext';
-
 import { useSelector } from 'react-redux';
 
 const Swipe = ({ navigation, route }) => {
   const user = useSelector((state) => state.user.user);
-  const [cocktails, __] = React.useContext(CocktailContext);
+  const cocktails = useSelector((state) => state.cocktails.cocktails);
 
   const [likes, setLikes] = React.useState([]);
 
@@ -34,7 +32,6 @@ const Swipe = ({ navigation, route }) => {
   // When a user likes or dislikes a cocktail
   const handleSwipe = async (likeOrDislike, index) => {
     await api.swipe(user.id, cocktails[index].idDrink, likeOrDislike); // Add this cocktail to users likes list
-    // setCurrent((prev) => prev + 1); // Update cocktail index to begin to render next cocktail
   };
 
   const renderCocktailCards = () => {
@@ -57,7 +54,6 @@ const Swipe = ({ navigation, route }) => {
         secondCardZoom={0.4}
         onSwipedRight={(index) => handleSwipe(true, index)}
         onSwipedLeft={(index) => handleSwipe(false, index)}
-        // onSwipedTop={(index) => handleRefresh()}
       >
         {renderCocktailCards()}
       </CardStack>

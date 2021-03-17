@@ -6,12 +6,13 @@ import Profile from '../screens/Main/Profile/Profile';
 import MyDrinks from '../screens/Main/MyDrinks';
 import Swipe from '../screens/Main/Swipe';
 import DeleteAccount from '../screens/Main/Profile/DeleteAccount';
-import CocktailContext from '../context/CocktailContext';
 import theCocktailDB from '../apiService/TheCocktailDB';
 import api from '../apiService/';
 import GroupStack from '../navigation/GroupStack';
+
 import { addCocktails } from '../store/actions/cocktails';
 import { useDispatch, useSelector } from 'react-redux';
+
 const arrayShuffle = require('array-shuffle');
 
 const Stack = createStackNavigator();
@@ -19,8 +20,6 @@ const Stack = createStackNavigator();
 const MainStack = () => {
   const user = useSelector((state) => state.user.user);
   const [likes, setLikes] = React.useState([]);
-  const cocktailsHook = React.useState([]);
-  const setCocktails = cocktailsHook[1];
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -42,54 +41,50 @@ const MainStack = () => {
           filtered.map(({ idDrink }) =>
             theCocktailDB.getOne(idDrink).then(({ drinks }) => drinks[0]),
           ),
-        ).then((fullCocktails) => {
-          const shuffled = arrayShuffle(fullCocktails);
-          setCocktails(shuffled);
-          dispatch(addCocktails(shuffled));
-        }),
+        ).then((fullCocktails) =>
+          dispatch(addCocktails(arrayShuffle(fullCocktails))),
+        ),
       );
   }, [likes]);
 
   return (
-    <CocktailContext.Provider value={cocktailsHook}>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{ title: 'BarTinder', headerShown: false }}
-        />
-        <Stack.Screen
-          name="Profile"
-          component={Profile}
-          options={({ route }) => ({
-            title: route.params.name,
-            headerShown: false,
-          })}
-        />
-        <Stack.Screen
-          name="Groups"
-          component={GroupStack}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Swipe"
-          component={Swipe}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="MyDrinks"
-          component={MyDrinks}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Delete"
-          component={DeleteAccount}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </CocktailContext.Provider>
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{ title: 'BarTinder', headerShown: false }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={({ route }) => ({
+          title: route.params.name,
+          headerShown: false,
+        })}
+      />
+      <Stack.Screen
+        name="Groups"
+        component={GroupStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Swipe"
+        component={Swipe}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="MyDrinks"
+        component={MyDrinks}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Delete"
+        component={DeleteAccount}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
   );
 };
 

@@ -14,6 +14,8 @@ import theCocktailDB from '../apiService/TheCocktailDB';
 import api from '../apiService/';
 import GroupStack from '../navigation/GroupStack';
 import UserContext from '../context/UserContext';
+import { useDispatch } from 'react-redux';
+import { addCocktails } from '../store/actions/cocktails';
 
 const arrayShuffle = require('array-shuffle');
 
@@ -24,11 +26,13 @@ const MainStack = () => {
   const [likes, setLikes] = React.useState([]);
   const cocktailsHook = React.useState([]);
   const setCocktails = cocktailsHook[1];
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    api
-      .getLikesAndDislikes(user.id)
-      .then((fetchedLikesAndDislikes) => setLikes(fetchedLikesAndDislikes));
+    api.getLikesAndDislikes(user.id).then((fetchedLikesAndDislikes) => {
+      console.log(fetchedLikesAndDislikes);
+      setLikes(fetchedLikesAndDislikes);
+    });
   }, []);
 
   React.useEffect(() => {
@@ -44,7 +48,11 @@ const MainStack = () => {
           filtered.map(({ idDrink }) =>
             theCocktailDB.getOne(idDrink).then(({ drinks }) => drinks[0]),
           ),
-        ).then((fullCocktails) => setCocktails(arrayShuffle(fullCocktails))),
+        ).then((fullCocktails) => {
+          const shuffled = arrayShuffle(fullCocktails);
+          setCocktails(shuffled);
+          dispatch(addCocktails(shuffled));
+        }),
       );
   }, [likes]);
 

@@ -13,7 +13,17 @@ import Splash from './splash/Splash';
 export default function AppLayout() {
   const userRedux = useSelector((state) => state.user.user);
 
-  const userHook = React.useState({});
+  const userHook = React.useState({
+    id: 1,
+    firstName: 'Ben',
+    lastName: 'Pearce',
+    email: 'ben@email.com',
+    username: 'Ben',
+    password: 'ben',
+    friends: null,
+    createdAt: '2021-03-09T10:39:06.060Z',
+    updatedAt: '2021-03-09T10:39:06.060Z',
+  });
   // const user = Object.keys(userHook[0]);
   let [fontsLoaded] = useFonts({
     L: require('./assets/fonts/Lato-Regular.ttf'),

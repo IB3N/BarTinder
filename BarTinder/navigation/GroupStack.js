@@ -5,15 +5,16 @@ import Group from '../screens/Main/Group/Group';
 import GroupItem from '../screens/Main/Group/GroupItem';
 import CreateGroupForm from '../screens/Main/Group/CreateGroupForm';
 
-import UserContext from '../context/UserContext';
 import GroupsContext from '../context/GroupsContext';
+
+import { useSelector } from 'react-redux';
 
 import api from '../apiService';
 
 const Stack = createStackNavigator();
 
 const GroupStack = () => {
-  const [user, _] = React.useContext(UserContext);
+  const user = useSelector((stack) => stack.user.user);
   const groupsHook = React.useState([]);
   const setGroups = groupsHook[1];
 

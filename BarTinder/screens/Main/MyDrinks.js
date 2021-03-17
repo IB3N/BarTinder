@@ -10,15 +10,18 @@ import Colours from '../../assets/colours';
 import TopBarButtons from '../../components/TopBarButtons';
 import CocktailCard from '../../components/CocktailCard';
 
-import UserContext from '../../context/UserContext';
+// import UserContext from '../../context/UserContext';
 import api from '../../apiService';
 import TheCocktailDB from '../../apiService/TheCocktailDB';
 import Splash from '../../splash/Splash';
 
+import { useSelector } from 'react-redux';
+
 const windowWidth = Dimensions.get('window').width;
 
 const MyDrinks = ({ navigation, route }) => {
-  const [user, _] = React.useContext(UserContext);
+  const user = useSelector((state) => state.user.user);
+  // const [user, _] = React.useContext(UserContext);
   const [likes, setLikes] = React.useState([]);
 
   // Initial call to api to get users likes (drink id's)

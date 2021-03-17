@@ -14,10 +14,11 @@ import SwipeButtons from '../../components/SwipeButtons';
 import api from '../../apiService';
 
 import CocktailContext from '../../context/CocktailContext';
-import UserContext from '../../context/UserContext';
+
+import { useSelector } from 'react-redux';
 
 const Swipe = ({ navigation, route }) => {
-  const [user, _] = React.useContext(UserContext);
+  const user = useSelector((state) => state.user.user);
   const [cocktails, __] = React.useContext(CocktailContext);
 
   const [likes, setLikes] = React.useState([]);

@@ -1,5 +1,4 @@
 'use strict';
-const { Op } = require('sequelize');
 
 const { like } = require('../models');
 

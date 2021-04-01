@@ -1,13 +1,22 @@
 'use strict';
 
 require('dotenv').config();
-const { DB_CONNECTION_URL, DB_DIALECT, DB_PROTOCOL } = process.env;
+const {
+  DB_NAME,
+  DB_USERNAME,
+  DB_PASSWORD,
+  DB_HOST,
+  DB_PORT,
+  DB_DIALECT,
+} = process.env;
 const Sequelize = require('sequelize');
 const { associations } = require('./associations');
+const { DataTypes } = Sequelize;
 
-const sequelize = new Sequelize(DB_CONNECTION_URL, {
+const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
+  host: DB_HOST,
+  port: DB_PORT,
   dialect: DB_DIALECT,
-  protocol: DB_PROTOCOL,
   logging: true,
   benchmark: true,
   logQueryParameters: true,
@@ -27,9 +36,7 @@ const modelDefiners = [
 ];
 
 // Define all models
-modelDefiners.forEach((modelDefiner) =>
-  modelDefiner(sequelize, Sequelize.DataTypes),
-);
+modelDefiners.forEach((modelDefiner) => modelDefiner(sequelize, DataTypes));
 
 // Once all models are defined, execute associations
 associations(sequelize);

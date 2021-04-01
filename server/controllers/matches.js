@@ -1,6 +1,6 @@
 'use strict';
 
-const { like, sequelize } = require('../models');
+const { like } = require('../models');
 
 exports.getMatches = async (req, res) => {
   try {

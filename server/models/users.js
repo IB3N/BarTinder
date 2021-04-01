@@ -1,37 +1,31 @@
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('user', {
+  const { STRING, INTEGER, ARRAY } = DataTypes;
+  return sequelize.define('user', {
     firstName: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: false,
     },
     lastName: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: false,
     },
     email: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: false,
       unique: true,
     },
     username: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: false,
       unique: true,
     },
     password: {
-      type: DataTypes.STRING,
+      type: STRING,
       allowNull: false,
     },
     friends: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      type: ARRAY(INTEGER),
       allowNull: true,
     },
   });
-
-  User.associate = (model) => {
-    User.hasMany(model.like);
-    User.belongsToMany(model.group, { through: model.member });
-  };
-
-  return User;
 };

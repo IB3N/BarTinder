@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import {
   StyleSheet,
@@ -7,11 +8,30 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-
+import { useDispatch } from 'react-redux';
 import Colours from '../../assets/colours';
 import ButtonStyles from '../../assets/button.styles';
+import theCocktailDB from '../../apiService/TheCocktailDB';
+import arrayShuffle from 'array-shuffle';
+import { addCocktails } from '../../store/actions/cocktails';
 
 const Home = ({ navigation }) => {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    theCocktailDB
+      .getCocktails()
+      .then(({ drinks }) =>
+        Promise.all(
+          drinks.map(({ idDrink }) =>
+            theCocktailDB.getOne(idDrink).then(({ drinks }) => drinks[0]),
+          ),
+        ).then((fullCocktails) =>
+          dispatch(addCocktails(arrayShuffle(fullCocktails))),
+        ),
+      );
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logoContainer}>

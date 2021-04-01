@@ -6,47 +6,11 @@ import Profile from '../screens/Main/Profile/Profile';
 import MyDrinks from '../screens/Main/MyDrinks';
 import Swipe from '../screens/Main/Swipe';
 import DeleteAccount from '../screens/Main/Profile/DeleteAccount';
-import theCocktailDB from '../apiService/TheCocktailDB';
-import api from '../apiService/';
 import GroupStack from '../navigation/GroupStack';
-
-import { addCocktails } from '../store/actions/cocktails';
-import { useDispatch, useSelector } from 'react-redux';
-
-const arrayShuffle = require('array-shuffle');
 
 const Stack = createStackNavigator();
 
 const MainStack = () => {
-  const user = useSelector((state) => state.user);
-  const [likes, setLikes] = React.useState([]);
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    api
-      .getLikesAndDislikes(user.id)
-      .then((fetchedLikesAndDislikes) => setLikes(fetchedLikesAndDislikes));
-  }, []);
-
-  React.useEffect(() => {
-    theCocktailDB
-      .getCocktails()
-      .then(({ drinks }) =>
-        drinks.filter((cocktail) => {
-          return !likes.some(({ drinkId }) => drinkId === +cocktail.idDrink);
-        }),
-      )
-      .then((filtered) =>
-        Promise.all(
-          filtered.map(({ idDrink }) =>
-            theCocktailDB.getOne(idDrink).then(({ drinks }) => drinks[0]),
-          ),
-        ).then((fullCocktails) =>
-          dispatch(addCocktails(arrayShuffle(fullCocktails))),
-        ),
-      );
-  }, [likes]);
-
   return (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen

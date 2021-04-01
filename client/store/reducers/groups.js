@@ -3,7 +3,7 @@ const initialState = {
   groups: [],
 };
 
-export const group = (state = initialState, action) => {
+export const groups = (state = initialState, action) => {
   const { payload } = action;
   switch (action.type) {
     case ADD_GROUP:

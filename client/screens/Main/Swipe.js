@@ -4,38 +4,34 @@ import * as React from 'react';
 import { StyleSheet, Text, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CardStack from 'react-native-card-stack-swiper';
-
 import Colours from '../../assets/colours';
-
 import TopBarButtons from '../../components/TopBarButtons';
 import CocktailCard from '../../components/CocktailCard';
 import SwipeButtons from '../../components/SwipeButtons';
-
 import api from '../../apiService';
-
 import { useSelector } from 'react-redux';
 
 const Swipe = ({ navigation, route }) => {
+  const [swipeList, setSwipeList] = React.useState([]);
   const user = useSelector((state) => state.user);
   const cocktails = useSelector((state) => state.cocktails.cocktails);
-
-  const [likes, setLikes] = React.useState([]);
-
+  const likes = useSelector((state) => state.user.likes);
   const swiper = React.useRef(null);
 
+  // filter likes
   React.useEffect(() => {
-    api
-      .getLikesAndDislikes(user.id)
-      .then((fetchedLikesAndDislikes) => setLikes(fetchedLikesAndDislikes));
+    const filteredByLikes = cocktails.filter((cocktail) => {
+      return !likes.some(({ drinkId }) => drinkId === +cocktail.idDrink);
+    });
+    setSwipeList(filteredByLikes);
   }, []);
 
-  // When a user likes or dislikes a cocktail
   const handleSwipe = async (likeOrDislike, index) => {
     await api.swipe(user.id, cocktails[index].idDrink, likeOrDislike); // Add this cocktail to users likes list
   };
 
   const renderCocktailCards = () => {
-    return cocktails.map((cocktail) => (
+    return swipeList.map((cocktail) => (
       <CocktailCard key={cocktail.idDrink} cocktail={cocktail} />
     ));
   };

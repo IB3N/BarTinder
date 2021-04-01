@@ -14,21 +14,27 @@ import { useSelector } from 'react-redux';
 const windowWidth = Dimensions.get('window').width;
 
 const MyDrinks = ({ navigation, route }) => {
-  const user = useSelector((state) => state.user);
-  const [likes, setLikes] = React.useState([]);
+  const id = useSelector((state) => state.user.id);
+  const likes = useSelector((state) => state.user.likes);
+  const cocktails = useSelector((state) => state.cocktails);
+
+  // TODO:
+  const filteredByLikes = cocktails.filter((cocktail) => {
+    return !likes.some(({ drinkId }) => drinkId === +cocktail.idDrink);
+  });
 
   // Initial call to api to get users likes (drink id's)
-  React.useEffect(() => {
-    api
-      .getLikes(user.id)
-      .then((fetchedLikes) =>
-        Promise.all(
-          fetchedLikes.map(({ drinkId }) =>
-            TheCocktailDB.getOne(drinkId).then((drink) => drink.drinks[0]),
-          ),
-        ).then((drinks) => setLikes(drinks)),
-      );
-  }, []);
+  // React.useEffect(() => {
+  //   api
+  //     .getLikes(user.id)
+  //     .then((fetchedLikes) =>
+  //       Promise.all(
+  //         fetchedLikes.map(({ drinkId }) =>
+  //           TheCocktailDB.getOne(drinkId).then((drink) => drink.drinks[0]),
+  //         ),
+  //       ).then((drinks) => setLikes(drinks)),
+  //     );
+  // }, []);
 
   return (
     <SafeAreaView style={styles.container}>

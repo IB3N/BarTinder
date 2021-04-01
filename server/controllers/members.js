@@ -1,6 +1,7 @@
 'use strict';
 
-const { member, user } = require('../models');
+const { models } = require('../models');
+const { member, user } = models;
 
 exports.createMember = async (req, res) => {
   try {

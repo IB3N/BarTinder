@@ -4,7 +4,7 @@
     "slug": "BarTinder",
     "version": "1.0.0",
     "orientation": "portrait",
-    // "icon": "./assets/tumblerSmall.png",
+    "icon": "./assets/tumblerSmall.png",
     "splash": {
       "image": "./assets/tumbler.png",
       "resizeMode": "contain",
@@ -21,7 +21,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        // "foregroundImage": "./assets/tumblerSmall.png",
+        "foregroundImage": "./assets/tumblerSmall.png",
         "backgroundColor": "#000000"
       }
     },

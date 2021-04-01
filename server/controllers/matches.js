@@ -1,6 +1,7 @@
 'use strict';
 
-const { like } = require('../models');
+const { models } = require('../models');
+const { like } = models;
 
 exports.getMatches = async (req, res) => {
   try {

@@ -1,10 +1,11 @@
 'use strict';
 
-const { user, like } = require('../models');
+const { models } = require('../models');
+const { user, like } = models;
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const all = await user.findAll();
+    const all = await user.findAll({ attributes: { exclude: ['password'] } });
     res.send(all).status(200);
   } catch (error) {
     console.error(error);

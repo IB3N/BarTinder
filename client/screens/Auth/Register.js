@@ -10,31 +10,35 @@ import {
   Keyboard,
   Alert,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   TextInput,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Colours from '../../assets/colours';
 import ButtonStyles from '../../assets/button.styles';
-import UserContext from '../../context/UserContext';
 import api from '../../apiService';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../store/actions/user';
 
-const initialCredentials = {
+const initialUserState = {
+  firstName: '',
+  lastName: '',
   username: '',
   password: '',
+  email: '',
 };
 
-const Login = ({ navigation }) => {
-  const [credentials, setCredentials] = React.useState(initialCredentials);
-  const [_, setUser] = React.useContext(UserContext);
+const Register = ({ navigation }) => {
+  const [newUser, setNewUser] = React.useState(initialUserState);
+  const dispatch = useDispatch();
 
-  const handleLogin = async () => {
-    await api.login(credentials).then((fetchedUser) => {
+  const handleRegister = async () => {
+    await api.register(newUser).then((fetchedUser) => {
       !fetchedUser.errors
-        ? setUser(fetchedUser)
-        : Alert.alert('Could not login');
+        ? dispatch(setUser(fetchedUser))
+        : Alert.alert('Could not register');
     });
   };
 
@@ -61,10 +65,46 @@ const Login = ({ navigation }) => {
             <View>
               <TextInput
                 style={styles.input}
-                value={credentials.username}
+                value={newUser.firstName}
                 onChangeText={(input) =>
-                  setCredentials((previousCredentials) => ({
-                    ...previousCredentials,
+                  setNewUser((previousUser) => ({
+                    ...previousUser,
+                    firstName: input,
+                  }))
+                }
+                placeholder="First name..."
+                placeholderTextColor={Colours.green}
+              />
+              <TextInput
+                style={styles.input}
+                value={newUser.lastName}
+                onChangeText={(input) =>
+                  setNewUser((previousUser) => ({
+                    ...previousUser,
+                    lastName: input,
+                  }))
+                }
+                placeholder="Last name..."
+                placeholderTextColor={Colours.green}
+              />
+              <TextInput
+                style={styles.input}
+                value={newUser.email}
+                onChangeText={(input) =>
+                  setNewUser((previousUser) => ({
+                    ...previousUser,
+                    email: input,
+                  }))
+                }
+                placeholder="Email..."
+                placeholderTextColor={Colours.green}
+              />
+              <TextInput
+                style={styles.input}
+                value={newUser.username}
+                onChangeText={(input) =>
+                  setNewUser((previousUser) => ({
+                    ...previousUser,
                     username: input,
                   }))
                 }
@@ -73,10 +113,10 @@ const Login = ({ navigation }) => {
               />
               <TextInput
                 style={styles.input}
-                value={credentials.password}
+                value={newUser.password}
                 onChangeText={(input) =>
-                  setCredentials((previousCredentials) => ({
-                    ...previousCredentials,
+                  setNewUser((previousUser) => ({
+                    ...previousUser,
                     password: input,
                   }))
                 }
@@ -88,17 +128,17 @@ const Login = ({ navigation }) => {
           </View>
         </TouchableWithoutFeedback>
         <TouchableOpacity
-          style={[ButtonStyles.button, styles.login]}
-          onPress={handleLogin}
+          style={[ButtonStyles.button, styles.register]}
+          onPress={handleRegister}
         >
-          <Text style={ButtonStyles.buttonText}>Login</Text>
+          <Text style={ButtonStyles.buttonText}>Register</Text>
         </TouchableOpacity>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };
 
-export default Login;
+export default Register;
 
 const styles = StyleSheet.create({
   container: {
@@ -140,7 +180,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
   },
-  login: {
+  register: {
     alignSelf: 'center',
   },
 });

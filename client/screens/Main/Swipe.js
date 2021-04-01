@@ -16,7 +16,7 @@ import api from '../../apiService';
 import { useSelector } from 'react-redux';
 
 const Swipe = ({ navigation, route }) => {
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user);
   const cocktails = useSelector((state) => state.cocktails.cocktails);
 
   const [likes, setLikes] = React.useState([]);

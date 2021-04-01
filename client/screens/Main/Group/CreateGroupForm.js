@@ -30,7 +30,7 @@ const windowWidth = Dimensions.get('window').width;
 
 const CreateGroupForm = ({ navigation, route }) => {
   const [groupName, setGroupName] = React.useState('');
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   // Call api to create group and insert user into that group

@@ -1,19 +1,19 @@
 import * as React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import Colours from '../../../assets/colours';
 import ButtonStyles from '../../../assets/button.styles';
-
 import InfoRow from '../../../components/InfoRow';
 import TopBarButtons from '../../../components/TopBarButtons';
-
-import UserContext from '../../../context/UserContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../../store/actions/user';
 
 const Profile = ({ navigation, route }) => {
-  const [{ username, firstName, lastName, email }, setUser] = React.useContext(
-    UserContext,
-  );
+  const user = useSelector((state) => state.user);
+  const { username, firstName, lastName, email } = user;
+  const dispatch = useDispatch();
+
+  const handleLogout = () => dispatch(logout());
 
   return (
     <SafeAreaView style={styles.profileScreenContainer}>
@@ -33,7 +33,7 @@ const Profile = ({ navigation, route }) => {
       <View style={styles.deleteContainer}>
         <TouchableOpacity
           style={ButtonStyles.button}
-          onPress={() => setUser({})}
+          onPress={() => handleLogout}
         >
           <Text style={ButtonStyles.buttonText}>Logout</Text>
         </TouchableOpacity>

@@ -1,16 +1,11 @@
 import { ADD_COCKTAILS } from '../actions/ActionTypes';
 
-const initialState = {
-  cocktails: [],
-};
+const initialState = [];
 
 export const cocktails = (state = initialState, action) => {
   switch (action.type) {
     case ADD_COCKTAILS:
-      return {
-        ...state,
-        cocktails: action.payload.cocktails,
-      };
+      return action.payload.cocktails;
     default:
       return state;
   }

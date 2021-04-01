@@ -18,29 +18,25 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Colours from '../../assets/colours';
 import ButtonStyles from '../../assets/button.styles';
-import UserContext from '../../context/UserContext';
 import api from '../../apiService';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../store/actions/user';
 
-const initialUserState = {
-  firstName: '',
-  lastName: '',
+const initialCredentials = {
   username: '',
   password: '',
-  email: '',
 };
 
-const Register = ({ navigation }) => {
-  const [newUser, setNewUser] = React.useState(initialUserState);
-  const [_, setUser] = React.useContext(UserContext);
+const Login = ({ navigation }) => {
+  const [credentials, setCredentials] = React.useState(initialCredentials);
+  const dispatch = useDispatch();
 
-  const handleRegister = async () => {
-    await api
-      .register(newUser) // Call api service
-      .then((fetchedUser) => {
-        !fetchedUser.errors
-          ? setUser(fetchedUser)
-          : Alert.alert('Could not register');
-      });
+  const handleLogin = async () => {
+    await api.login(credentials).then((fetchedUser) => {
+      !fetchedUser.errors
+        ? dispatch(setUser(fetchedUser))
+        : Alert.alert('Could not login');
+    });
   };
 
   return (
@@ -66,46 +62,10 @@ const Register = ({ navigation }) => {
             <View>
               <TextInput
                 style={styles.input}
-                value={newUser.firstName}
+                value={credentials.username}
                 onChangeText={(input) =>
-                  setNewUser((previousUser) => ({
-                    ...previousUser,
-                    firstName: input,
-                  }))
-                }
-                placeholder="First name..."
-                placeholderTextColor={Colours.green}
-              />
-              <TextInput
-                style={styles.input}
-                value={newUser.lastName}
-                onChangeText={(input) =>
-                  setNewUser((previousUser) => ({
-                    ...previousUser,
-                    lastName: input,
-                  }))
-                }
-                placeholder="Last name..."
-                placeholderTextColor={Colours.green}
-              />
-              <TextInput
-                style={styles.input}
-                value={newUser.email}
-                onChangeText={(input) =>
-                  setNewUser((previousUser) => ({
-                    ...previousUser,
-                    email: input,
-                  }))
-                }
-                placeholder="Email..."
-                placeholderTextColor={Colours.green}
-              />
-              <TextInput
-                style={styles.input}
-                value={newUser.username}
-                onChangeText={(input) =>
-                  setNewUser((previousUser) => ({
-                    ...previousUser,
+                  setCredentials((previousCredentials) => ({
+                    ...previousCredentials,
                     username: input,
                   }))
                 }
@@ -114,10 +74,10 @@ const Register = ({ navigation }) => {
               />
               <TextInput
                 style={styles.input}
-                value={newUser.password}
+                value={credentials.password}
                 onChangeText={(input) =>
-                  setNewUser((previousUser) => ({
-                    ...previousUser,
+                  setCredentials((previousCredentials) => ({
+                    ...previousCredentials,
                     password: input,
                   }))
                 }
@@ -129,17 +89,17 @@ const Register = ({ navigation }) => {
           </View>
         </TouchableWithoutFeedback>
         <TouchableOpacity
-          style={[ButtonStyles.button, styles.register]}
-          onPress={handleRegister}
+          style={[ButtonStyles.button, styles.login]}
+          onPress={handleLogin}
         >
-          <Text style={ButtonStyles.buttonText}>Register</Text>
+          <Text style={ButtonStyles.buttonText}>Login</Text>
         </TouchableOpacity>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };
 
-export default Register;
+export default Login;
 
 const styles = StyleSheet.create({
   container: {
@@ -181,7 +141,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
   },
-  register: {
+  login: {
     alignSelf: 'center',
   },
 });

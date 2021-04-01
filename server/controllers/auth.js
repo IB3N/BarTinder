@@ -1,6 +1,6 @@
 'use strict';
 
-const { user } = require('../models');
+const { user, like } = require('../models');
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -30,6 +30,7 @@ exports.login = async (req, res) => {
         username,
         password,
       },
+      include: [{ model: like }],
     });
     if (!userExists) throw new Error('Invalid login credentials');
     else res.send(userExists).status(200);

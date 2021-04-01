@@ -18,7 +18,7 @@ const arrayShuffle = require('array-shuffle');
 const Stack = createStackNavigator();
 
 const MainStack = () => {
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user);
   const [likes, setLikes] = React.useState([]);
   const dispatch = useDispatch();
 

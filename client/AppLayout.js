@@ -9,7 +9,7 @@ import Auth from './screens/Auth';
 import Splash from './splash/Splash';
 
 export default function AppLayout() {
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.user);
 
   let [fontsLoaded] = useFonts({
     L: require('./assets/fonts/Lato-Regular.ttf'),

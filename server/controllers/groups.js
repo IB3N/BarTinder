@@ -1,6 +1,6 @@
 'use strict';
 
-const { group, user } = require('../models');
+const { group, user, member } = require('../models');
 
 exports.createGroup = async (req, res) => {
   try {
@@ -22,10 +22,13 @@ exports.getGroup = async (req, res) => {
   }
 };
 
-exports.getGroups = async (req, res) => {
+exports.getUsersGroups = async (req, res) => {
   try {
     const foundUser = await user.findByPk(req.body.userId);
-    const usersGroups = foundUser.getGroups({ order: [['groupId', 'DESC']] });
+    const usersGroups = foundUser.getGroups({
+      order: [['groupId', 'DESC']],
+      include: [{ model: member }],
+    });
     res.status(200).send(usersGroups);
   } catch (error) {
     console.error(error);

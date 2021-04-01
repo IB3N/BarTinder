@@ -5,9 +5,8 @@ import Group from '../screens/Main/Group/Group';
 import GroupItem from '../screens/Main/Group/GroupItem';
 import CreateGroupForm from '../screens/Main/Group/CreateGroupForm';
 
-import GroupsContext from '../context/GroupsContext';
-
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addGroups } from '../store/actions/groups';
 
 import api from '../apiService';
 
@@ -15,8 +14,7 @@ const Stack = createStackNavigator();
 
 const GroupStack = () => {
   const user = useSelector((stack) => stack.user.user);
-  const groupsHook = React.useState([]);
-  const setGroups = groupsHook[1];
+  const dispatch = useDispatch();
 
   // Initial call to api to get users groups
   React.useEffect(() => {
@@ -27,30 +25,28 @@ const GroupStack = () => {
           fetchedGroupIds.map(({ groupId }) =>
             api.getGroup(groupId).then((group) => group),
           ),
-        ).then((fetchedGroups) => setGroups(fetchedGroups)),
+        ).then((fetchedGroups) => dispatch(addGroups(fetchedGroups))),
       );
   }, []);
 
   return (
-    <GroupsContext.Provider value={groupsHook}>
-      <Stack.Navigator mode="modal">
-        <Stack.Screen
-          name="Group"
-          component={Group}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="GroupItem"
-          component={GroupItem}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="CreateGroupForm"
-          component={CreateGroupForm}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </GroupsContext.Provider>
+    <Stack.Navigator mode="modal">
+      <Stack.Screen
+        name="Group"
+        component={Group}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="GroupItem"
+        component={GroupItem}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CreateGroupForm"
+        component={CreateGroupForm}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
   );
 };
 

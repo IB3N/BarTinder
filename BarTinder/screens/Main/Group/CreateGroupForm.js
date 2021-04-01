@@ -13,26 +13,25 @@ import {
   Dimensions,
   Alert,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-import Colours from '../../../assets/colours';
-import ButtonStyles from '../../../assets/button.styles';
 import {
   TextInput,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import UserContext from '../../../context/UserContext';
-import GroupsContext from '../../../context/GroupsContext';
+import Colours from '../../../assets/colours';
+import ButtonStyles from '../../../assets/button.styles';
 
 import api from '../../../apiService';
+import { useDispatch, useSelector } from 'react-redux';
+import { addGroup } from '../../../store/actions/groups';
 
 const windowWidth = Dimensions.get('window').width;
 
 const CreateGroupForm = ({ navigation, route }) => {
   const [groupName, setGroupName] = React.useState('');
-  const [user, setUser] = React.useContext(UserContext);
-  const [groups, setGroups] = React.useContext(GroupsContext);
+  const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
 
   // Call api to create group and insert user into that group
   const handleCreateGroup = async () => {
@@ -41,8 +40,8 @@ const CreateGroupForm = ({ navigation, route }) => {
       return;
     }
     await api.createGroup(groupName).then((group) => {
-      setGroups((prevGroups) => [group, ...prevGroups]);
       api.addMember(group.id, user.email);
+      dispatch(addGroup(group));
     });
     setGroupName('');
     navigation.navigate('Group');

@@ -10,15 +10,12 @@ import ButtonStyles from '../../../assets/button.styles';
 
 import GroupItemButton from '../../../components/GroupItemButton';
 import TopBarButtons from '../../../components/TopBarButtons';
-
-import UserContext from '../../../context/UserContext';
-import GroupsContext from '../../../context/GroupsContext';
-import api from '../../../apiService/index';
 import Splash from '../../../splash/Splash';
 
+import { useSelector } from 'react-redux';
+
 const Group = ({ navigation, route }) => {
-  const [user, _] = React.useContext(UserContext);
-  const [groups, setGroups] = React.useContext(GroupsContext);
+  const groups = useSelector((state) => state.groups.groups);
 
   return (
     <SafeAreaView style={styles.groupScreenContainer}>

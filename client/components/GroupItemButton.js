@@ -19,7 +19,7 @@ const GroupItemButton = ({ header, navigation, groupId }) => {
 
   // Find matches for all users in the group
   React.useEffect(() => {
-    const memberIds = members.map((member) => member.userId); // [1, 2, 3]
+    const memberIds = members.map((member) => member.userId);
     api.getMatches(memberIds).then((fetchedMatches) =>
       Promise.all(
         fetchedMatches

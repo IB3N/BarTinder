@@ -34,13 +34,11 @@ const Register = ({ navigation }) => {
   const [_, setUser] = React.useContext(UserContext);
 
   const handleRegister = async () => {
-    await api
-      .register(newUser) // Call api service
-      .then((fetchedUser) => {
-        !fetchedUser.errors
-          ? setUser(fetchedUser)
-          : Alert.alert('Could not register');
-      });
+    await api.register(newUser).then((fetchedUser) => {
+      !fetchedUser.errors
+        ? setUser(fetchedUser)
+        : Alert.alert('Could not register');
+    });
   };
 
   return (

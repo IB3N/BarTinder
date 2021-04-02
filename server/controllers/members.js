@@ -10,7 +10,7 @@ exports.createMember = async (req, res) => {
       groupId,
       userId: foundUser.dataValues.id,
     });
-    res.send(foundUser).status(201); // return the full member back to the front end
+    res.send(foundUser).status(201);
   } catch (error) {
     console.error(error);
     res.status(500);

@@ -26,7 +26,6 @@ const sequelize = new Sequelize(
       acquire: 30000,
       idle: 10000,
     },
-    // operatorsAliases: false // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
   },
 );
 

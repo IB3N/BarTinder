@@ -37,7 +37,6 @@ const Members = ({ navigation, route }) => {
     getMemberDetails();
   }, []);
 
-  // When member gets added to group
   const addMember = async () => {
     await api.addMember(groupId, member).then((member) =>
       setMatchesMembers({
@@ -45,7 +44,7 @@ const Members = ({ navigation, route }) => {
         members: [...matchesMembers.members, member],
       }),
     );
-    setMember(''); // reset text input field
+    setMember('');
   };
 
   return (

@@ -33,7 +33,6 @@ const Swipe = ({ navigation, route }) => {
   // When a user likes or dislikes a cocktail
   const handleSwipe = async (likeOrDislike, index) => {
     await api.swipe(user.id, cocktails[index].idDrink, likeOrDislike); // Add this cocktail to users likes list
-    // setCurrent((prev) => prev + 1); // Update cocktail index to begin to render next cocktail
   };
 
   const renderCocktailCards = () => {
@@ -56,7 +55,6 @@ const Swipe = ({ navigation, route }) => {
         secondCardZoom={0.4}
         onSwipedRight={(index) => handleSwipe(true, index)}
         onSwipedLeft={(index) => handleSwipe(false, index)}
-        // onSwipedTop={(index) => handleRefresh()}
       >
         {renderCocktailCards()}
       </CardStack>

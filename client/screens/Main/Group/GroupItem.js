@@ -36,8 +36,6 @@ const GroupItem = ({ route }) => {
             } else if (route.name === 'Members') {
               iconName = focused ? 'people' : 'people-outline';
             }
-
-            // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}

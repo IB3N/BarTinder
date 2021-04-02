@@ -18,6 +18,7 @@ import { addCocktails } from '../../store/actions/cocktails';
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
 
+  // Set isLoading redux or local state to show animations
   React.useEffect(() => {
     theCocktailDB
       .getCocktails()

@@ -4,17 +4,14 @@ import * as React from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatList } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
 import Colours from '../../assets/colours';
 import TopBarButtons from '../../components/TopBarButtons';
 import CocktailCard from '../../components/CocktailCard';
-import api from '../../apiService';
-import TheCocktailDB from '../../apiService/TheCocktailDB';
 import Splash from '../../splash/Splash';
-import { useSelector } from 'react-redux';
 const windowWidth = Dimensions.get('window').width;
 
 const MyDrinks = ({ navigation, route }) => {
-  const id = useSelector((state) => state.user.id);
   const likes = useSelector((state) => state.user.likes);
   const cocktails = useSelector((state) => state.cocktails);
 
@@ -22,19 +19,6 @@ const MyDrinks = ({ navigation, route }) => {
   const filteredByLikes = cocktails.filter((cocktail) => {
     return !likes.some(({ drinkId }) => drinkId === +cocktail.idDrink);
   });
-
-  // Initial call to api to get users likes (drink id's)
-  // React.useEffect(() => {
-  //   api
-  //     .getLikes(user.id)
-  //     .then((fetchedLikes) =>
-  //       Promise.all(
-  //         fetchedLikes.map(({ drinkId }) =>
-  //           TheCocktailDB.getOne(drinkId).then((drink) => drink.drinks[0]),
-  //         ),
-  //       ).then((drinks) => setLikes(drinks)),
-  //     );
-  // }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -50,7 +34,7 @@ const MyDrinks = ({ navigation, route }) => {
           horizontal
           pagingEnabled={true}
           showsHorizontalScrollIndicator={false}
-          data={likes}
+          data={filteredByLikes}
           keyExtractor={(item) => item.idDrink}
           renderItem={({ item }) => <CocktailCard cocktail={item} />}
           style={styles.drinks}

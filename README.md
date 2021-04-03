@@ -24,7 +24,7 @@ BarTinder lets drinkers decide what they want to drink before getting to the bar
 
 ## Getting started
 
-Get yourself setup with your favourite code editor, a local Postgres DB running on your machine, expo for your phone and setup an account with The Cocktail DB or use the free version of their API
+Get yourself setup with your favourite code editor, a local Postgres DB running on your machine (need to know all of the credentials), expo for your phone and setup an account with The Cocktail DB or use the free version of their API
 
 1. Clone the repo
 
@@ -40,9 +40,12 @@ cd client
 touch .env
 ```
 
-#### /client/.env ~ You will need to use the free or paid version of the Cocktail DB (example is using free version)
-
 ```
+/*
+client/.env
+You will need to use the free or paid version of the Cocktail DB (example is using free version)
+*/
+
 API_URL=https://www.thecocktaildb.com/api/json/v1/1/
 API_KEY= (if you're paying for the API)
 SERVER_URL=http://<localhost || IP_ADDRESS>:4000
@@ -54,9 +57,12 @@ cd server
 touch .env
 ```
 
-#### /server/.env ~ Fill in your DB credentials
-
 ```
+/*
+server/.env
+Fill in your DB credentials
+*/
+
 DB_CONNECTION_URL=postgresql://[user[:password]@][netloc][:port][/dbname]
 DB_NAME=
 DB_USERNAME=
@@ -66,7 +72,7 @@ DB_DIALECT=postgres
 DB_PORT=
 ```
 
-3. Install dependencies and start server (you should already be in /server)
+3. Install dependencies and start BarTinder (you should already be in /server)
 
 ```
 npm i

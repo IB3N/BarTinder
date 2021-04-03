@@ -26,15 +26,59 @@ BarTinder lets drinkers decide what they want to drink before getting to the bar
 
 Get yourself setup with your favourite code editor, a local Postgres DB running on your machine, expo for your phone and setup an account with The Cocktail DB or use the free version of their API
 
-1. Fork and clone the repo onto your computer
+1. Clone the repo
 
-2. Create a .env file in /client with the following: API_URL, API_KEY (if you're paying for the API) and SERVER_URL
+```
+git clone https://github.com/IB3N/BarTinder.git
+cd BarTinder
+```
 
-3. Create a .env file in /server with your DB credentials and edit server/models/index.js to suit
+2. Create your .env files
 
-4. `cd server && npm i && nodemon`
+```
+cd client
+touch .env
+```
 
-5. `cd client && npm i && expo start`
+#### /client/.env ~ You will need to use the free or paid version of the Cocktail DB (example is using free version)
+
+```
+API_URL=https://www.thecocktaildb.com/api/json/v1/1/
+API_KEY= (if you're paying for the API)
+SERVER_URL=http://<localhost || IP_ADDRESS>:4000
+```
+
+```
+cd ..
+cd server
+touch .env
+```
+
+#### /server/.env ~ Fill in your DB credentials
+
+```
+DB_CONNECTION_URL=postgresql://[user[:password]@][netloc][:port][/dbname]
+DB_NAME=
+DB_USERNAME=
+DB_PASSWORD=
+DB_HOST=
+DB_DIALECT=postgres
+DB_PORT=
+```
+
+3. Install dependencies and start server (you should already be in /server)
+
+```
+npm i
+nodemon OR npm start
+```
+
+```
+cd ..
+cd client
+npm i
+expo start
+```
 
 ## Currently developing...
 
@@ -44,7 +88,7 @@ Get yourself setup with your favourite code editor, a local Postgres DB running 
 
 ## Room For Improvement
 
-- Choose what type of drinks you would like to swipe on such as non-alcoholic, beer, punch etc...
+- Swipe on other drinks categories such as non-alcoholic, beer, punch etc...
 - The ability to add friends
 - Add an events page for parties
 - Authorization and/or facebook/google login

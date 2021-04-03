@@ -77,9 +77,6 @@ DB_PORT=
 ```
 npm i
 nodemon OR npm start
-```
-
-```
 cd ..
 cd client
 npm i

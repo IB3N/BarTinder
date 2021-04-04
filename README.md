@@ -13,15 +13,6 @@ BarTinder lets drinkers decide what they want to drink before getting to the bar
   <img src="./client/assets/BarTinder.gif"/>
 </p>
 
-## Tech Stack
-
-- [React Native](https://reactnative.dev/)
-- [Expo](https://expo.io/)
-- [Node.js](https://nodejs.org/)
-- [Express](https://expressjs.com)
-- [Sequelize](https://sequelize.org/)
-- [The Cocktail DB](https://www.thecocktaildb.com/api.php)
-
 ## Getting started
 
 Get yourself setup with your favourite code editor, a local Postgres DB running on your machine (need to know all of the credentials), expo for your phone and setup an account with The Cocktail DB or use the free version of their API
@@ -82,6 +73,15 @@ cd client
 npm i
 expo start
 ```
+
+## Tech Stack
+
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.io/)
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com)
+- [Sequelize](https://sequelize.org/)
+- [The Cocktail DB](https://www.thecocktaildb.com/api.php)
 
 ## Currently developing...
 

@@ -10,7 +10,7 @@ Made for bartenders and drinkers alike!
 BarTinder lets drinkers decide what they want to drink before getting to the bar and helps bartenders know what to make for their illustrious cocktail parties they'll be throwing! 🍸 🥃
 
 <p align="center">
-  <img src="./client/assets/BarTinder1.gif"/>
+  <img src="./client/assets/BarTinder2.gif"/>
 </p>
 
 ## Getting started

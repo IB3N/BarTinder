@@ -25,6 +25,7 @@ router.post('/user/dislikes', likes.usersDislikes);
 router.post('/user/likesAndDislikes', likes.usersLikesAndDislikes);
 
 // Groups
+router.get('/groups', groups.getGroups);
 router.post('/group', groups.createGroup);
 router.post('/groups', groups.getGroup);
 // router.post('/groups', groups.getGroups);

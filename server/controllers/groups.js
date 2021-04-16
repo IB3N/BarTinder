@@ -3,6 +3,16 @@
 const { models } = require('../models');
 const { group, user, member } = models;
 
+exports.getGroups = async (req, res) => {
+  try {
+    const groups = await group.findAll({ include: [{ model: user }] });
+    res.status(200).send(groups);
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+};
+
 exports.createGroup = async (req, res) => {
   try {
     const newGroup = await group.create(req.body);

@@ -1,6 +1,3 @@
-// Import copy code
-// import { charcoal, green, yellow, brown, sienna } from './assets/colours';
-
 const Colours = {
   charcoal: '#264653ff',
   green: '#2a9d8fff',

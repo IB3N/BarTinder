@@ -1,16 +1,14 @@
 'use strict';
 
 const { models } = require('../models');
-const { member, user } = models;
+const { member, user, group } = models;
 
 exports.createMember = async (req, res) => {
   try {
     const { email, groupId } = req.body;
+    const foundGroup = await group.findByPk(groupId);
     const foundUser = await user.findOne({ where: { email } });
-    await member.create({
-      groupId,
-      userId: foundUser.dataValues.id,
-    });
+    await foundGroup.addMember(foundUser);
     res.send(foundUser).status(201); // return the full member back to the front end
   } catch (error) {
     console.error(error);

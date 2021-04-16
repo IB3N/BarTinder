@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 const Swipe = ({ navigation, route }) => {
   const [swipeList, setSwipeList] = React.useState([]);
   const user = useSelector((state) => state.user);
-  const cocktails = useSelector((state) => state.cocktails.cocktails);
+  const cocktails = useSelector((state) => state.cocktails);
   const likes = useSelector((state) => state.user.likes);
   const swiper = React.useRef(null);
 

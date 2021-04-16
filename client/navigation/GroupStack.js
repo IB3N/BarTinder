@@ -13,11 +13,12 @@ import api from '../apiService';
 const Stack = createStackNavigator();
 
 const GroupStack = () => {
-  const user = useSelector((stack) => stack.user.user);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   // Initial call to api to get users groups
   React.useEffect(() => {
+    console.log('USER', user);
     api
       .getGroupIds(user.id)
       .then((fetchedGroupIds) =>
